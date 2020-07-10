@@ -1,0 +1,300 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retrievalTransactionData",
+        "transactions",
+        "comments",
+        "message",
+        "numItemsPerPage",
+        "pdfUrl"        
+      ],
+      "properties": {
+        "retrievalTransactionData": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "bankNumber",
+            "retrievalMinDate",
+            "formattedRetrievalMinDate",
+            "retrievalMaxDate",
+            "formattedRetrievalMaxDate",
+            "retrievalStartDate",
+            "formattedRetrievalStartDate",
+            "retrievalEndDate",
+            "formattedRetrievalEndDate",
+            "balanceAmountDisplayIndication",
+            "branchNumber",
+            "accountNumber",
+            "joinPfm",
+            "eventCounter"
+          ],
+          "properties": {
+            "bankNumber": {
+              "const": 12
+            },
+            "retrievalMinDate": {
+              "type": "number"
+            },
+            "formattedRetrievalMinDate": {
+              "type": "string"
+            },
+            "retrievalMaxDate": {
+              "type": "number"
+            },
+            "formattedRetrievalMaxDate": {
+              "type": "string"
+            },
+            "retrievalStartDate": {
+              "type": "number"
+            },
+            "formattedRetrievalStartDate": {
+              "type": "string"
+            },
+            "retrievalEndDate": {
+              "type": "number"
+            },
+            "formattedRetrievalEndDate": {
+              "type": "string"
+            },
+            "balanceAmountDisplayIndication": {
+              "const": "Y"
+            },
+            "branchNumber": {
+              "type": "number"
+            },
+            "accountNumber": {
+              "type": "number"
+            },
+            "joinPfm": {
+              "const": false
+            },
+            "eventCounter": {
+              "type": "number"
+            }
+          }
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "eventDate",
+              "formattedEventDate",
+              "serialNumber",
+              "activityTypeCode",
+              "activityDescription",
+              "activityDescriptionIncludeValueDate",
+              "textCode",
+              "referenceNumber",
+              "referenceCatenatedNumber",
+              "valueDate",
+              "formattedValueDate",
+              "eventAmount",
+              "eventActivityTypeCode",
+              "currentBalance",
+              "internalLinkCode",
+              "originalEventCreateDate",
+              "formattedOriginalEventCreateDate",
+              "transactionType",
+              "dataGroupCode",
+              "expandedEventDate",
+              "executingBranchNumber",
+              "eventId",
+              "details",
+              "pfmDetails",
+              "differentDateIndication",
+              "rejectedDataEventPertainingIndication",
+              "tableNumber",
+              "recordNumber",
+              "contraBankNumber",
+              "contraBranchNumber",
+              "contraAccountNumber",
+              "contraAccountTypeCode",
+              "marketingOfferContext",
+              "commentExistenceSwitch",
+              "englishActionDesc",
+              "fieldDescDisplaySwitch",
+              "offerActivityContext",
+              "comment"
+            ],
+            "properties": {
+              "eventDate": {
+                "type": "number"
+              },
+              "formattedEventDate": {
+                "type": "string"
+              },
+              "serialNumber": {
+                "type": "number"
+              },
+              "activityTypeCode": {
+                "type": "number"
+              },
+              "activityDescription": {
+                "type": "string"
+              },
+              "activityDescriptionIncludeValueDate": {
+                "type": ["string", "null"]
+              },
+              "textCode": {
+                "type": "number"
+              },
+              "referenceNumber": {
+                "type": "number"
+              },
+              "referenceCatenatedNumber": {
+                "type": "number"
+              },
+              "valueDate": {
+                "type": "number"
+              },
+              "formattedValueDate": {
+                "type": "string"
+              },
+              "eventAmount": {
+                "type": "number"
+              },
+              "eventActivityTypeCode": {
+                "type": "number",
+                "description": "Income (1) or expense (2)",
+                "enum": [1, 2]
+              },
+              "currentBalance": {
+                "type": "number"
+              },
+              "internalLinkCode": {
+                "type": "integer"
+              },
+              "originalEventCreateDate": {
+                "type": "number"
+              },
+              "formattedOriginalEventCreateDate": {
+                "const": null
+              },
+              "transactionType": {
+                "type": "string",
+                "description": "Fixed (REGULAR) or still in process/temporary (TODAY)",
+                "enum": ["REGULAR", "TODAY"]
+              },
+              "dataGroupCode": {
+                "type": "number"
+              },
+              "beneficiaryDetailsData": {
+                "type": ["object", "null"],
+                "additionalProperties": false,
+                "required": [],
+                "properties": {
+                  "partyName": {
+                    "type": ["string", "null"]
+                  },
+                  "messageHeadline": {
+                    "type": ["string", "null"]
+                  },
+                  "partyHeadline": {
+                    "type": ["string", "null"]
+                  },
+                  "messageDetail": {
+                    "type": ["string", "null"]
+                  },
+                  "tableNumber": {
+                    "type": "number"
+                  },
+                  "recordNumber": {
+                    "type": "number"
+                  }
+                }
+              },
+              "expandedEventDate": {
+                "type": "string"
+              },
+              "executingBranchNumber": {
+                "type": "number"
+              },
+              "eventId": {
+                "type": "integer",
+                "enum": [0, 184]
+              },
+              "details": {
+                "type": ["string", "null"]
+              },
+              "pfmDetails": {
+                "const": null
+              },
+              "differentDateIndication": {
+                "type": "string"
+              },
+              "rejectedDataEventPertainingIndication": {
+                "type": "string"
+              },
+              "tableNumber": {
+                "type": "number"
+              },
+              "recordNumber": {
+                "type": "number"
+              },
+              "contraBankNumber": {
+                "type": "number"
+              },
+              "contraBranchNumber": {
+                "type": "number"
+              },
+              "contraAccountNumber": {
+                "type": "number"
+              },
+              "contraAccountTypeCode": {
+                "type": "number"
+              },
+              "marketingOfferContext": {
+                "const": 0
+              },
+              "commentExistenceSwitch": {
+                "const": 0
+              },
+              "englishActionDesc": {
+                "type": ["string", "null"]
+              },
+              "fieldDescDisplaySwitch": {
+                "type": "integer",
+                "enum": [0, 1]
+              },
+              "offerActivityContext": {
+                "type": "string"
+              },
+              "comment": {
+                "type": ["string", "null"]
+              }
+            }
+          }
+        },
+        "comments": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "message": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "numItemsPerPage": {
+          "type": "number"
+        },
+        "pdfUrl": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
