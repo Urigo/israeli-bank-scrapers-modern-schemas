@@ -54,12 +54,12 @@ async function getData(page: puppeteer.Page) {
   const endDateString = moment().format(API_DATE_FORMAT);
 
   if (accountDataResult) {
-    let dataRequests = () =>
-      accountDataResult.flatMap(async (account: any) => {
+    let promises: Promise<any>[] = [];
+    let dataRequests = accountDataResult.flatMap((account: any) => {
         const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
 
         const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
-        let ILSTransactionsRequest = await fetchPoalimXSRFWithinPage<
+        let ILSTransactionsRequest = fetchPoalimXSRFWithinPage<
           ILSCheckingTransactionsDataSchema
         >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
 
@@ -67,11 +67,11 @@ async function getData(page: puppeteer.Page) {
         // TODO: Type and validate all fetches
         // TODO: Check the DB to validate more strict on enums
         const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
-        let foreignTransactionsRequest = await fetchGetWithinPage<
+        let foreignTransactionsRequest = fetchGetWithinPage<
           ForeignTransactionsSchema
         >(page, foreignTransactionsUrl);
 
-        return [ILSTransactionsRequest, foreignTransactionsRequest];
+        promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
 
         // // TODO: Share json-schema parts between schemas
         // const dollarsBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=19&lang=he`;
@@ -92,7 +92,7 @@ async function getData(page: puppeteer.Page) {
 
     // TODO: Flatten all Promises (not sure why they are not flatten by flatMap)
     // TODO: Validate all responses
-    let results = await Promise.all(dataRequests());
+    let results = await Promise.all(promises);
 
     console.log(results);
   }
