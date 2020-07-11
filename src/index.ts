@@ -10,6 +10,10 @@ import { AccountDataSchema } from '../generatedTypes/AccountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../generatedTypes/foreignTransactionsSchema';
 
+import dotenv from 'dotenv';
+const { config } = dotenv;
+config();
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
