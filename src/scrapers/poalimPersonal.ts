@@ -1,11 +1,8 @@
 import puppeteer from 'puppeteer';
-import inquirer from 'inquirer';
 import Ajv from 'ajv';
 import moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import accountDataSchemaFile from '../schemas/accountDataSchema.json';
-import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
-import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
 import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
@@ -19,7 +16,10 @@ const VIEWPORT_HEIGHT = 768;
 
 const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
 
-async function login(userCode: string, password: string, page: puppeteer.Page) {
+async function login(page: puppeteer.Page) {
+  const userCode: string = process.env.USER_CODE;
+  const password: string = process.env.PASSWORD;
+  
   await page.waitFor('.login-btn');
 
   await page.type('#userCode', userCode);
@@ -107,6 +107,6 @@ export async function poalimPersonal(browser: puppeteer.Browser) {
   });
 
   await page.goto(BASE_URL);
-  await login(process.env.USER_CODE, process.env.PASSWORD, page);
+  await login(page);
   await getData(page);
 }

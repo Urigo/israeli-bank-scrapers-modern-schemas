@@ -4,8 +4,6 @@ import Ajv from 'ajv';
 import moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import accountDataSchemaFile from '../schemas/accountDataSchema.json';
-import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
-import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
 import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
@@ -19,7 +17,10 @@ const VIEWPORT_HEIGHT = 768;
 
 const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
 
-async function login(userCode: string, password: string, page: puppeteer.Page) {
+async function login(page: puppeteer.Page) {
+  const userCode: string = process.env.USER_CODE;
+  const password: string = process.env.PASSWORD;
+
   await page.waitFor('#inputSend');
 
   await page.type('#userID', userCode);
@@ -68,7 +69,8 @@ async function getData(page: puppeteer.Page) {
   const endDateString = moment().format(API_DATE_FORMAT);
 
   if (accountDataResult) {
-    let dataRequests = accountDataResult.flatMap(async (account) => {
+    let promises: Promise<any>[] = [];
+    let dataRequests = accountDataResult.flatMap((account) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
 
       const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
@@ -84,7 +86,7 @@ async function getData(page: puppeteer.Page) {
         ForeignTransactionsSchema
       >(page, foreignTransactionsUrl);
 
-      return [ILSTransactionsRequest, foreignTransactionsRequest];
+      promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
 
       // // TODO: Share json-schema parts between schemas
       // const dollarsBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=19&lang=he`;
@@ -105,7 +107,7 @@ async function getData(page: puppeteer.Page) {
 
     // TODO: Flatten all Promises (not sure why they are not flatten by flatMap)
     // TODO: Validate all responses
-    let results = await Promise.all(dataRequests);
+    let results = await Promise.all(promises);
 
     console.log(results);
   }
@@ -120,6 +122,6 @@ export async function poalimBuisness(browser: puppeteer.Browser) {
   });
 
   await page.goto(BASE_URL);
-  await login(process.env.USER_CODE, process.env.PASSWORD, page);
+  await login(page);
   await getData(page);
 }
