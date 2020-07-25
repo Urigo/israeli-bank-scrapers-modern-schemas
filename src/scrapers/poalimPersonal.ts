@@ -2,10 +2,10 @@ import puppeteer from 'puppeteer';
 import Ajv from 'ajv';
 import moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
-import accountDataSchemaFile from '../schemas/accountDataSchema.json';
-import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
-import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
-import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
+import hapoalimAccountDataSchemaFile from '../schemas/hapoalimAccountDataSchema.json';
+import { HapoalimAccountDataSchema } from '../../generatedTypes/hapoalimAccountDataSchema';
+import { HapoalimILSCheckingTransactionsDataSchema } from '../../generatedTypes/hapoalimILSCheckingTransactionsDataSchema';
+import { HapoalimForeignTransactionsSchema } from '../../generatedTypes/hapoalimForeignTransactionsSchema';
 
 declare namespace window {
   const bnhpApp: any;
@@ -19,7 +19,7 @@ const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
 async function login(page: puppeteer.Page) {
   const userCode: string = process.env.USER_CODE;
   const password: string = process.env.PASSWORD;
-  
+
   await page.waitFor('.login-btn');
 
   await page.type('#userCode', userCode);
@@ -37,14 +37,14 @@ async function getData(page: puppeteer.Page) {
   const apiSiteUrl = `https://login.bankhapoalim.co.il/${result.slice(1)}`;
   const accountDataUrl = `${apiSiteUrl}/general/accounts`;
 
-  const accountDataResult = await fetchGetWithinPage<AccountDataSchema>(
+  const accountDataResult = await fetchGetWithinPage<HapoalimAccountDataSchema>(
     page,
     accountDataUrl
   );
 
   const ajv = new Ajv({ verbose: true });
   // TODO: Validate asyncrhniously
-  const valid = ajv.validate(accountDataSchemaFile, accountDataResult);
+  const valid = ajv.validate(hapoalimAccountDataSchemaFile, accountDataResult);
   console.log(valid);
   console.log(ajv.errors);
 
@@ -56,39 +56,39 @@ async function getData(page: puppeteer.Page) {
   if (accountDataResult) {
     let promises: Promise<any>[] = [];
     let dataRequests = accountDataResult.flatMap((account: any) => {
-        const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
+      const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
 
-        const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
-        let ILSTransactionsRequest = fetchPoalimXSRFWithinPage<
-          ILSCheckingTransactionsDataSchema
-        >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
+      const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
+      let ILSTransactionsRequest = fetchPoalimXSRFWithinPage<
+        HapoalimILSCheckingTransactionsDataSchema
+      >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
 
-        // TODO: Get the list of foreign account and iterate over them
-        // TODO: Type and validate all fetches
-        // TODO: Check the DB to validate more strict on enums
-        const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
-        let foreignTransactionsRequest = fetchGetWithinPage<
-          ForeignTransactionsSchema
-        >(page, foreignTransactionsUrl);
+      // TODO: Get the list of foreign account and iterate over them
+      // TODO: Type and validate all fetches
+      // TODO: Check the DB to validate more strict on enums
+      const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
+      let foreignTransactionsRequest = fetchGetWithinPage<
+        HapoalimForeignTransactionsSchema
+      >(page, foreignTransactionsUrl);
 
-        promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
+      promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
 
-        // // TODO: Share json-schema parts between schemas
-        // const dollarsBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=19&lang=he`;
-        // allAccountRequests.push(fetchGetWithinPage(page, dollarsBalanceUrl));
+      // // TODO: Share json-schema parts between schemas
+      // const dollarsBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=19&lang=he`;
+      // allAccountRequests.push(fetchGetWithinPage(page, dollarsBalanceUrl));
 
-        // const eurosBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=100&lang=he`;
-        // allAccountRequests.push(fetchGetWithinPage(page, eurosBalanceUrl));
+      // const eurosBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=100&lang=he`;
+      // allAccountRequests.push(fetchGetWithinPage(page, eurosBalanceUrl));
 
-        // const transactionBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&lang=he`;
-        // allAccountRequests.push(fetchGetWithinPage(page, transactionBalanceUrl));
+      // const transactionBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&lang=he`;
+      // allAccountRequests.push(fetchGetWithinPage(page, transactionBalanceUrl));
 
-        // // TODO: Get card numbers
-        // const creditCardTransactionsUrl = `${apiSiteUrl}/cards/transactions?accountId=${fullAccountNumber}&cardSuffix=2733&cardIssuingSPCode=1&transactionsType=current&totalInd=1`;
-        // allAccountRequests.push(
-        //   fetchGetWithinPage(page, creditCardTransactionsUrl)
-        // );
-      });
+      // // TODO: Get card numbers
+      // const creditCardTransactionsUrl = `${apiSiteUrl}/cards/transactions?accountId=${fullAccountNumber}&cardSuffix=2733&cardIssuingSPCode=1&transactionsType=current&totalInd=1`;
+      // allAccountRequests.push(
+      //   fetchGetWithinPage(page, creditCardTransactionsUrl)
+      // );
+    });
 
     // TODO: Flatten all Promises (not sure why they are not flatten by flatMap)
     // TODO: Validate all responses

@@ -10,6 +10,9 @@ declare global {
     interface ProcessEnv {
       USER_CODE: string;
       PASSWORD: string;
+      ISRACARD_ID: string;
+      ISRACARD_PASSWORD: string;
+      ISRACARD_6_DIGITS: string;
     }
   }
 }
@@ -17,13 +20,20 @@ declare global {
 const isBiz: boolean = false;
 
 async function main(bizFlag: boolean) {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: false });
 
   if (bizFlag) {
-    scraper.poalimBuisness(browser);
+    await scraper.poalimBuisness(browser);
   } else {
-    scraper.poalimPersonal(browser);
+    await scraper.poalimPersonal(browser);
   }
+
+  const page = await browser.newPage();
+
+  await scraper.isracard(page);
+
+  browser.close();
+  return 0
 }
 
 main(isBiz);

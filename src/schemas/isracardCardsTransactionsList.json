@@ -1,0 +1,674 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"Header",
+		"CardsTransactionsListBean"
+	],
+	"properties": {
+		"Header": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+						"Status",
+						"Message"
+				],
+				"properties": {
+						"Status": {
+								"type": "string",
+								"const": "1"
+						},
+						"Message": {
+								"type": "null"
+						}
+				}
+		},
+		"CardsTransactionsListBean": {
+				"type": "object",
+				"additionalProperties": false,
+				"required": [
+						"month",
+						"year",
+						"specificDate",
+						"totalDebit",
+						"cardIdx",
+						"moed",
+						"payDay",
+						"selectedDateIndex",
+						"dateList",
+						"totalChargeNis",
+						"totalChargeDollar",
+						"totalChargeEuro",
+						"isShowDealsInboundForCharge",
+						"isTooManyRecords",
+						"isShowDealsInboundForInfo",
+						"startDate",
+						"endDate",
+						"paymentSum",
+						"paymentPercent",
+						"Index0",
+						"Index1",
+						"Index2",
+						"isCashBack",
+						"currentDate",
+						"cardNumberList",
+						"selectedCardInfo",
+						"userId",
+						"cardNumberTail",
+						"card6Digits",
+						"selectedCardIndex",
+						"card0",
+						"card1",
+						"card2",
+						"id038061636",
+						"isThereData",
+						"stage",
+						"returnCode",
+						"message",
+						"returnMessage",
+						"displayProperties",
+						"tablePageNum",
+						"isError",
+						"isCaptcha",
+						"isButton",
+						"siteName",
+						"clientIpAddress"
+				],
+				"properties": {
+						"month": {
+								"type": "string",
+								"enum": [
+									"01",
+									"02",
+									"03",
+									"04",
+									"05",
+									"06",
+									"07",
+									"08",
+									"09",
+									"10",
+									"11",
+									"12"
+								]
+						},
+						"year": {
+								"type": "integer",
+								"minimums": 2010,
+								"maximum": 2030
+						},
+						"specificDate": {
+							"type": "null"
+						},
+						"totalDebit": {
+							"type": "null"
+						},
+						"cardIdx": {
+								"type": "string",
+								"const": "0,1,2"
+						},
+						"moed": {
+								"type": "string",
+								"pattern": "^[0-9]{6}$"
+						},
+						"payDay": {
+								"type": ["integer", "null"],
+								"minimum": 1,
+								"maximum": 31
+						},
+						"selectedDateIndex": {
+							"type": "integer",
+							"const": 14
+						},
+						"dateList": {
+								"type": "array",
+								"items": {	
+									"type": "string"
+								}
+						},
+						"totalChargeNis": {
+								"type": "number"
+						},
+						"totalChargeDollar": {
+								"type": "null"
+						},
+						"totalChargeEuro": {
+							"type": "null"
+						},
+						"isShowDealsInboundForCharge": {
+								"type": "string",
+								"enum": [
+										"yes",
+										"NO"
+								]
+						},
+						"isTooManyRecords": {
+								"type": "null"
+						},
+						"isShowDealsInboundForInfo": {
+							"type": "string",
+								"const": "NO"
+						},
+						"startDate": {
+								"type": "null"
+						},
+						"endDate": {
+								"type": "null"
+						},
+						"paymentSum": {
+							"type": "number",
+								"const": 0
+						},
+						"paymentPercent": {
+								"type": "null"
+						},
+						"patternProperties": {
+							"^Index": {
+								"type": "object",
+								"additionalProperties": false,
+								"required": [
+										"@AllCards",
+										"CurrentCardTransactions"
+								],
+								"properties": {
+									"@AllCards": {
+										"type": "string",
+											"const": "AllCards"
+									},
+									"CurrentCardTransactions": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"additionalProperties": false,
+											"required": [
+												"@cardTransactions"
+											],
+											"properties": {
+												"@cardTransactions": {
+													"type": "string"
+												},
+												"txnIsrael": {
+													"type": ["array", "null"],
+													"items": {
+														"type": "object",
+														"additionalProperties": false,
+														"required": [
+															"specificDate",
+															"cardIndex",
+															"dealsInbound",
+															"supplierId",
+															"supplierName",
+															"dealSumType",
+															"paymentSumSign",
+															"purchaseDate",
+															"fullPurchaseDate",
+															"moreInfo",
+															"horaatKeva",
+															"voucherNumber",
+															"voucherNumberRatz",
+															"solek",
+															"purchaseDateOutbound",
+															"fullPurchaseDateOutbound",
+															"currencyId",
+															"currentPaymentCurrency",
+															"city",
+															"supplierNameOutbound",
+															"fullSupplierNameOutbound",
+															"paymentDate",
+															"fullPaymentDate",
+															"isShowDealsOutbound",
+															"adendum",
+															"voucherNumberRatzOutbound",
+															"isShowLinkForSupplierDetails",
+															"dealSum",
+															"paymentSum",
+															"fullSupplierNameHeb",
+															"dealSumOutbound",
+															"paymentSumOutbound",
+															"isHoraatKeva",
+															"stage",
+															"returnCode",
+															"message",
+															"returnMessage",
+															"displayProperties",
+															"tablePageNum",
+															"isError",
+															"isCaptcha",
+															"isButton",
+															"siteName",
+															"clientIpAddress",
+															"processedDate"
+														],
+														"properties": {
+															"specificDate": {
+																"type": "null"
+															},
+															"cardIndex": {
+																"type": "integer",
+																"enum": [ 0, 1, 2 ]
+															},
+															"dealsInbound": {
+																"type": "string",
+																"const": "yes"
+															},
+															"supplierId": {
+																"type": "string",
+																"maxLength": 7
+															},
+															"supplierName": {
+																"type": "string"
+															},
+															"dealSumType": {
+																"type": ["string", "integer"],
+																"enum": [ 1, "T", "null" ]
+															},
+															"paymentSumSign": {
+																"type": "null"
+															},
+															"purchaseDate": {
+																"type": ["string", "null"]
+															},
+															"fullPurchaseDate": {
+																"type": ["string", "null"]
+															},
+															"moreInfo": {
+																"type": ["string", "null"]
+															},
+															"horaatKeva": {
+																"type": "null"
+															},
+															"voucherNumber": {
+																"type": ["string", "null"],
+																"minLength": 7,
+																"maxLength": 7
+															},
+															"voucherNumberRatz": {
+																"type": "string",
+																"minLength": 9,
+																"maxLength": 9
+															},
+															"solek": {
+																"type": "string",
+																"enum": [ "I", "L", "V", "_" ]
+															},
+															"purchaseDateOutbound": {
+																"type": "null"
+															},
+															"fullPurchaseDateOutbound": {
+																"type": "null"
+															},
+															"currencyId": {
+																"type": ["string", "null"],
+																"enum": [
+																	"ש\"ח"
+																]
+															},
+															"currentPaymentCurrency": {
+																"type": "null"
+															},
+															"city": {
+																"type": "null"
+															},
+															"supplierNameOutbound": {
+																"type": "null"
+															},
+															"fullSupplierNameOutbound": {
+																"type": "null"
+															},
+															"paymentDate": {
+																"type": "null"
+															},
+															"fullPaymentDate": {
+																"type": "null"
+															},
+															"isShowDealsOutbound": {
+																"type": "null"
+															},
+															"adendum": {
+																"type": "null"
+															},
+															"voucherNumberRatzOutbound": {
+																"type": "null"
+															},
+															"isShowLinkForSupplierDetails": {
+																"type": "string",
+																"enum": [
+																	"yes", "NO"
+																]
+															},
+															"dealSum": {
+																"type": "string"
+															},
+															"paymentSum": {
+																"type": "number"
+															},
+															"fullSupplierNameHeb": {
+																"type": "string"
+															},
+															"dealSumOutbound": {
+																"type": "null"
+															},
+															"paymentSumOutbound": {
+																"type": "null"
+															},
+															"isHoraatKeva": {
+																"type": "boolean"
+															},
+															"stage": {
+																"type": "null"
+															},
+															"returnCode": {
+																"type": "null"
+															},
+															"message": {
+																"type": "null"
+															},
+															"returnMessage": {
+																"type": "null"
+															},
+															"displayProperties": {
+																"type": "null"
+															},
+															"tablePageNum": {
+																"type": "integer",
+																"const": 0
+															},
+															"isError": {
+																"type": "boolean",
+																"const": false
+															},
+															"isCaptcha": {
+																"type": "boolean",
+																"const": false
+															},
+															"isButton": {
+																"type": "boolean",
+																"const": false
+															},
+															"siteName": {
+																"type": "null"
+															},
+															"clientIpAddress": {
+																"type": "null"
+															},
+															"processedDate": {
+																"type": "string",
+																"format": "date-time"
+															}
+														}
+													}
+												},
+												"txnInfo": {
+													"type": "null"
+												},
+												"txnAbroad": {
+													"type": "null"
+												},
+												"oneOf": [
+													{
+														"required": [
+															"txnIsrael"
+														] 
+													},
+													{
+														"required": [
+															"txnInfo"
+														] 
+													},
+													{
+														"required": [
+															"txnAbroad"
+														] 
+													}
+												]
+											}
+										}
+									}
+								}
+							},
+							"^id[0-9]{9}$": {
+								"type": "array",
+								"items": {
+										"type": "object",
+										"additionalProperties": false,
+										"required": [
+												"currentId",
+												"holderName",
+												"holderId",
+												"totalNis",
+												"totalDollar",
+												"totalEuro",
+												"stage",
+												"returnCode",
+												"message",
+												"returnMessage",
+												"displayProperties",
+												"tablePageNum",
+												"isError",
+												"isCaptcha",
+												"isButton",
+												"siteName",
+												"clientIpAddress"
+										],
+										"properties": {
+												"currentId": {
+														"type": "string",
+														"pattern": "^[0-9]{9}$"
+												},
+												"holderName": {
+														"type": "string"
+												},
+												"holderId": {
+														"type": "null"
+												},
+												"totalNis": {
+														"type": "number"
+												},
+												"totalDollar": {
+														"type": "number"
+												},
+												"totalEuro": {
+														"type": "number"
+												},
+												"stage": {
+														"type": "null"
+												},
+												"returnCode": {
+														"type": "null"
+												},
+												"message": {
+														"type": "null"
+												},
+												"returnMessage": {
+														"type": "null"
+												},
+												"displayProperties": {
+														"type": "null"
+												},
+												"tablePageNum": {
+													"type": "integer",
+														"const": 0
+												},
+												"isError": {"type": "boolean",
+														"const": false
+												},
+												"isCaptcha": {"type": "boolean",
+													"const": false
+												},
+												"isButton": {"type": "boolean",
+													"const": false
+												},
+												"siteName": {
+														"type": "null"
+												},
+												"clientIpAddress": {
+														"type": "null"
+												}
+										}
+								}
+							},
+							"^card": {
+								"type": "array",
+								"items" : {
+									"type": "object",
+									"additionalProperties": false,
+									"required": [
+										"currentId",
+										"holderName",
+										"holderId",
+										"totalNis",
+										"totalDollar",
+										"totalEuro",
+										"stage",
+										"returnCode",
+										"message",
+										"returnMessage",
+										"displayProperties",
+										"tablePageNum",
+										"isError",
+										"isCaptcha",
+										"isButton",
+										"siteName",
+										"clientIpAddress"
+									],
+									"properties": {
+										"currentId": {
+											"type": ["integer", "null"],
+											"enum": [ 0, 1, 2 ]
+										},
+										"holderName": {
+											"type": "null"
+										},
+										"holderId": {
+											"type": "string",
+											"pattern": "^[0-9]{9}$"
+										},
+										"totalNis": {
+											"type": "number"
+										},
+										"totalDollar": {
+											"type": ["number", "null"],
+											"const": 0
+										},
+										"totalEuro": {
+											"type": ["number", "null"],
+											"const": 0
+										},
+										"stage": {
+											"type": "null"
+										},
+										"returnCode": {
+											"type": "null"
+										},
+										"message": {
+											"type": "null"
+										},
+										"returnMessage": {
+											"type": "null"
+										},
+										"displayProperties": {
+											"type": "null"
+										},
+										"tablePageNum": {
+											"type": "integer",
+											"const": 0
+										},
+										"isError": {
+											"type": "boolean",
+											"const": false
+										},
+										"isCaptcha": {"type": "boolean",
+											"const": false
+										},
+										"isButton": {"type": "boolean",
+											"const": false
+										},
+										"siteName": {
+											"type": "null"
+										},
+										"clientIpAddress": {
+											"type": "null"
+										}
+									}
+								}
+							}
+						},
+						"isCashBack": {
+							"type": "boolean",
+								"const": false
+						},
+						"currentDate": {
+								"type": "string"
+						},
+						"cardNumberList": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+						},
+						"selectedCardInfo": {
+								"type": "string"
+						},
+						"userId": {
+								"type": "string",
+								"pattern": "^[0-9]{9}$"
+						},
+						"cardNumberTail": {
+								"type": "string",
+								"pattern": "^[0-9]{4}$"
+						},
+						"card6Digits": {
+								"type": "string",
+								"pattern": "^[0-9]{6}$"
+						},
+						"selectedCardIndex": {
+								"type": "integer",
+								"const": 2
+						},
+						"isThereData": {
+								"type": ["integer", "null"],
+								"const": 1
+						},
+						"stage": {
+								"type": "null"
+						},
+						"returnCode": {
+								"type": "null"
+						},
+						"message": {
+								"type": "null"
+						},
+						"returnMessage": {
+								"type": "null"
+						},
+						"displayProperties": {
+								"type": "string"
+						},
+						"tablePageNum": {
+								"type": "integer",
+								"const": 0
+						},
+						"isError": {
+							"type": "boolean",
+								"const": false
+						},
+						"isCaptcha": {
+							"type": "boolean",
+								"const": false
+						},
+						"isButton": {
+							"type": "boolean",
+								"const": false
+						},
+						"siteName": {
+								"type": "null"
+						},
+						"clientIpAddress": {
+								"type": "string",
+								"format": "ipv6"
+						}
+				}
+		}
+	}
+}

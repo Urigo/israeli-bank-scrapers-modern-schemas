@@ -3,10 +3,10 @@ import inquirer from 'inquirer';
 import Ajv from 'ajv';
 import moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
-import accountDataSchemaFile from '../schemas/accountDataSchema.json';
-import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
-import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
-import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
+import hapoalimAccountDataSchemaFile from '../schemas/hapoalimAccountDataSchema.json';
+import { HapoalimAccountDataSchema } from '../../generatedTypes/hapoalimAccountDataSchema';
+import { HapoalimILSCheckingTransactionsDataSchema } from '../../generatedTypes/hapoalimILSCheckingTransactionsDataSchema';
+import { HapoalimForeignTransactionsSchema } from '../../generatedTypes/hapoalimForeignTransactionsSchema';
 
 declare namespace window {
   const bnhpApp: any;
@@ -52,14 +52,14 @@ async function getData(page: puppeteer.Page) {
   const apiSiteUrl = `https://biz2.bankhapoalim.co.il/${result.slice(1)}`;
   const accountDataUrl = `${apiSiteUrl}/general/accounts`;
 
-  const accountDataResult = await fetchGetWithinPage<AccountDataSchema>(
+  const accountDataResult = await fetchGetWithinPage<HapoalimAccountDataSchema>(
     page,
     accountDataUrl
   );
 
   const ajv = new Ajv({ verbose: true });
   // TODO: Validate asyncrhniously
-  const valid = ajv.validate(accountDataSchemaFile, accountDataResult);
+  const valid = ajv.validate(hapoalimAccountDataSchemaFile, accountDataResult);
   console.log(valid);
   console.log(ajv.errors);
 
@@ -75,7 +75,7 @@ async function getData(page: puppeteer.Page) {
 
       const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
       let ILSTransactionsRequest = fetchPoalimXSRFWithinPage<
-        ILSCheckingTransactionsDataSchema
+        HapoalimILSCheckingTransactionsDataSchema
       >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
 
       // TODO: Get the list of foreign account and iterate over them
@@ -83,7 +83,7 @@ async function getData(page: puppeteer.Page) {
       // TODO: Check the DB to validate more strict on enums
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
       let foreignTransactionsRequest = fetchGetWithinPage<
-        ForeignTransactionsSchema
+        HapoalimForeignTransactionsSchema
       >(page, foreignTransactionsUrl);
 
       promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
