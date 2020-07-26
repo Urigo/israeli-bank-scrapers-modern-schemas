@@ -1,29 +1,18 @@
 import puppeteer from 'puppeteer';
 import moment from 'moment';
 import lodash from 'lodash';
-import Ajv from 'ajv';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
 import { IsracardDashboardMonth } from '../../generatedTypes/isracardDashboardMonth';
 import { IsracardCardsTransactionsList } from '../../generatedTypes/isracardCardsTransactionsList';
 import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json';
 import isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json';
+import { validateSchema } from '../utils/validateSchema';
+import { terminatePage } from '../utils/terminatePage';
 
 
 const BASE_URL = 'https://digital.isracard.co.il';
 const SERVICE_URL =
   'https://digital.isracard.co.il/services/ProxyRequestHandler.ashx';
-
-async function terminatePage(page: puppeteer.Page) {
-  await page.close();
-}
-
-async function validateSchema(title: string, schema: any, data: any) {
-  const ajv = new Ajv({ verbose: true });
-
-  const valid = ajv.validate(schema, data);
-  console.log(title+":", valid);
-  console.log(title+":", ajv.errors);
-}
 
 async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
   // get accounts list
@@ -145,5 +134,6 @@ export async function isracard(page: puppeteer.Page) {
   await page.goto(`${BASE_URL}/personalarea/Login`);
   await login(page);
   await fetchTransactions(page);
-  await terminatePage(page);
+  terminatePage(page);
+  return 0
 }

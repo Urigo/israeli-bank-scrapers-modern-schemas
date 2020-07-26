@@ -8,8 +8,10 @@ config();
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      USER_CODE: string;
-      PASSWORD: string;
+      HAPOALIM_PERSONAL_USER_CODE: string;
+      HAPOALIM_PERSONAL_PASSWORD: string;
+      HAPOALIM_BUISNESS_USER_CODE: string;
+      HAPOALIM_BUISNESS_PASSWORD: string;
       ISRACARD_ID: string;
       ISRACARD_PASSWORD: string;
       ISRACARD_6_DIGITS: string;
@@ -17,23 +19,22 @@ declare global {
   }
 }
 
-const isBiz: boolean = false;
-
-async function main(bizFlag: boolean) {
-  const browser = await puppeteer.launch({ headless: false });
-
-  if (bizFlag) {
-    await scraper.poalimBuisness(browser);
-  } else {
-    await scraper.poalimPersonal(browser);
+async function main() {
+  const browser = await puppeteer.launch({ headless: true });
+  let promises: Promise<any>[] = [];
+  // Choose Companies to Scrape:
+  const companies = [
+    scraper.isracard,
+    // scraper.poalimBuisness,
+    scraper.poalimPersonal
+  ]
+  for (let company of companies) {
+    const page = await browser.newPage();
+    promises.push(company(page));
   }
-
-  const page = await browser.newPage();
-
-  await scraper.isracard(page);
-
+  await Promise.all(promises);
   browser.close();
   return 0
 }
 
-main(isBiz);
+main();

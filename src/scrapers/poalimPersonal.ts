@@ -1,11 +1,14 @@
 import puppeteer from 'puppeteer';
-import Ajv from 'ajv';
 import moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import hapoalimAccountDataSchemaFile from '../schemas/hapoalimAccountDataSchema.json';
+import hapoalimILSCheckingTransactionsDataSchema from '../schemas/hapoalimILSCheckingTransactionsDataSchema.json';
+import hapoalimForeignTransactionsSchema from '../schemas/hapoalimForeignTransactionsSchema.json';
 import { HapoalimAccountDataSchema } from '../../generatedTypes/hapoalimAccountDataSchema';
 import { HapoalimILSCheckingTransactionsDataSchema } from '../../generatedTypes/hapoalimILSCheckingTransactionsDataSchema';
 import { HapoalimForeignTransactionsSchema } from '../../generatedTypes/hapoalimForeignTransactionsSchema';
+import { validateSchema } from '../utils/validateSchema';
+import { terminatePage } from '../utils/terminatePage';
 
 declare namespace window {
   const bnhpApp: any;
@@ -17,8 +20,8 @@ const VIEWPORT_HEIGHT = 768;
 const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
 
 async function login(page: puppeteer.Page) {
-  const userCode: string = process.env.USER_CODE;
-  const password: string = process.env.PASSWORD;
+  const userCode: string = process.env.HAPOALIM_PERSONAL_USER_CODE;
+  const password: string = process.env.HAPOALIM_PERSONAL_PASSWORD;
 
   await page.waitFor('.login-btn');
 
@@ -42,11 +45,7 @@ async function getData(page: puppeteer.Page) {
     accountDataUrl
   );
 
-  const ajv = new Ajv({ verbose: true });
-  // TODO: Validate asyncrhniously
-  const valid = ajv.validate(hapoalimAccountDataSchemaFile, accountDataResult);
-  console.log(valid);
-  console.log(ajv.errors);
+  validateSchema("HapoalimAccountDataSchema", hapoalimAccountDataSchemaFile, accountDataResult);
 
   const API_DATE_FORMAT = 'YYYYMMDD';
   const defaultStartMoment = moment().subtract(1, 'years').add(1, 'day');
@@ -63,6 +62,8 @@ async function getData(page: puppeteer.Page) {
         HapoalimILSCheckingTransactionsDataSchema
       >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
 
+      validateSchema("HapoalimILSCheckingTransactionsDataSchema", hapoalimILSCheckingTransactionsDataSchema, ILSTransactionsRequest);
+
       // TODO: Get the list of foreign account and iterate over them
       // TODO: Type and validate all fetches
       // TODO: Check the DB to validate more strict on enums
@@ -71,6 +72,8 @@ async function getData(page: puppeteer.Page) {
         HapoalimForeignTransactionsSchema
       >(page, foreignTransactionsUrl);
 
+      validateSchema("HapoalimForeignTransactionsSchema", hapoalimForeignTransactionsSchema, foreignTransactionsRequest);
+      
       promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
 
       // // TODO: Share json-schema parts between schemas
@@ -98,9 +101,7 @@ async function getData(page: puppeteer.Page) {
   }
 }
 
-export async function poalimPersonal(browser: puppeteer.Browser) {
-  const page = await browser.newPage();
-
+export async function poalimPersonal(page: puppeteer.Page) {
   await page.setViewport({
     width: VIEWPORT_WIDTH,
     height: VIEWPORT_HEIGHT,
@@ -109,4 +110,6 @@ export async function poalimPersonal(browser: puppeteer.Browser) {
   await page.goto(BASE_URL);
   await login(page);
   await getData(page);
+  terminatePage(page);
+  return 0
 }
