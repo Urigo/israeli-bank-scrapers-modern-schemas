@@ -1,609 +1,601 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "required": [
-    "type"
-  ],
-  "additionalProperties": false,
-  "properties": {
-    "type": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "metadata",
-        "formattedValidityDate",
-        "outputArrayRecordSum2",
-        "displayedRevaluationCurrencyCode",
-        "rateFixingDescription",
-        "currancyBalanceData",
-        "currencyCode",
-        "balancesAndTransactionsCurrencyCombo",
-        "detailedAccountTypeCode",
-        "foreignCurrencyBalancesData",
-        "balancesAndLimitsDataList",
-        "messages",
-        "pdfUrl",
-        "validityDate"       
-      ],
-      "properties": {
-        "metadata": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "balancesAndLimitsDataList",
+      "balancesAndTransactionsCurrencyCombo",
+      "currancyBalanceData",
+      "currencyCode",
+      "detailedAccountTypeCode",
+      "displayedRevaluationCurrencyCode",
+      "foreignCurrencyBalancesData",
+      "formattedValidityDate",
+      "messages",
+      "metadata",
+      "outputArrayRecordSum2",
+      "pdfUrl",
+      "rateFixingDescription",
+      "validityDate"
+    ],
+    "properties": {
+      "balancesAndLimitsDataList": {
+        "type": "array",
+        "additionalItems": false,
+        "items": {
           "type": "object",
           "additionalProperties": false,
           "required": [
+            "accountNumber",
+            "bankNumber",
+            "branchNumber",
+            "creditLimits",
+            "currencyCode",
+            "currencyLongDescription",
+            "currencyShortedDescription",
+            "currencySwiftCode",
+            "currencySwiftDescription",
+            "currentAccountLimitsAmount",
+            "currentBalance",
+            "currentBalanceExchangeRateWayDescription",
+            "currentBalanceExchangeRateWayCode",
+            "detailedAccountTypeCode",
+            "detailedAccountTypeShortedDescription",
+            "formattedLastEventDate",
+            "formattedRetrievalMaxDate",
+            "formattedRetrievalMinDate",
+            "lastBalance",
+            "lastBalanceExchangeRateWayCode",
+            "lastEventDate",
             "messages",
-            "links"
+            "numItemsPerPage",
+            "outputArrayRecordSum3",
+            "outputArrayRecordSum4",
+            "pendingBalance",
+            "rateExerciseDescription",
+            "rateRealizationCode",
+            "retrievalMaxDate",
+            "retrievalMinDate",
+            "revaluatedCurrentBalance",
+            "transactionResultCode",
+            "transactions",
+            "withdrawalBalance"
           ],
           "properties": {
+            "accountNumber": {
+              "type": "number"
+            },
+            "bankNumber": {
+              "type": "number",
+              "enum": [12]
+            },
+            "branchNumber": {
+              "type": "number"
+            },
+            "creditLimits": {
+              "type": "array",
+              "additionalItems": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            "currencyCode": {
+              "type": "number"
+            },
+            "currencyLongDescription": {
+              "type": "string"
+            },
+            "currencyShortedDescription": {
+              "type": "string"
+            },
+            "currencySwiftCode": {
+              "type": "string"
+            },
+            "currencySwiftDescription": {
+              "type": "string"
+            },
+            "currentAccountLimitsAmount": {
+              "type": "number",
+              "enum": [0]
+            },
+            "currentBalance": {
+              "type": "number",
+              "enum": [0]
+            },
+            "currentBalanceExchangeRateWayDescription": {
+              "type": "null"
+            },
+            "currentBalanceExchangeRateWayCode": {
+              "type": "number",
+              "enum": [0]
+            },
+            "detailedAccountTypeCode": {
+              "type": "number",
+              "enum": [142]
+            },
+            "detailedAccountTypeShortedDescription": {
+              "type": "string"
+            },
+            "formattedLastEventDate": {
+              "type": "null"
+            },
+            "formattedRetrievalMaxDate": {
+              "type": "string"
+            },
+            "formattedRetrievalMinDate": {
+              "type": "string"
+            },
+            "lastBalance": {
+              "type": "number",
+              "enum": [0]
+            },
+            "lastBalanceExchangeRateWayCode": {
+              "type": "number",
+              "enum": [0]
+            },
+            "lastEventDate": {
+              "type": "number",
+              "enum": [0]
+            },
             "messages": {
+              "type": "array",
+              "additionalItems": false,
+              "items": {
+                "type": "string"
+              }
+            },
+            "numItemsPerPage": {
+              "type": "number"
+            },
+            "outputArrayRecordSum3": {
+              "type": "number",
+              "enum": [0]
+            },
+            "outputArrayRecordSum4": {
+              "type": "number",
+              "enum": [0]
+            },
+            "pendingBalance": {
+              "type": "number",
+              "enum": [0]
+            },
+            "rateExerciseDescription": {
+              "type": "null"
+            },
+            "rateRealizationCode": {
+              "type": "number",
+              "enum": [0]
+            },
+            "retrievalMaxDate": {
+              "type": "number"
+            },
+            "retrievalMinDate": {
+              "type": "number"
+            },
+            "revaluatedCurrentBalance": {
+              "type": "array",
+              "additionalItems": false,
+              "minItems": 0,
+              "maxItems": 0,
+              "items": {
+                "type": "string"
+              }
+            },
+            "transactionResultCode": {
+              "type": "number"
+            },
+            "transactions": {
               "type": "array",
               "additionalItems": false,
               "items": {
                 "type": "object",
                 "additionalProperties": false,
                 "required": [
-                  "messageDescription",
-                  "messageCode",
-                  "severity"
+                  "accountName",
+                  "activityDescription",
+                  "activityTypeCode",
+                  "comments",
+                  "commentExistenceSwitch",
+                  "contraAccountFieldNameLable",
+                  "contraAccountNumber",
+                  "contraBankNumber",
+                  "contraBranchNumber",
+                  "contraCurrencyCode",
+                  "currencyLongDescription",
+                  "currencyRate",
+                  "currencySwiftCode",
+                  "currentBalance",
+                  "dataGroupCode",
+                  "eventActivityTypeCode",
+                  "eventAmount",
+                  "eventDetails",
+                  "eventNumber",
+                  "executingDate",
+                  "expendedExecutingDate",
+                  "formattedExecutingDate",
+                  "formattedValueDate",
+                  "metadata",
+                  "originalEventKey",
+                  "originalSystemId",
+                  "rateFixingCode",
+                  "rateFixingDescription",
+                  "rateFixingShortDescription",
+                  "recordSerialNumber",
+                  "referenceCatenatedNumber",
+                  "referenceNumber",
+                  "transactionType",
+                  "urlAddress",
+                  "validityDate",
+                  "valueDate"
                 ],
                 "properties": {
-                  "messageDescription": {
+                  "accountName": {
+                    "type": ["string", "null"]
+                  },
+                  "activityDescription": {
                     "type": "string"
                   },
-                  "messageCode": {
-                    "type": "number",
-                    "enum": [11040]
+                  "activityTypeCode": {
+                    "type": "number"
                   },
-                  "severity": {
-                    "type": "string",
-                    "enum": ["I"]
+                  "comments": {
+                    "type": "null"
+                  },
+                  "commentExistenceSwitch": {
+                    "type": "number",
+                    "enum": [0]
+                  },
+                  "contraAccountFieldNameLable": {
+                    "type": ["string", "null"]
+                  },
+                  "contraAccountNumber": {
+                    "type": "number"
+                  },
+                  "contraBankNumber": {
+                    "type": "number"
+                  },
+                  "contraBranchNumber": {
+                    "type": "number"
+                  },
+                  "contraCurrencyCode": {
+                    "type": "integer",
+                    "enum": [0, 1, 19, 78, 100]
+                  },
+                  "currencyLongDescription": {
+                    "type": "string"
+                  },
+                  "currencyRate": {
+                    "type": "number"
+                  },
+                  "currencySwiftCode": {
+                    "type": "string"
+                  },
+                  "currentBalance": {
+                    "type": "number"
+                  },
+                  "dataGroupCode": {
+                    "type": "integer",
+                    "enum": [0]
+                  },
+                  "eventActivityTypeCode": {
+                    "type": "number"
+                  },
+                  "eventAmount": {
+                    "type": "number"
+                  },
+                  "eventDetails": {
+                    "type": ["string", "null"]
+                  },
+                  "eventNumber": {
+                    "type": "number"
+                  },
+                  "executingDate": {
+                    "type": "number"
+                  },
+                  "expendedExecutingDate": {
+                    "type": "string"
+                  },
+                  "formattedExecutingDate": {
+                    "type": "string"
+                  },
+                  "formattedValueDate": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "attributes",
+                      "links"
+                    ],
+                    "properties": {
+                      "attributes": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [],
+                        "properties": {
+                          "contraAccountFieldNameLable": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "contraAccountNumber": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "contraBankNumber": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "contraBranchNumber": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "contraCurrencyCode": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "currencyRate": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "dataGroupCode": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "originalEventKey": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          },
+                          "rateFixingCode": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [],
+                            "properties": {
+                              "disabled": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              },
+                              "hidden": {
+                                "type": "boolean",
+                                "enum": ["true"]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "links": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [],
+                        "properties": {}
+                      }
+                    }
+                  },
+                  "originalEventKey": {
+                    "type": "integer",
+                    "enum": [0]
+                  },
+                  "originalSystemId": {
+                    "type": "number"
+                  },
+                  "rateFixingCode": {
+                    "type": "integer"
+                  },
+                  "rateFixingDescription": {
+                    "type": "string"
+                  },
+                  "rateFixingShortDescription": {
+                    "type": "string"
+                  },
+                  "recordSerialNumber": {
+                    "type": "number"
+                  },
+                  "referenceCatenatedNumber": {
+                    "type": "number"
+                  },
+                  "referenceNumber": {
+                    "type": "number"
+                  },
+                  "transactionType": {
+                    "type": "string"
+                  },
+                  "urlAddress": {
+                    "type": "null"
+                  },
+                  "validityDate": {
+                    "type": "number"
+                  },
+                  "valueDate": {
+                    "type": "number"
                   }
                 }
               }
             },
-            "links": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [],
-              "properties": {}
+            "withdrawalBalance": {
+              "type": "number",
+              "enum": [0]
             }
           }
-        },
-        "formattedValidityDate": {
-          "type": "null"
-        },
-        "outputArrayRecordSum2": {
-          "type": "number",
-          "enum": [0]
-        },
-        "displayedRevaluationCurrencyCode": {
-          "type": "number",
-          "enum": [0]
-        },
-        "rateFixingDescription": {
-          "type": "null"
-        },
-        "currancyBalanceData": {
-          "type": "null"
-        },
-        "currencyCode": {
-          "type": "null"
-        },
-        "balancesAndTransactionsCurrencyCombo": {
-          "type": "object",
-          "additionalProperties": false,
-          "required": [
-            "currencyCode"
-          ],
-          "properties": {
-            "currencyCode": {
-              "type": "null"
-            }
+        }
+      },
+      "balancesAndTransactionsCurrencyCombo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "currencyCode"
+        ],
+        "properties": {
+          "currencyCode": {
+            "type": "null"
           }
-        },
-        "detailedAccountTypeCode": {
-          "type": "null"
-        },
-        "foreignCurrencyBalancesData": {
-          "type": "null"
-        },
-        "balancesAndLimitsDataList": {
-          "type": "array",
-          "additionalItems": false,
-          "items": {
+        }
+      },
+      "currancyBalanceData": {
+        "type": "null"
+      },
+      "currencyCode": {
+        "type": "null"
+      },
+      "detailedAccountTypeCode": {
+        "type": "null"
+      },
+      "displayedRevaluationCurrencyCode": {
+        "type": "number",
+        "enum": [0]
+      },
+      "foreignCurrencyBalancesData": {
+        "type": "null"
+      },
+      "formattedValidityDate": {
+        "type": "null"
+      },
+      "messages": {
+        "type": "null"
+      },
+      "metadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "links",
+          "messages"
+        ],
+        "properties": {
+          "links": {
             "type": "object",
             "additionalProperties": false,
-            "required": [
-              "numItemsPerPage",
-              "transactionResultCode",
-              "detailedAccountTypeCode",
-              "currencyCode",
-              "withdrawalBalance",
-              "currentBalance",
-              "lastBalance",
-              "lastEventDate",
-              "formattedLastEventDate",
-              "outputArrayRecordSum3",
-              "outputArrayRecordSum4",
-              "revaluatedCurrentBalance",
-              "rateExerciseDescription",
-              "currentBalanceExchangeRateWayDescription",
-              "currentBalanceExchangeRateWayCode",
-              "rateRealizationCode",
-              "lastBalanceExchangeRateWayCode",
-              "bankNumber",
-              "branchNumber",
-              "accountNumber",
-              "retrievalMinDate",
-              "formattedRetrievalMinDate",
-              "retrievalMaxDate",
-              "formattedRetrievalMaxDate",
-              "creditLimits",
-              "transactions",
-              "messages",
-              "currencySwiftDescription",
-              "currencyShortedDescription",
-              "pendingBalance",
-              "currentAccountLimitsAmount",
-              "currencySwiftCode",
-              "currencyLongDescription",
-              "detailedAccountTypeShortedDescription"             
-            ],
-            "properties": {
-              "numItemsPerPage": {
-                "type": "number"
-              },
-              "transactionResultCode": {
-                "type": "number"
-              },
-              "detailedAccountTypeCode": {
-                "type": "number",
-                "enum": [142]
-              },
-              "currencyCode": {
-                "type": "number"
-              },
-              "withdrawalBalance": {
-                "type": "number",
-                "enum": [0]
-              },
-              "currentBalance": {
-                "type": "number",
-                "enum": [0]
-              },
-              "lastBalance": {
-                "type": "number",
-                "enum": [0]
-              },
-              "lastEventDate": {
-                "type": "number",
-                "enum": [0]
-              },
-              "formattedLastEventDate": {
-                "type": "null"
-              },
-              "outputArrayRecordSum3": {
-                "type": "number",
-                "enum": [0]
-              },
-              "outputArrayRecordSum4": {
-                "type": "number",
-                "enum": [0]
-              },
-              "revaluatedCurrentBalance": {
-                "type": "array",
-                "additionalItems": false,
-                "minItems": 0,
-                "maxItems": 0,
-                "items": {
+            "required": [],
+            "properties": {}
+          },
+          "messages": {
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "messageCode",
+                "messageDescription",
+                "severity"
+              ],
+              "properties": {
+                "messageCode": {
+                  "type": "number",
+                  "enum": [11040]
+                },
+                "messageDescription": {
                   "type": "string"
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": ["I"]
                 }
-              },
-              "rateExerciseDescription": {
-                "type": "null"
-              },
-              "currentBalanceExchangeRateWayDescription": {
-                "type": "null"
-              },
-              "currentBalanceExchangeRateWayCode": {
-                "type": "number",
-                "enum": [0]
-              },
-              "rateRealizationCode": {
-                "type": "number",
-                "enum": [0]
-              },
-              "lastBalanceExchangeRateWayCode": {
-                "type": "number",
-                "enum": [0]
-              },
-              "bankNumber": {
-                "type": "number",
-                "enum": [12]
-              },
-              "branchNumber": {
-                "type": "number"
-              },
-              "accountNumber": {
-                "type": "number"
-              },
-              "retrievalMinDate": {
-                "type": "number"
-              },
-              "formattedRetrievalMinDate": {
-                "type": "string"
-              },
-              "retrievalMaxDate": {
-                "type": "number"
-              },
-              "formattedRetrievalMaxDate": {
-                "type": "string"
-              },
-              "creditLimits": {
-                "type": "array",
-                "additionalItems": false,
-                "items": {
-                  "type": "string"
-                }
-              },
-              "transactions": {
-                "type": "array",
-                "additionalItems": false,
-                "items": {
-                  "type": "object",
-                  "additionalProperties": false,
-                  "required": [
-                    "metadata",
-                    "executingDate",
-                    "formattedExecutingDate",
-                    "valueDate",
-                    "formattedValueDate",
-                    "originalSystemId",
-                    "activityDescription",
-                    "eventAmount",
-                    "currentBalance",
-                    "referenceCatenatedNumber",
-                    "referenceNumber",
-                    "currencyRate",
-                    "eventDetails",
-                    "rateFixingCode",
-                    "rateFixingDescription",
-                    "contraCurrencyCode",
-                    "eventActivityTypeCode",
-                    "transactionType",
-                    "rateFixingShortDescription",
-                    "currencyLongDescription",
-                    "activityTypeCode",
-                    "eventNumber",
-                    "validityDate",
-                    "comments",
-                    "commentExistenceSwitch",
-                    "accountName",
-                    "contraBankNumber",
-                    "contraBranchNumber",
-                    "contraAccountNumber",
-                    "originalEventKey",
-                    "contraAccountFieldNameLable",
-                    "dataGroupCode",
-                    "recordSerialNumber",
-                    "expendedExecutingDate",
-                    "urlAddress",
-                    "currencySwiftCode"
-                  ],
-                  "properties": {
-                    "metadata": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "required": [
-                        "attributes",
-                        "links"
-                      ],
-                      "properties": {
-                        "attributes": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [],
-                          "properties": {
-                            "originalEventKey": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "contraBranchNumber": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "contraAccountNumber": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "contraBankNumber": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "contraAccountFieldNameLable": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "dataGroupCode": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "currencyRate": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "contraCurrencyCode": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            },
-                            "rateFixingCode": {
-                              "type": "object",
-                              "additionalProperties": false,
-                              "required": [],
-                              "properties": {
-                                "hidden": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                },
-                                "disabled": {
-                                  "type": "boolean",
-                                  "enum": ["true"]
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "links": {
-                          "type": "object",
-                          "additionalProperties": false,
-                          "required": [],
-                          "properties": {}
-                        }
-                      }
-                    },
-                    "executingDate": {
-                      "type": "number"
-                    },
-                    "formattedExecutingDate": {
-                      "type": "string"
-                    },
-                    "valueDate": {
-                      "type": "number"
-                    },
-                    "formattedValueDate": {
-                      "type": "string"
-                    },
-                    "originalSystemId": {
-                      "type": "number"
-                    },
-                    "activityDescription": {
-                      "type": "string"
-                    },
-                    "eventAmount": {
-                      "type": "number"
-                    },
-                    "currentBalance": {
-                      "type": "number"
-                    },
-                    "referenceCatenatedNumber": {
-                      "type": "number"
-                    },
-                    "referenceNumber": {
-                      "type": "number"
-                    },
-                    "currencyRate": {
-                      "type": "number"
-                    },
-                    "eventDetails": {
-                      "type": ["string", "null"]
-                    },
-                    "rateFixingCode": {
-                      "type": "integer"
-                    },
-                    "rateFixingDescription": {
-                      "type": "string"
-                    },
-                    "contraCurrencyCode": {
-                      "type": "integer",
-                      "enum": [0, 1, 19, 78, 100]
-                    },
-                    "eventActivityTypeCode": {
-                      "type": "number"
-                    },
-                    "transactionType": {
-                      "type": "string"
-                    },
-                    "rateFixingShortDescription": {
-                      "type": "string"
-                    },
-                    "currencyLongDescription": {
-                      "type": "string"
-                    },
-                    "activityTypeCode": {
-                      "type": "number"
-                    },
-                    "eventNumber": {
-                      "type": "number"
-                    },
-                    "validityDate": {
-                      "type": "number"
-                    },
-                    "comments": {
-                      "type": "null"
-                    },
-                    "commentExistenceSwitch": {
-                      "type": "number",
-                      "enum": [0]
-                    },
-                    "accountName": {
-                      "type": ["string", "null"]
-                    },
-                    "contraBankNumber": {
-                      "type": "number"
-                    },
-                    "contraBranchNumber": {
-                      "type": "number"
-                    },
-                    "contraAccountNumber": {
-                      "type": "number"
-                    },
-                    "originalEventKey": {
-                      "type": "integer",
-                      "enum": [0]
-                    },
-                    "contraAccountFieldNameLable": {
-                      "type": ["string", "null"]
-                    },
-                    "dataGroupCode": {
-                      "type": "integer",
-                      "enum": [0]
-                    },
-                    "recordSerialNumber": {
-                      "type": "number"
-                    },
-                    "expendedExecutingDate": {
-                      "type": "string"
-                    },
-                    "urlAddress": {
-                      "type": "null"
-                    },
-                    "currencySwiftCode": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              "messages": {
-                "type": "array",
-                "additionalItems": false,
-                "items": {
-                  "type": "string"
-                }
-              },
-              "currencySwiftDescription": {
-                "type": "string"
-              },
-              "currencyShortedDescription": {
-                "type": "string"
-              },
-              "pendingBalance": {
-                "type": "number",
-                "enum": [0]
-              },
-              "currentAccountLimitsAmount": {
-                "type": "number",
-                "enum": [0]
-              },
-              "currencySwiftCode": {
-                "type": "string"
-              },
-              "currencyLongDescription": {
-                "type": "string"
-              },
-              "detailedAccountTypeShortedDescription": {
-                "type": "string"
               }
             }
           }
-        },
-        "messages": {
-          "type": "null"
-        },
-        "pdfUrl": {
-          "type": "null"
-        },
-        "validityDate": {
-          "type": "number",
-          "enum": [0]
         }
+      },
+      "outputArrayRecordSum2": {
+        "type": "number",
+        "enum": [0]
+      },
+      "pdfUrl": {
+        "type": "null"
+      },
+      "rateFixingDescription": {
+        "type": "null"
+      },
+      "validityDate": {
+        "type": "number",
+        "enum": [0]
       }
     }
-  }
 }

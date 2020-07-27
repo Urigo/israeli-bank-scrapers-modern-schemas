@@ -57,7 +57,7 @@ async function getData(page: puppeteer.Page) {
   const endDateString = moment().format(API_DATE_FORMAT);
 
   if (accountDataResult) {
-    let promises: Promise<any>[] = [];
+    let promises: Promise<HapoalimILSCheckingTransactionsDataSchema | HapoalimForeignTransactionsSchema | null>[] = [];
     let dataRequests = accountDataResult.flatMap((account: any) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
 
@@ -96,18 +96,16 @@ async function getData(page: puppeteer.Page) {
     // TODO: Flatten all Promises (not sure why they are not flatten by flatMap)
     // TODO: Validate all responses
     let results = await Promise.all(promises);
-    let ILSTransactionsResults = { type: results[0] };
-    let bforeignTransactionsResults = { type: results[1] };
 
     validateSchema(
       'HapoalimILSCheckingTransactionsDataSchema',
       hapoalimILSCheckingTransactionsDataSchema,
-      ILSTransactionsResults
+      results[0]
     );
     validateSchema(
       'HapoalimForeignTransactionsSchema',
       hapoalimForeignTransactionsSchema,
-      bforeignTransactionsResults
+      results[1]
     );
     console.log(results);
   }
