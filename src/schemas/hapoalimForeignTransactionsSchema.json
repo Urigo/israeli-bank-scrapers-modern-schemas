@@ -67,7 +67,7 @@
             },
             "bankNumber": {
               "type": "number",
-              "enum": [12]
+              "enum": [12,0]
             },
             "branchNumber": {
               "type": "number"
@@ -120,10 +120,10 @@
               "type": "null"
             },
             "formattedRetrievalMaxDate": {
-              "type": "string"
+              "type": ["string", "null"]
             },
             "formattedRetrievalMinDate": {
-              "type": "string"
+              "type": ["string","null"]
             },
             "lastBalance": {
               "type": "number",
@@ -138,7 +138,7 @@
               "enum": [0]
             },
             "messages": {
-              "type": "array",
+              "type": ["array","null"],
               "additionalItems": false,
               "items": {
                 "type": "string"
@@ -320,11 +320,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -335,11 +335,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -350,11 +350,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -365,11 +365,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -380,11 +380,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -395,11 +395,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -410,11 +410,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -426,11 +426,11 @@
                             "properties": {
 
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -441,11 +441,11 @@
                             "required": [],
                             "properties": {
                               "disabled": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               },
                               "hidden": {
-                                "type": "boolean",
+                                "type": "string",
                                 "enum": ["true"]
                               }
                             }
@@ -569,7 +569,7 @@
               "properties": {
                 "messageCode": {
                   "type": "number",
-                  "enum": [11040]
+                  "enum": [11040, 330]
                 },
                 "messageDescription": {
                   "type": "string"
