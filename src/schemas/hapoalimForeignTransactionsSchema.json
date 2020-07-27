@@ -36,6 +36,7 @@
           "properties": {
             "messages": {
               "type": "array",
+              "additionalItems": false,
               "items": {
                 "type": "object",
                 "additionalProperties": false,
@@ -68,22 +69,24 @@
           }
         },
         "formattedValidityDate": {
-          "const": null
+          "type": "null"
         },
         "outputArrayRecordSum2": {
-          "const": 0
+          "type": "number",
+          "enum": [0]
         },
         "displayedRevaluationCurrencyCode": {
-          "const": 0
+          "type": "number",
+          "enum": [0]
         },
         "rateFixingDescription": {
-          "const": null
+          "type": "null"
         },
         "currancyBalanceData": {
-          "const": null
+          "type": "null"
         },
         "currencyCode": {
-          "const": null
+          "type": "null"
         },
         "balancesAndTransactionsCurrencyCombo": {
           "type": "object",
@@ -93,18 +96,19 @@
           ],
           "properties": {
             "currencyCode": {
-              "const": null
+              "type": "null"
             }
           }
         },
         "detailedAccountTypeCode": {
-          "const": null
+          "type": "null"
         },
         "foreignCurrencyBalancesData": {
-          "const": null
+          "type": "null"
         },
         "balancesAndLimitsDataList": {
           "type": "array",
+          "additionalItems": false,
           "items": {
             "type": "object",
             "additionalProperties": false,
@@ -159,28 +163,35 @@
                 "type": "number"
               },
               "withdrawalBalance": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "currentBalance": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "lastBalance": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "lastEventDate": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "formattedLastEventDate": {
-                "const": null
+                "type": "null"
               },
               "outputArrayRecordSum3": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "outputArrayRecordSum4": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "revaluatedCurrentBalance": {
                 "type": "array",
+                "additionalItems": false,
                 "minItems": 0,
                 "maxItems": 0,
                 "items": {
@@ -188,22 +199,26 @@
                 }
               },
               "rateExerciseDescription": {
-                "const": null
+                "type": "null"
               },
               "currentBalanceExchangeRateWayDescription": {
-                "const": null
+                "type": "null"
               },
               "currentBalanceExchangeRateWayCode": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "rateRealizationCode": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "lastBalanceExchangeRateWayCode": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "bankNumber": {
-                "const": 12
+                "type": "number",
+                "enum": [12]
               },
               "branchNumber": {
                 "type": "number"
@@ -225,12 +240,14 @@
               },
               "creditLimits": {
                 "type": "array",
+                "additionalItems": false,
                 "items": {
                   "type": "string"
                 }
               },
               "transactions": {
                 "type": "array",
+                "additionalItems": false,
                 "items": {
                   "type": "object",
                   "additionalProperties": false,
@@ -275,6 +292,7 @@
                   "properties": {
                     "metadata": {
                       "type": "object",
+                      "additionalProperties": false,
                       "required": [
                         "attributes",
                         "links"
@@ -282,113 +300,141 @@
                       "properties": {
                         "attributes": {
                           "type": "object",
+                          "additionalProperties": false,
                           "required": [],
                           "properties": {
                             "originalEventKey": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "contraBranchNumber": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "contraAccountNumber": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "contraBankNumber": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "contraAccountFieldNameLable": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "dataGroupCode": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "currencyRate": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "contraCurrencyCode": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             },
                             "rateFixingCode": {
                               "type": "object",
+                              "additionalProperties": false,
                               "required": [],
                               "properties": {
                                 "hidden": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 },
                                 "disabled": {
-                                  "const": "true"
+                                  "type": "boolean",
+                                  "enum": ["true"]
                                 }
                               }
                             }
@@ -470,10 +516,11 @@
                       "type": "number"
                     },
                     "comments": {
-                      "const": null
+                      "type": "null"
                     },
                     "commentExistenceSwitch": {
-                      "const": 0
+                      "type": "number",
+                      "enum": [0]
                     },
                     "accountName": {
                       "type": ["string", "null"]
@@ -488,13 +535,15 @@
                       "type": "number"
                     },
                     "originalEventKey": {
-                      "const": 0
+                      "type": "integer",
+                      "enum": [0]
                     },
                     "contraAccountFieldNameLable": {
                       "type": ["string", "null"]
                     },
                     "dataGroupCode": {
-                      "const": 0
+                      "type": "integer",
+                      "enum": [0]
                     },
                     "recordSerialNumber": {
                       "type": "number"
@@ -503,7 +552,7 @@
                       "type": "string"
                     },
                     "urlAddress": {
-                      "const": null
+                      "type": "null"
                     },
                     "currencySwiftCode": {
                       "type": "string"
@@ -513,6 +562,7 @@
               },
               "messages": {
                 "type": "array",
+                "additionalItems": false,
                 "items": {
                   "type": "string"
                 }
@@ -524,10 +574,12 @@
                 "type": "string"
               },
               "pendingBalance": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "currentAccountLimitsAmount": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "currencySwiftCode": {
                 "type": "string"
@@ -542,13 +594,14 @@
           }
         },
         "messages": {
-          "const": null
+          "type": "null"
         },
         "pdfUrl": {
-          "const": null
+          "type": "null"
         },
         "validityDate": {
-          "const": 0
+          "type": "number",
+          "enum": [0]
         }
       }
     }

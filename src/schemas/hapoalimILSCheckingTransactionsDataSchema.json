@@ -15,7 +15,7 @@
         "comments",
         "message",
         "numItemsPerPage",
-        "pdfUrl"        
+        "pdfUrl"
       ],
       "properties": {
         "retrievalTransactionData": {
@@ -39,7 +39,8 @@
           ],
           "properties": {
             "bankNumber": {
-              "const": 12
+              "type": "number",
+              "enum": [12]
             },
             "retrievalMinDate": {
               "type": "number"
@@ -66,7 +67,8 @@
               "type": "string"
             },
             "balanceAmountDisplayIndication": {
-              "const": "Y"
+              "type": "string",
+              "enum": ["Y"]
             },
             "branchNumber": {
               "type": "number"
@@ -75,7 +77,8 @@
               "type": "number"
             },
             "joinPfm": {
-              "const": false
+              "type": "boolean",
+              "enum": [false]
             },
             "eventCounter": {
               "type": "number"
@@ -84,6 +87,7 @@
         },
         "transactions": {
           "type": "array",
+          "additionalItems": false,
           "items": {
             "type": "object",
             "additionalProperties": false,
@@ -179,7 +183,7 @@
                 "type": "number"
               },
               "formattedOriginalEventCreateDate": {
-                "const": null
+                "type": "null"
               },
               "transactionType": {
                 "type": "string",
@@ -228,7 +232,7 @@
                 "type": ["string", "null"]
               },
               "pfmDetails": {
-                "const": null
+                "type": "null"
               },
               "differentDateIndication": {
                 "type": "string"
@@ -255,10 +259,12 @@
                 "type": "number"
               },
               "marketingOfferContext": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "commentExistenceSwitch": {
-                "const": 0
+                "type": "number",
+                "enum": [0]
               },
               "englishActionDesc": {
                 "type": ["string", "null"]
@@ -278,12 +284,14 @@
         },
         "comments": {
           "type": "array",
+          "additionalItems": false,
           "items": {
             "type": "string"
           }
         },
         "message": {
           "type": "array",
+          "additionalItems": false,
           "items": {
             "type": "string"
           }
@@ -293,6 +301,12 @@
         },
         "pdfUrl": {
           "type": "string"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {},
+          "required": []
         }
       }
     }
