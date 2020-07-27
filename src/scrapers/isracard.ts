@@ -15,7 +15,7 @@ const SERVICE_URL =
   'https://digital.isracard.co.il/services/ProxyRequestHandler.ashx';
 
 async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
-  // get accounts list
+  // get accounts data
   const billingDate = monthMoment.format('YYYY-MM-DD');
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
   const dashboardMonthData = await 
@@ -24,6 +24,7 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
 
   validateSchema("IsracardDashboardMonth",isracardDashboardMonth , dashboardMonthData)
 
+  // create conainer object by user accounts
   if (dashboardMonthData) {
     const accounts = dashboardMonthData.DashboardMonthBean.cardsCharges.map(
       (cardCharge: {
@@ -41,8 +42,8 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
         };
       }
     );
-  
-    // get transactions
+
+    // get transactions data
     const month = monthMoment.month() + 1;
     const monthStr = month < 10 ? `0${month}` : month.toString();
     const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthMoment.year()}&requiredDate=N`;
@@ -88,10 +89,9 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
         };
       }
     });
-    return accounts;
-  } else {
-    return 0
+    return accountTxns;
   }
+  return 0
 }
 
 async function fetchTransactions(page: puppeteer.Page) {
