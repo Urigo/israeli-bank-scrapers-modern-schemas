@@ -60,7 +60,11 @@ async function getData(page: puppeteer.Page) {
     accountDataUrl
   );
 
-  validateSchema("HapoalimAccountDataSchema", hapoalimAccountDataSchemaFile, accountDataResult);
+  validateSchema(
+    'HapoalimAccountDataSchema',
+    hapoalimAccountDataSchemaFile,
+    accountDataResult
+  );
 
   const API_DATE_FORMAT = 'YYYYMMDD';
   const defaultStartMoment = moment().subtract(1, 'years').add(1, 'day');
@@ -77,8 +81,6 @@ async function getData(page: puppeteer.Page) {
         HapoalimILSCheckingTransactionsDataSchema
       >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
 
-      validateSchema("HapoalimILSCheckingTransactionsDataSchema", hapoalimILSCheckingTransactionsDataSchema, ILSTransactionsRequest);
-
       // TODO: Get the list of foreign account and iterate over them
       // TODO: Type and validate all fetches
       // TODO: Check the DB to validate more strict on enums
@@ -86,8 +88,6 @@ async function getData(page: puppeteer.Page) {
       let foreignTransactionsRequest = fetchGetWithinPage<
         HapoalimForeignTransactionsSchema
       >(page, foreignTransactionsUrl);
-
-      validateSchema("HapoalimForeignTransactionsSchema", hapoalimForeignTransactionsSchema, foreignTransactionsRequest);
 
       promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
 
@@ -108,9 +108,18 @@ async function getData(page: puppeteer.Page) {
       // );
     });
 
-    // TODO: Flatten all Promises (not sure why they are not flatten by flatMap)
-    // TODO: Validate all responses
     let results = await Promise.all(promises);
+
+    validateSchema(
+      'HapoalimILSCheckingTransactionsDataSchema',
+      hapoalimILSCheckingTransactionsDataSchema,
+      results[0]
+    );
+    validateSchema(
+      'HapoalimForeignTransactionsSchema',
+      hapoalimForeignTransactionsSchema,
+      results[1]
+    );
 
     console.log(results);
   }
@@ -126,5 +135,5 @@ export async function poalimBuisness(page: puppeteer.Page) {
   await login(page);
   await getData(page);
   terminatePage(page);
-  return 0
+  return 0;
 }
