@@ -66,35 +66,14 @@ async function getData(page: puppeteer.Page) {
         HapoalimILSCheckingTransactionsDataSchema
       >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
 
-      // TODO: Get the list of foreign account and iterate over them
-      // TODO: Type and validate all fetches
-      // TODO: Check the DB to validate more strict on enums
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
       let foreignTransactionsRequest = fetchGetWithinPage<
         HapoalimForeignTransactionsSchema
       >(page, foreignTransactionsUrl);
 
       promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
-
-      // // TODO: Share json-schema parts between schemas
-      // const dollarsBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=19&lang=he`;
-      // allAccountRequests.push(fetchGetWithinPage(page, dollarsBalanceUrl));
-
-      // const eurosBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&view=graph&detailedAccountTypeCode=142&currencyCode=100&lang=he`;
-      // allAccountRequests.push(fetchGetWithinPage(page, eurosBalanceUrl));
-
-      // const transactionBalanceUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&lang=he`;
-      // allAccountRequests.push(fetchGetWithinPage(page, transactionBalanceUrl));
-
-      // // TODO: Get card numbers
-      // const creditCardTransactionsUrl = `${apiSiteUrl}/cards/transactions?accountId=${fullAccountNumber}&cardSuffix=2733&cardIssuingSPCode=1&transactionsType=current&totalInd=1`;
-      // allAccountRequests.push(
-      //   fetchGetWithinPage(page, creditCardTransactionsUrl)
-      // );
     });
 
-    // TODO: Flatten all Promises (not sure why they are not flatten by flatMap)
-    // TODO: Validate all responses
     let results = await Promise.all(promises);
 
     validateSchema(
@@ -107,7 +86,8 @@ async function getData(page: puppeteer.Page) {
       hapoalimForeignTransactionsSchema,
       results[1]
     );
-    console.log(results);
+    
+    // console.log(results);
   }
 }
 
