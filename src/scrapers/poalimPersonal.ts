@@ -9,6 +9,7 @@ import { HapoalimILSCheckingTransactionsDataSchema } from '../../generatedTypes/
 import { HapoalimForeignTransactionsSchema } from '../../generatedTypes/hapoalimForeignTransactionsSchema';
 import { validateSchema } from '../utils/validateSchema';
 import { terminatePage } from '../utils/terminatePage';
+import lodash from 'lodash';
 
 declare namespace window {
   const bnhpApp: any;
@@ -30,7 +31,32 @@ async function login(page: puppeteer.Page) {
 
   page.click('.login-btn');
 
-  await Promise.all([page.waitForNavigation()]);
+  await page.waitForNavigation();
+}
+
+async function getInnerDetails(iLSTransactionsData: HapoalimILSCheckingTransactionsDataSchema, page: puppeteer.Page) {
+  let promises: Promise<any>[] = [];
+  let paths: (string|number)[][] = [];
+  for (let i=0; i<iLSTransactionsData.transactions.length; i++) {
+    const path = ["transactions", i, "details"]
+    let value = lodash.get(iLSTransactionsData, path)
+    if (value != null && value.charAt(0) == "/") {
+      const detailsUrl = `https://login.bankhapoalim.co.il${value}`;
+      let detailsData = fetchPoalimXSRFWithinPage<
+        HapoalimForeignTransactionsSchema
+      >(page, detailsUrl, '/current-account/transactions');
+
+      promises.push(detailsData);
+      paths.push(path);
+    }
+  }
+  let results = await Promise.all(promises);
+
+  for (let i=0; i<=results.length; i++) {
+    lodash.set(iLSTransactionsData, paths[i], results[i]);
+  }
+
+  return iLSTransactionsData;
 }
 
 async function getData(page: puppeteer.Page) {
@@ -57,7 +83,7 @@ async function getData(page: puppeteer.Page) {
   const endDateString = moment().format(API_DATE_FORMAT);
 
   if (accountDataResult) {
-    let promises: Promise<HapoalimILSCheckingTransactionsDataSchema | HapoalimForeignTransactionsSchema | null>[] = [];
+    let promises: Promise<any>[] = [];
     let dataRequests = accountDataResult.flatMap((account: any) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
 
@@ -71,7 +97,9 @@ async function getData(page: puppeteer.Page) {
         HapoalimForeignTransactionsSchema
       >(page, foreignTransactionsUrl);
 
-      promises.push(ILSTransactionsRequest, foreignTransactionsRequest);
+      promises.push(ILSTransactionsRequest,
+        foreignTransactionsRequest
+        );
     });
 
     let results = await Promise.all(promises);
@@ -81,13 +109,18 @@ async function getData(page: puppeteer.Page) {
       hapoalimILSCheckingTransactionsDataSchema,
       results[0]
     );
+    
     validateSchema(
       'HapoalimForeignTransactionsSchema',
       hapoalimForeignTransactionsSchema,
       results[1]
     );
+
+    if (results[0]) {
+      results[0] = await getInnerDetails(results[0]!, page);
+    }
     
-    // console.log(results);
+    console.log(results);
   }
 }
 
