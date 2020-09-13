@@ -12,7 +12,7 @@
     "dotenv": "8.2.0",
     "inquirer": "7.3.0",
     "moment": "2.27.0",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "puppeteer": "5.0.0",
     "uuid": "8.2.0"
   },
