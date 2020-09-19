@@ -91,33 +91,36 @@ export async function init() {
   return {
     getAccountsData: () => {
       const accountDataUrl = `${apiSiteUrl}/general/accounts`;
-      return fetchGetWithinPage<AccountDataSchema>(
-        page,
-        accountDataUrl
-      );      
+      return fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
     },
-    getILSTransactions: (account: {bankNumber: number , branchNumber: number, accountNumber: number}) => {
+    getILSTransactions: (account: {
+      bankNumber: number;
+      branchNumber: number;
+      accountNumber: number;
+    }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
-      const ILSCheckingTransactionsUrl = 
-        `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
+      const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
 
       return fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
-          page,
-          ILSCheckingTransactionsUrl,
-          '/current-account/transactions'
-        );
+        page,
+        ILSCheckingTransactionsUrl,
+        '/current-account/transactions'
+      );
     },
-    getForeignTransactions: (account: {bankNumber: string , branchNumber: number, accountNumber: number}) => {
+    getForeignTransactions: (account: {
+      bankNumber: string;
+      branchNumber: number;
+      accountNumber: number;
+    }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
-      const foreignTransactionsUrl = 
-        `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
+      const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
       return fetchGetWithinPage<ForeignTransactionsSchema>(
-          page,
-          foreignTransactionsUrl
-        );
+        page,
+        foreignTransactionsUrl
+      );
     },
-    close: async () => {
-      await browser.close();
-    }
-  }
+    close: () => {
+      return browser.close();
+    },
+  };
 }
