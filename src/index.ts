@@ -6,7 +6,7 @@ import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from './utils/fetch';
 import accountDataSchemaFile from './schemas/accountDataSchema.json';
 import ILSCheckingTransactionsDataSchemaFile from './schemas/ILSCheckingTransactionsDataSchema.json';
 import foreignTransactionsSchema from './schemas/foreignTransactionsSchema.json';
-import { AccountDataSchema } from '../generatedTypes/AccountDataSchema';
+import { AccountDataSchema } from '../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../generatedTypes/foreignTransactionsSchema';
 import { IncomingHttpHeaders } from 'http';
