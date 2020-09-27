@@ -130,7 +130,8 @@ async function login(page: puppeteer.Page) {
   return fetchPostWithinPage(page, validateUrl, validateRequest);
 }
 
-export async function isracard(page: puppeteer.Page) {
+export async function isracard(browser: puppeteer.Browser) {
+  const page = await browser.newPage();
   await page.goto(`${BASE_URL}/personalarea/Login`);
   await login(page);
   await fetchTransactions(page);

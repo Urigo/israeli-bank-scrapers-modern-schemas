@@ -19,22 +19,26 @@ declare global {
   }
 }
 
-async function main() {
-  const browser = await puppeteer.launch({ headless: true });
-  let promises: Promise<any>[] = [];
-  // Choose Companies to Scrape:
-  const companies = [
-    scraper.isracard,
-    // scraper.poalimBuisness,
-    scraper.poalimPersonal
-  ]
-  for (let company of companies) {
-    const page = await browser.newPage();
-    promises.push(company(page));
-  }
-  await Promise.all(promises);
-  browser.close();
-  return 0
+const scrapersDict: {[k:string]: ((page: puppeteer.Browser) => Promise<number>)}  = {
+  isracard: scraper.isracard,
+  poalimBuisness: scraper.poalimBuisness,
+  poalimPersonal: scraper.poalimPersonal
 }
 
-main();
+export async function main(companies?: string[]) {
+  const browser = await puppeteer.launch({ headless: true });
+  let promises: Promise<any>[] = [];
+
+  if (companies) {
+    companies.forEach((company) => {
+      var index = Object.keys(scrapersDict).indexOf(company);
+      promises.push(Object.values(scrapersDict)[index](browser))
+    })
+  } else return 0
+
+  let results = await Promise.all(promises);
+  browser.close();
+  return results
+}
+
+main(["isracard"]);

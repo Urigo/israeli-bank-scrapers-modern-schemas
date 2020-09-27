@@ -125,7 +125,8 @@ async function getData(page: puppeteer.Page) {
   }
 }
 
-export async function poalimBuisness(page: puppeteer.Page) {
+export async function poalimBuisness(browser: puppeteer.Browser) {
+  const page = await browser.newPage();
   await page.setViewport({
     width: VIEWPORT_WIDTH,
     height: VIEWPORT_HEIGHT,
