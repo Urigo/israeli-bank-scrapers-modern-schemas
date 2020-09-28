@@ -122,7 +122,7 @@ export async function hapoalim(
   };
 }
 
-class hapoalimOptions {
+export class hapoalimOptions {
   validateSchema: boolean = false;
   isBuisness: boolean = true;
 }
