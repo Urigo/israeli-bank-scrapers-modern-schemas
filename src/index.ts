@@ -31,8 +31,10 @@ export async function init() {
       const page = await browserUtil.newPage(browser);
       return scraper.hapoalim(page, options);
     },
-    isracard: () => {
+    isracard: async (options?: scraper.isracardOptions) => {
       //return isracard.init
+      const page = await browserUtil.newPage(browser);
+      return scraper.isracard(page, options);
     },
     close: () => {
       return browser.close();

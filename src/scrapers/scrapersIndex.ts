@@ -1,1 +1,2 @@
-export * from './hapoalim'
+export * from './hapoalim';
+export * from './isracard';
