@@ -1,5 +1,6 @@
 import * as puppeteer from 'puppeteer';
 import { config } from 'dotenv';
+import * as scraper from './scrapers/scrapersIndex';
 config();
 
 declare global {
@@ -26,6 +27,7 @@ export async function init() {
   return {
     hapoalim: () => {
       //return hapoalim.init
+      return scraper.hapoalim();
     },
     isracard: () => {
       //return isracard.init
