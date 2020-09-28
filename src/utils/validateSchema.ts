@@ -1,9 +1,6 @@
 import Ajv from 'ajv';
 
-export async function validateSchema(
-  jsonSchema: any,
-  data: any
-) {
+export async function validateSchema(jsonSchema: any, data: any) {
   const ajv = new Ajv({ verbose: true });
   const valid = ajv.validate(jsonSchema, data);
 
