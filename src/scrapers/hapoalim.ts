@@ -12,6 +12,7 @@ import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransacti
 import { IncomingHttpHeaders } from 'http';
 import { v4 as uuidv4 } from 'uuid';
 import * as fetch from 'node-fetch';
+import { validateSchema } from '../utils/validateSchema';
 
 declare namespace window {
   const bnhpApp: any;
@@ -70,9 +71,20 @@ export async function hapoalim(
   // console.log(ajv.errors);
 
   return {
-    getAccountsData: () => {
+    getAccountsData: async () => {
       const accountDataUrl = `${apiSiteUrl}/general/accounts`;
-      return fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
+      const data = fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
+      if (options?.validateSchema) {
+        await data
+        const validation = await validateSchema(
+          accountDataSchemaFile,
+          data
+        );
+        Object.assign(data, validation);
+        return data;
+      } else {
+        return fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
+      }
     },
     getILSTransactions: (account: {
       bankNumber: number;
