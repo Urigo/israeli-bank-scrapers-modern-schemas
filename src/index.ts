@@ -26,9 +26,9 @@ export async function init() {
   const browser = await puppeteer.launch({ headless: true });
 
   return {
-    hapoalim: async (options: scraper.hapoalimOptions) => {
+    hapoalim: async (options?: scraper.hapoalimOptions) => {
       //return hapoalim.init
-      const page = await browserUtil.newPage(browser)
+      const page = await browserUtil.newPage(browser);
       return scraper.hapoalim(page, options);
     },
     isracard: () => {
