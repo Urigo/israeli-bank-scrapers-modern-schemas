@@ -13,7 +13,6 @@ import { IncomingHttpHeaders } from 'http';
 import { v4 as uuidv4 } from 'uuid';
 import * as fetch from 'node-fetch';
 
-
 declare namespace window {
   const bnhpApp: any;
 }
@@ -97,9 +96,6 @@ export async function hapoalim(page: puppeteer.Page) {
         page,
         foreignTransactionsUrl
       );
-    },
-    close: () => {
-      return browser.close();
     },
   };
 }
