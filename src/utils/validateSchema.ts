@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import * as Ajv from 'ajv';
 
 export async function validateSchema(jsonSchema: any, data: any) {
   const ajv = new Ajv({ verbose: true });
