@@ -86,31 +86,52 @@ export async function hapoalim(
         return fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
       }
     },
-    getILSTransactions: (account: {
+    getILSTransactions: async (account: {
       bankNumber: number;
       branchNumber: number;
       accountNumber: number;
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
-
-      return fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
+      const data = fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
         page,
         ILSCheckingTransactionsUrl,
         '/current-account/transactions'
       );
+      if (options?.validateSchema) {
+        await data;
+        const validation = await validateSchema(
+          ILSCheckingTransactionsDataSchemaFile,
+          data
+        );
+        Object.assign(data, validation);
+        return data;
+      } else {
+        return data;
+      }
     },
-    getForeignTransactions: (account: {
+    getForeignTransactions: async (account: {
       bankNumber: string;
       branchNumber: number;
       accountNumber: number;
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
-      return fetchGetWithinPage<ForeignTransactionsSchema>(
+      const data = fetchGetWithinPage<ForeignTransactionsSchema>(
         page,
         foreignTransactionsUrl
       );
+      if (options?.validateSchema) {
+        await data;
+        const validation = await validateSchema(
+          foreignTransactionsSchema,
+          data
+        );
+        Object.assign(data, validation);
+        return data;
+      } else {
+        return data;
+      }
     },
   };
 }
