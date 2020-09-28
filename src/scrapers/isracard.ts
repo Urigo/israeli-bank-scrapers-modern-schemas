@@ -23,7 +23,11 @@ async function login(page: puppeteer.Page) {
   return fetchPostWithinPage(page, validateUrl, validateRequest);
 }
 
-async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
+async function fetchAndEditMonth(
+  page: puppeteer.Page,
+  monthMoment: moment.Moment,
+  options?: isracardOptions
+) {
   // get accounts data
   const billingDate = monthMoment.format('YYYY-MM-DD');
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
@@ -32,8 +36,13 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
     accountsUrl
   );
 
-  let validation = await validateSchema(isracardDashboardMonth, dashboardMonthData);
-  Object.assign(dashboardMonthData, validation)
+  if (options && options.validateSchema) {
+    let validation = await validateSchema(
+      isracardDashboardMonth,
+      dashboardMonthData
+    );
+    Object.assign(dashboardMonthData, validation);
+  }
 
   /* create conainer object by user accounts */
   if (dashboardMonthData) {
@@ -63,8 +72,13 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
       transUrl
     );
 
-    validation = await validateSchema(isracardCardsTransactionsList, transResult);
-    Object.assign(transResult, validation)
+    if (options && options.validateSchema) {
+      let validation = await validateSchema(
+        isracardCardsTransactionsList,
+        transResult
+      );
+      Object.assign(transResult, validation);
+    }
 
     const accountTxns: { [key: string]: any } = {};
     accounts.forEach((account) => {
@@ -109,6 +123,49 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
   return 0;
 }
 
+async function getMonthDashboard(
+  page: puppeteer.Page,
+  monthMoment: moment.Moment,
+  options?: isracardOptions
+) {
+  // get accounts data
+  const billingDate = monthMoment.format('YYYY-MM-DD');
+  const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
+  const data = fetchGetWithinPage<IsracardDashboardMonth>(page, accountsUrl);
+
+  if (options && options.validateSchema) {
+    await data;
+    let validation = await validateSchema(isracardDashboardMonth, data);
+    Object.assign(data, validation);
+  } else {
+    return data;
+  }
+}
+
+async function getMonthTransactions(
+  page: puppeteer.Page,
+  monthMoment: moment.Moment,
+  options?: isracardOptions
+) {
+  /* get transactions data */
+  const month = monthMoment.month() + 1;
+  const monthStr = month < 10 ? `0${month}` : month.toString();
+  const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthMoment.year()}&requiredDate=N`;
+  const data = fetchGetWithinPage<IsracardCardsTransactionsList>(
+    page,
+    transUrl
+  );
+
+  if (options && options.validateSchema) {
+    await data;
+    let validation = await validateSchema(isracardCardsTransactionsList, data);
+    Object.assign(data, validation);
+    return data;
+  } else {
+    return data;
+  }
+}
+
 export async function isracard(
   page: puppeteer.Page,
   options?: isracardOptions
@@ -116,27 +173,42 @@ export async function isracard(
   const BASE_URL = 'https://digital.isracard.co.il';
   await page.goto(`${BASE_URL}/personalarea/Login`);
 
-    await login(page);
+  await login(page);
+
+  /* dates logic  */
+  let startMoment = moment().subtract(5, 'years').startOf('month');
+  const allMonths: moment.Moment[] = [];
+  let lastMonth = moment().startOf('month').add(1, 'month');
+  while (startMoment.isSameOrBefore(lastMonth)) {
+    allMonths.push(startMoment);
+    startMoment = moment(startMoment).add(1, 'month');
+  }
 
   return {
-    getTransactions: async () => {
-      /* dates logic  */
-      let startMoment = moment().subtract(1, 'years').startOf('month');
-      const allMonths = [];
-      let lastMonth = moment().startOf('month').add(1, 'month');
-
-      while (startMoment.isSameOrBefore(lastMonth)) {
-        allMonths.push(startMoment);
-        startMoment = moment(startMoment).add(1, 'month');
-      }
-
+    getDashboard: async () => {
       return Promise.all(
         /* get monthly results */
         allMonths.map(async (monthMoment) => {
-          return fetchMonth(page, monthMoment);
+          return getMonthDashboard(page, monthMoment, options);
         })
       );
     },
+    getTransactions: async () => {
+      return Promise.all(
+        /* get monthly results */
+        allMonths.map(async (monthMoment) => {
+          return getMonthTransactions(page, monthMoment, options);
+        })
+      );
+    },
+    getEditedTransactions: async () => {
+      return Promise.all(
+        /* get monthly results */
+        allMonths.map(async (monthMoment) => {
+          return fetchAndEditMonth(page, monthMoment, options);
+        })
+      );
+    }
   };
 }
 
