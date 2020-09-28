@@ -43,19 +43,8 @@ async function login(userCode: string, password: string, page: puppeteer.Page) {
   ]);
 }
 
-export async function hapoalim() {
-  const VIEWPORT_WIDTH = 1024;
-  const VIEWPORT_HEIGHT = 768;
-
+export async function hapoalim(page: puppeteer.Page) {
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
-  const browser = await puppeteer.launch({ headless: true });
-
-  const page = await browser.newPage();
-
-  await page.setViewport({
-    width: VIEWPORT_WIDTH,
-    height: VIEWPORT_HEIGHT,
-  });
 
   await page.goto(BASE_URL);
   await login(process.env.USER_CODE, process.env.PASSWORD, page);

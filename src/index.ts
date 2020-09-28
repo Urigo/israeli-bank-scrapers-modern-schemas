@@ -1,6 +1,7 @@
 import * as puppeteer from 'puppeteer';
 import { config } from 'dotenv';
 import * as scraper from './scrapers/scrapersIndex';
+import * as browserUtil from './utils/browserUtil';
 config();
 
 declare global {
@@ -25,9 +26,10 @@ export async function init() {
   const browser = await puppeteer.launch({ headless: true });
 
   return {
-    hapoalim: () => {
+    hapoalim: async () => {
       //return hapoalim.init
-      return scraper.hapoalim();
+      const page = await browserUtil.newPage(browser)
+      return scraper.hapoalim(page);
     },
     isracard: () => {
       //return isracard.init
