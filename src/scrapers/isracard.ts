@@ -1,11 +1,11 @@
 import puppeteer from 'puppeteer';
-import moment from 'moment';
-import lodash from 'lodash';
+import * as moment from 'moment';
+import * as lodash from 'lodash';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
 import { IsracardDashboardMonth } from '../../generatedTypes/isracardDashboardMonth';
 import { IsracardCardsTransactionsList } from '../../generatedTypes/isracardCardsTransactionsList';
-import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json';
-import isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json';
+import * as isracardDashboardMonth from '../schemas/isracardDashboardMonth.json';
+import * as isracardCardsTransactionsList from '../schemas/ILSCheckingTransactionsDataSchema.json';
 import { validateSchema } from '../utils/validateSchema';
 
 const SERVICE_URL =
@@ -31,9 +31,11 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
     page,
     accountsUrl
   );
-  validateSchema(isracardDashboardMonth, dashboardMonthData);
 
-  // create conainer object by user accounts
+  let validation = await validateSchema(isracardDashboardMonth, dashboardMonthData);
+  Object.assign(dashboardMonthData, validation)
+
+  /* create conainer object by user accounts */
   if (dashboardMonthData) {
     const accounts = dashboardMonthData.DashboardMonthBean.cardsCharges.map(
       (cardCharge: {
@@ -52,7 +54,7 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
       }
     );
 
-    // get transactions data
+    /* get transactions data */
     const month = monthMoment.month() + 1;
     const monthStr = month < 10 ? `0${month}` : month.toString();
     const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthMoment.year()}&requiredDate=N`;
@@ -61,7 +63,8 @@ async function fetchMonth(page: puppeteer.Page, monthMoment: moment.Moment) {
       transUrl
     );
 
-    validateSchema(isracardCardsTransactionsList, transResult);
+    validation = await validateSchema(isracardCardsTransactionsList, transResult);
+    Object.assign(transResult, validation)
 
     const accountTxns: { [key: string]: any } = {};
     accounts.forEach((account) => {
@@ -117,8 +120,8 @@ export async function isracard(
 
   return {
     getTransactions: async () => {
-      // dates logic
-      let startMoment = await moment().subtract(1, 'years').startOf('month');
+      /* dates logic  */
+      let startMoment = moment().subtract(1, 'years').startOf('month');
       const allMonths = [];
       let lastMonth = moment().startOf('month').add(1, 'month');
 
@@ -128,7 +131,7 @@ export async function isracard(
       }
 
       return Promise.all(
-        // get monthly results
+        /* get monthly results */
         allMonths.map(async (monthMoment) => {
           return fetchMonth(page, monthMoment);
         })
