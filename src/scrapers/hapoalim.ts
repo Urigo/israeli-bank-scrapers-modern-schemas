@@ -1,6 +1,5 @@
 import * as puppeteer from 'puppeteer';
 import * as inquirer from 'inquirer';
-import * as Ajv from 'ajv';
 import * as moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import accountDataSchemaFile from '../schemas/accountDataSchema.json';
@@ -9,9 +8,6 @@ import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json
 import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
-import { IncomingHttpHeaders } from 'http';
-import { v4 as uuidv4 } from 'uuid';
-import * as fetch from 'node-fetch';
 import { validateSchema } from '../utils/validateSchema';
 
 declare namespace window {
@@ -63,23 +59,13 @@ export async function hapoalim(
   const endDateString = moment().format(API_DATE_FORMAT);
   // TODO: https://www.npmjs.com/package/node-fetch-cookies
 
-  // TODO: Bring back validation as an option flag to each function
-  // const ajv = new Ajv({ verbose: true });
-  // // TODO: Validate asyncrhniously
-  // const valid = ajv.validate(accountDataSchemaFile, accountDataResult);
-  // console.log(valid);
-  // console.log(ajv.errors);
-
   return {
     getAccountsData: async () => {
       const accountDataUrl = `${apiSiteUrl}/general/accounts`;
       const data = fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
       if (options?.validateSchema) {
-        await data
-        const validation = await validateSchema(
-          accountDataSchemaFile,
-          data
-        );
+        await data;
+        const validation = await validateSchema(accountDataSchemaFile, data);
         Object.assign(data, validation);
         return data;
       } else {
