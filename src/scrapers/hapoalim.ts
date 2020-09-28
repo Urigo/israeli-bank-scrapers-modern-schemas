@@ -42,7 +42,10 @@ async function login(userCode: string, password: string, page: puppeteer.Page) {
   ]);
 }
 
-export async function hapoalim(page: puppeteer.Page) {
+export async function hapoalim(
+  page: puppeteer.Page,
+  options?: hapoalimOptions
+) {
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
 
   await page.goto(BASE_URL);
@@ -98,4 +101,9 @@ export async function hapoalim(page: puppeteer.Page) {
       );
     },
   };
+}
+
+class hapoalimOptions {
+  validateSchema: boolean = false;
+  isBuisness: boolean = true;
 }
