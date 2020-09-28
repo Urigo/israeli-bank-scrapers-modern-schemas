@@ -12,17 +12,7 @@ import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransacti
 import { IncomingHttpHeaders } from 'http';
 import { v4 as uuidv4 } from 'uuid';
 import * as fetch from 'node-fetch';
-import { config } from 'dotenv';
-config();
 
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      USER_CODE: string;
-      PASSWORD: string;
-    }
-  }
-}
 
 declare namespace window {
   const bnhpApp: any;
@@ -53,7 +43,7 @@ async function login(userCode: string, password: string, page: puppeteer.Page) {
   ]);
 }
 
-export async function init() {
+export async function hapoalim() {
   const VIEWPORT_WIDTH = 1024;
   const VIEWPORT_HEIGHT = 768;
 
