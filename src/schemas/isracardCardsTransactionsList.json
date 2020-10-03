@@ -15,6 +15,9 @@
 				"Message"
 			],
 			"properties": {
+				"ErrorPage": {
+					"type": "string"
+				},
 				"Status": {
 					"type": "string",
 					"enum": [ "1" ]
@@ -79,7 +82,7 @@
 				},
 				"cardIdx": {
 					"type": "string",
-					"enum": [ "0,1,2" ]
+					"enum": [ "0,1,2", "0,1" ]
 				},
 				"cardNumberList": {
 					"type": "array",
@@ -192,14 +195,14 @@
 				},
 				"selectedCardIndex": {
 					"type": "string",
-					"enum": [ "2" ]
+					"enum": [ "1", "2" ]
 				},
 				"selectedCardInfo": {
 					"type": "string"
 				},
 				"selectedDateIndex": {
 					"type": "string",
-					"enum": [ "23" ]
+					"enum": [ "23", "24" ]
 				},
 				"siteName": {
 					"type": "null"
@@ -224,7 +227,7 @@
 					"type": "null"
 				},
 				"totalChargeNis": {
-						"type": "string"
+						"type": ["string", "null"]
 				},
 				"totalDebit": {
 					"type": "null"
@@ -235,7 +238,7 @@
 				},
 				"year": {
 					"type": "string",
-					"enum": [ "2019", "2020" ]
+					"enum": ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020" ]
 				}
 			},
 			"patternProperties": {
@@ -414,7 +417,7 @@
 													"enum": [ "0", "1", "2" ]
 											},
 											"city": {
-													"type": "string"
+													"type": ["string", "null"]
 											},
 											"clientIpAddress": {
 													"type": "null"
@@ -427,7 +430,7 @@
 											},
 											"currentPaymentCurrency": {
 													"type": ["string", "null"],
-													"enum": [ "NIS", "USD", null ]
+													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", null ]
 											},
 											"dealsInbound": {
 													"type": "null"
@@ -452,7 +455,7 @@
 													"type": "null"
 											},
 											"fullPurchaseDateOutbound": {
-													"type": "string",
+													"type": ["string", "null"],
 													"pattern": "^[0-9]{2}/[0-9]{2}/[0-9]{4}$"
 											},
 											"fullSupplierNameHeb": {
@@ -545,7 +548,7 @@
 													"enum": [ "0" ]
 											},
 											"voucherNumber": {
-												"type": ["string"],
+												"type": ["string", "null"],
 												"pattern": "^[0-9]{7}$"
 											},
 											"voucherNumberRatz": {
