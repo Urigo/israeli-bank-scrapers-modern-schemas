@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import * as puppeteer from 'puppeteer';
 import * as moment from 'moment';
 import * as lodash from 'lodash';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';

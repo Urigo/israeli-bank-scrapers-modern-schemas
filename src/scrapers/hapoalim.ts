@@ -2,9 +2,9 @@ import * as puppeteer from 'puppeteer';
 import * as inquirer from 'inquirer';
 import * as moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
-import accountDataSchemaFile from '../schemas/accountDataSchema.json';
-import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
-import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
+import * as accountDataSchemaFile from '../schemas/accountDataSchema.json';
+import * as ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
+import * as foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
 import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
@@ -124,5 +124,5 @@ export async function hapoalim(
 
 export class hapoalimOptions {
   validateSchema: boolean = false;
-  isBuisness: boolean = true;
+  isBusiness: boolean = true;
 }
