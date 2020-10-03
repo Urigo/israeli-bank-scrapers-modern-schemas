@@ -131,14 +131,17 @@ async function getMonthDashboard(
   // get accounts data
   const billingDate = monthMoment.format('YYYY-MM-DD');
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
-  const data = fetchGetWithinPage<IsracardDashboardMonth>(page, accountsUrl);
+  const getDashboardFunction = fetchGetWithinPage<IsracardDashboardMonth>(page, accountsUrl);
 
   if (options && options.validateSchema) {
-    await data;
+    const data = await getDashboardFunction;
     let validation = await validateSchema(isracardDashboardMonth, data);
-    Object.assign(data, validation);
+    return {
+      data,
+      ...validation
+    };
   } else {
-    return data;
+    return {data: getDashboardFunction};
   }
 }
 
@@ -151,18 +154,20 @@ async function getMonthTransactions(
   const month = monthMoment.month() + 1;
   const monthStr = month < 10 ? `0${month}` : month.toString();
   const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthMoment.year()}&requiredDate=N`;
-  const data = fetchGetWithinPage<IsracardCardsTransactionsList>(
+  const getTransactionsFunction = fetchGetWithinPage<IsracardCardsTransactionsList>(
     page,
     transUrl
   );
 
   if (options && options.validateSchema) {
-    await data;
+    const data = await getTransactionsFunction;
     let validation = await validateSchema(isracardCardsTransactionsList, data);
-    Object.assign(data, validation);
-    return data;
+    return {
+      data,
+      ...validation
+    };
   } else {
-    return data;
+    return {data: getTransactionsFunction};
   }
 }
 
