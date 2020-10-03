@@ -11,12 +11,12 @@ import { validateSchema } from '../utils/validateSchema';
 const SERVICE_URL =
   'https://digital.isracard.co.il/services/ProxyRequestHandler.ashx';
 
-async function login(page: puppeteer.Page) {
+async function login(credentials: isracardCredentials, page: puppeteer.Page) {
   const validateUrl = `${SERVICE_URL}?reqName=performLogonI`;
   const validateRequest = {
-    MisparZihuy: process.env.ISRACARD_ID,
-    Sisma: process.env.ISRACARD_PASSWORD,
-    cardSuffix: process.env.ISRACARD_6_DIGITS,
+    MisparZihuy: credentials.ID || process.env.ISRACARD_ID,
+    Sisma: credentials.password || process.env.ISRACARD_PASSWORD,
+    cardSuffix: credentials.card6Digits || process.env.ISRACARD_6_DIGITS,
     countryCode: '212',
     idType: '1',
   };
@@ -131,17 +131,20 @@ async function getMonthDashboard(
   // get accounts data
   const billingDate = monthMoment.format('YYYY-MM-DD');
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
-  const getDashboardFunction = fetchGetWithinPage<IsracardDashboardMonth>(page, accountsUrl);
+  const getDashboardFunction = fetchGetWithinPage<IsracardDashboardMonth>(
+    page,
+    accountsUrl
+  );
 
   if (options && options.validateSchema) {
     const data = await getDashboardFunction;
     let validation = await validateSchema(isracardDashboardMonth, data);
     return {
       data,
-      ...validation
+      ...validation,
     };
   } else {
-    return {data: getDashboardFunction};
+    return { data: getDashboardFunction };
   }
 }
 
@@ -154,31 +157,31 @@ async function getMonthTransactions(
   const month = monthMoment.month() + 1;
   const monthStr = month < 10 ? `0${month}` : month.toString();
   const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthMoment.year()}&requiredDate=N`;
-  const getTransactionsFunction = fetchGetWithinPage<IsracardCardsTransactionsList>(
-    page,
-    transUrl
-  );
+  const getTransactionsFunction = fetchGetWithinPage<
+    IsracardCardsTransactionsList
+  >(page, transUrl);
 
   if (options && options.validateSchema) {
     const data = await getTransactionsFunction;
     let validation = await validateSchema(isracardCardsTransactionsList, data);
     return {
       data,
-      ...validation
+      ...validation,
     };
   } else {
-    return {data: getTransactionsFunction};
+    return { data: getTransactionsFunction };
   }
 }
 
 export async function isracard(
   page: puppeteer.Page,
+  credentials: isracardCredentials,
   options?: isracardOptions
 ) {
   const BASE_URL = 'https://digital.isracard.co.il';
   await page.goto(`${BASE_URL}/personalarea/Login`);
 
-  await login(page);
+  await login(credentials, page);
 
   /* dates logic  */
   let startMoment = moment().subtract(5, 'years').startOf('month');
@@ -213,10 +216,16 @@ export async function isracard(
           return fetchAndEditMonth(page, monthMoment, options);
         })
       );
-    }
+    },
   };
 }
 
 export class isracardOptions {
   validateSchema: boolean = false;
+}
+
+export class isracardCredentials {
+  ID: string = '';
+  password: string = '';
+  card6Digits: string = '';
 }

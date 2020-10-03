@@ -26,15 +26,21 @@ export async function init() {
   const browser = await puppeteer.launch({ headless: true });
 
   return {
-    hapoalim: async (options?: scraper.hapoalimOptions) => {
+    hapoalim: async (
+      credentials: scraper.hapoalimCredentials,
+      options?: scraper.hapoalimOptions
+    ) => {
       //return hapoalim.init
       const page = await browserUtil.newPage(browser);
-      return scraper.hapoalim(page, options);
+      return scraper.hapoalim(page, credentials, options);
     },
-    isracard: async (options?: scraper.isracardOptions) => {
+    isracard: async (
+      credentials: scraper.isracardCredentials,
+      options?: scraper.isracardOptions
+    ) => {
       //return isracard.init
       const page = await browserUtil.newPage(browser);
-      return scraper.isracard(page, options);
+      return scraper.isracard(page, credentials, options);
     },
     close: () => {
       return browser.close();

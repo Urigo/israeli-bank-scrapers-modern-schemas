@@ -14,11 +14,14 @@ declare namespace window {
   const bnhpApp: any;
 }
 
-async function login(userCode: string, password: string, page: puppeteer.Page) {
+async function login(credentials: hapoalimCredentials, page: puppeteer.Page) {
   await page.waitFor('#inputSend');
 
-  await page.type('#userID', userCode);
-  await page.type('#userPassword', password);
+  await page.type('#userID', credentials.userCode || process.env.USER_CODE);
+  await page.type(
+    '#userPassword',
+    credentials.password || process.env.PASSWORD
+  );
 
   page.click('#inputSend');
 
@@ -41,12 +44,13 @@ async function login(userCode: string, password: string, page: puppeteer.Page) {
 
 export async function hapoalim(
   page: puppeteer.Page,
+  credentials: hapoalimCredentials,
   options?: hapoalimOptions
 ) {
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
 
   await page.goto(BASE_URL);
-  await login(process.env.USER_CODE, process.env.PASSWORD, page);
+  await login(credentials, page);
 
   const result = await page.evaluate(() => {
     return window.bnhpApp.restContext;
@@ -62,16 +66,19 @@ export async function hapoalim(
   return {
     getAccountsData: async () => {
       const accountDataUrl = `${apiSiteUrl}/general/accounts`;
-      const getAccountsFunction = fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
+      const getAccountsFunction = fetchGetWithinPage<AccountDataSchema>(
+        page,
+        accountDataUrl
+      );
       if (options?.validateSchema) {
         const data = await getAccountsFunction;
         const validation = await validateSchema(accountDataSchemaFile, data);
         return {
           data,
-          ...validation
+          ...validation,
         };
       } else {
-        return {data: getAccountsFunction};
+        return { data: getAccountsFunction };
       }
     },
     getILSTransactions: async (account: {
@@ -81,11 +88,9 @@ export async function hapoalim(
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
-      const getIlsTransactionsFunction = fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
-        page,
-        ILSCheckingTransactionsUrl,
-        '/current-account/transactions'
-      );
+      const getIlsTransactionsFunction = fetchPoalimXSRFWithinPage<
+        ILSCheckingTransactionsDataSchema
+      >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
       if (options?.validateSchema) {
         const data = await getIlsTransactionsFunction;
         const validation = await validateSchema(
@@ -94,10 +99,10 @@ export async function hapoalim(
         );
         return {
           data,
-          ...validation
+          ...validation,
         };
       } else {
-        return {data: getIlsTransactionsFunction};
+        return { data: getIlsTransactionsFunction };
       }
     },
     getForeignTransactions: async (account: {
@@ -107,22 +112,21 @@ export async function hapoalim(
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
-      const getForeignTransactionsFunction = fetchGetWithinPage<ForeignTransactionsSchema>(
-        page,
-        foreignTransactionsUrl
-      );
+      const getForeignTransactionsFunction = fetchGetWithinPage<
+        ForeignTransactionsSchema
+      >(page, foreignTransactionsUrl);
       if (options?.validateSchema) {
-        const  data = await getForeignTransactionsFunction;
+        const data = await getForeignTransactionsFunction;
         const validation = await validateSchema(
           foreignTransactionsSchema,
           data
         );
         return {
           data,
-          ...validation
+          ...validation,
         };
       } else {
-        return {data: getForeignTransactionsFunction};
+        return { data: getForeignTransactionsFunction };
       }
     },
   };
@@ -132,3 +136,14 @@ export class hapoalimOptions {
   validateSchema: boolean = false;
   isBusiness: boolean = true;
 }
+
+class hapoalimPersonalCredentials {
+  userCode: string = '';
+  password: string = '';
+}
+
+class hapoalimBusinessCredentials extends hapoalimPersonalCredentials {}
+
+export type hapoalimCredentials =
+  | hapoalimPersonalCredentials
+  | hapoalimBusinessCredentials;
