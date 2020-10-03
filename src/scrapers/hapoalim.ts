@@ -62,14 +62,16 @@ export async function hapoalim(
   return {
     getAccountsData: async () => {
       const accountDataUrl = `${apiSiteUrl}/general/accounts`;
-      const data = fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
+      const getAccountsFunction = fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
       if (options?.validateSchema) {
-        await data;
+        const data = await getAccountsFunction;
         const validation = await validateSchema(accountDataSchemaFile, data);
-        Object.assign(data, validation);
-        return data;
+        return {
+          data,
+          ...validation
+        };
       } else {
-        return fetchGetWithinPage<AccountDataSchema>(page, accountDataUrl);
+        return getAccountsFunction;
       }
     },
     getILSTransactions: async (account: {
