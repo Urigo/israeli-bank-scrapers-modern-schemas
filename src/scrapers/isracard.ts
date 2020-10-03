@@ -144,7 +144,7 @@ async function getMonthDashboard(
       ...validation,
     };
   } else {
-    return { data: getDashboardFunction };
+    return { data: await getDashboardFunction };
   }
 }
 
@@ -169,7 +169,7 @@ async function getMonthTransactions(
       ...validation,
     };
   } else {
-    return { data: getTransactionsFunction };
+    return { data: await getTransactionsFunction };
   }
 }
 
@@ -184,7 +184,7 @@ export async function isracard(
   await login(credentials, page);
 
   /* dates logic  */
-  let startMoment = moment().subtract(5, 'years').startOf('month');
+  let startMoment = moment().subtract(1, 'months').startOf('month');
   const allMonths: moment.Moment[] = [];
   let lastMonth = moment().startOf('month').add(1, 'month');
   while (startMoment.isSameOrBefore(lastMonth)) {

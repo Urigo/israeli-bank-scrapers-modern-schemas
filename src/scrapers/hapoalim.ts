@@ -78,7 +78,7 @@ export async function hapoalim(
           ...validation,
         };
       } else {
-        return { data: getAccountsFunction };
+        return { data: await getAccountsFunction };
       }
     },
     getILSTransactions: async (account: {
@@ -102,7 +102,7 @@ export async function hapoalim(
           ...validation,
         };
       } else {
-        return { data: getIlsTransactionsFunction };
+        return { data: await getIlsTransactionsFunction };
       }
     },
     getForeignTransactions: async (account: {
@@ -126,7 +126,7 @@ export async function hapoalim(
           ...validation,
         };
       } else {
-        return { data: getForeignTransactionsFunction };
+        return { data: await getForeignTransactionsFunction };
       }
     },
   };
