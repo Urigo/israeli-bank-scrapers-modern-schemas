@@ -201,6 +201,9 @@ export async function isracard(
         })
       );
     },
+    getMonthTransactions: async (RequestedMonthMoment: moment.Moment) => {
+      return getMonthTransactions(page, RequestedMonthMoment, options);
+    },
     getTransactions: async () => {
       return Promise.all(
         /* get monthly results */
