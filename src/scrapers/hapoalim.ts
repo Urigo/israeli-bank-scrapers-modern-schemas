@@ -14,13 +14,22 @@ declare namespace window {
   const bnhpApp: any;
 }
 
-async function login(credentials: hapoalimCredentials, page: puppeteer.Page) {
+async function businessLogin(
+  credentials: hapoalimCredentials,
+  page: puppeteer.Page
+) {
+  const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
+  await page.goto(BASE_URL);
+
   await page.waitFor('#inputSend');
 
-  await page.type('#userID', credentials.userCode || process.env.USER_CODE);
+  await page.type(
+    '#userID',
+    credentials.userCode || process.env.HAPOALIM_BUISNESS_USER_CODE
+  );
   await page.type(
     '#userPassword',
-    credentials.password || process.env.PASSWORD
+    credentials.password || process.env.HAPOALIM_BUISNESS_PASSWORD
   );
 
   page.click('#inputSend');
@@ -42,20 +51,44 @@ async function login(credentials: hapoalimCredentials, page: puppeteer.Page) {
   ]);
 }
 
+async function personalLogin(
+  credentials: hapoalimCredentials,
+  page: puppeteer.Page
+) {
+  const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
+  await page.goto(BASE_URL);
+
+  const userCode: string =
+    credentials.userCode || process.env.HAPOALIM_PERSONAL_USER_CODE;
+  const password: string =
+    credentials.password || process.env.HAPOALIM_PERSONAL_PASSWORD;
+
+  await page.waitForSelector('.login-btn');
+
+  await page.type('#userCode', userCode);
+  await page.type('#password', password);
+
+  await page.click('.login-btn');
+
+  await page.waitForNavigation();
+  return 0;
+}
+
 export async function hapoalim(
   page: puppeteer.Page,
   credentials: hapoalimCredentials,
   options?: hapoalimOptions
 ) {
-  const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
-
-  await page.goto(BASE_URL);
-  await login(credentials, page);
+  options?.isBusiness
+    ? await businessLogin(credentials, page)
+    : await personalLogin(credentials, page);
 
   const result = await page.evaluate(() => {
     return window.bnhpApp.restContext;
   });
-  const apiSiteUrl = `https://biz2.bankhapoalim.co.il/${result.slice(1)}`;
+  const apiSiteUrl = `https://${
+    options?.isBusiness ? 'biz2' : 'login'
+  }.bankhapoalim.co.il/${result.slice(1)}`;
 
   const API_DATE_FORMAT = 'YYYYMMDD';
   const defaultStartMoment = moment().subtract(1, 'years').add(1, 'day');
@@ -106,7 +139,7 @@ export async function hapoalim(
       }
     },
     getForeignTransactions: async (account: {
-      bankNumber: string;
+      bankNumber: number;
       branchNumber: number;
       accountNumber: number;
     }) => {
