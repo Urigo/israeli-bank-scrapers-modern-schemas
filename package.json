@@ -16,16 +16,16 @@
     "dotenv": "8.2.0",
     "inquirer": "7.3.3",
     "lodash": "4.17.20",
-    "moment": "2.28.0",
+    "moment": "2.29.1",
     "node-fetch": "2.6.1",
-    "puppeteer": "5.3.0",
-    "uuid": "8.3.0"
+    "puppeteer": "5.3.1",
+    "uuid": "8.3.1"
   },
   "devDependencies": {
     "@types/dotenv": "8.2.0",
     "@types/inquirer": "7.3.1",
     "@types/lodash": "4.14.161",
-    "@types/node": "14.11.1",
+    "@types/node": "14.11.8",
     "@types/node-fetch": "2.5.7",
     "@types/puppeteer": "3.0.2",
     "@types/uuid": "8.3.0",
