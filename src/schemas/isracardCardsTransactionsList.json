@@ -178,7 +178,7 @@
 				},
 				"payDay": {
 					"type": ["string", "null"],
-					"enum": [ "10", null ]
+					"enum": [ "10", "02", null ]
 				},
 				"paymentPercent": {
 					"type": "null"
@@ -425,12 +425,12 @@
 											"currencyId": {
 													"type": ["string", "null"],
 													"enum": [
-															"NIS"
+															"NIS", "USD", "EUR"
 													]
 											},
 											"currentPaymentCurrency": {
 													"type": ["string", "null"],
-													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", null ]
+													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", "CHF", "HUF", null ]
 											},
 											"dealsInbound": {
 													"type": "null"
