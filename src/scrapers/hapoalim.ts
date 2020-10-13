@@ -25,11 +25,11 @@ async function businessLogin(
 
   await page.type(
     '#userID',
-    credentials.userCode || process.env.HAPOALIM_BUISNESS_USER_CODE
+    credentials.userCode
   );
   await page.type(
     '#userPassword',
-    credentials.password || process.env.HAPOALIM_BUISNESS_PASSWORD
+    credentials.password
   );
 
   page.click('#inputSend');
