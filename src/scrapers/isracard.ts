@@ -179,7 +179,7 @@ export async function isracard(
   options?: isracardOptions
 ) {
   const BASE_URL = 'https://digital.isracard.co.il';
-  await page.goto(`${BASE_URL}/personalarea/Login`);
+  await page.goto(`${BASE_URL}/personalarea/Login`, {waitUntil: 'load', timeout: 0});
 
   await login(credentials, page);
 
