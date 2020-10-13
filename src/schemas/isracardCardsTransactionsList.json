@@ -430,7 +430,7 @@
 											},
 											"currentPaymentCurrency": {
 													"type": ["string", "null"],
-													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", "CHF", "HUF", "AUD", "INR", "HKD", "YUN", null ]
+													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", "CHF", "HUF", "AUD", "INR", "HKD", "YUN", "JPY", "SGD", "OMR", null ]
 											},
 											"dealsInbound": {
 													"type": "null"
