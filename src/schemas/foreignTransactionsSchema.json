@@ -141,7 +141,21 @@
             "type": ["array","null"],
             "additionalItems": false,
             "items": {
-              "type": "string"
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "messageDescription",
+                "messageCode"
+              ],
+              "properties": {
+                "messageDescription": {
+                  "type": "string"
+                },
+                "messageCode": {
+                  "type": "number",
+                  "enum": [3]
+                }
+              }
             }
           },
           "numItemsPerPage": {
@@ -214,7 +228,6 @@
                 "expendedExecutingDate",
                 "formattedExecutingDate",
                 "formattedValueDate",
-                "metadata",
                 "originalEventKey",
                 "originalSystemId",
                 "rateFixingCode",
@@ -277,6 +290,10 @@
                   "type": "integer",
                   "enum": [0]
                 },
+                "displayCreditAccountDetails": {
+                  "type": "integer",
+                  "enum": [0, 1]
+                },                
                 "eventActivityTypeCode": {
                   "type": "number"
                 },
@@ -560,7 +577,7 @@
             "properties": {
               "messageCode": {
                 "type": "number",
-                "enum": [11040, 330]
+                "enum": [11040, 330, 11039]
               },
               "messageDescription": {
                 "type": "string"
