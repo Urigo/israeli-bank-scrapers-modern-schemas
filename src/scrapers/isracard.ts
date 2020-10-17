@@ -13,9 +13,9 @@ const SERVICE_URL =
 async function login(credentials: isracardCredentials, page: puppeteer.Page) {
   const validateUrl = `${SERVICE_URL}?reqName=performLogonI`;
   const validateRequest = {
-    MisparZihuy: credentials.ID || process.env.ISRACARD_ID,
-    Sisma: credentials.password || process.env.ISRACARD_PASSWORD,
-    cardSuffix: credentials.card6Digits || process.env.ISRACARD_6_DIGITS,
+    MisparZihuy: credentials.ID,
+    Sisma: credentials.password,
+    cardSuffix: credentials.card6Digits,
     countryCode: '212',
     idType: '1',
   };
@@ -187,7 +187,6 @@ export async function isracard(
     allMonths.push(new Date(firstMonth));
     firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth()+1));
   }
-
 
   return {
     getDashboard: async () => {

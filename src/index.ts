@@ -4,19 +4,6 @@ import * as scraper from './scrapers/scrapersIndex';
 import * as browserUtil from './utils/browserUtil';
 config();
 
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      HAPOALIM_BUISNESS_USER_CODE: string;
-      HAPOALIM_BUISNESS_PASSWORD: string;
-      HAPOALIM_PERSONAL_USER_CODE: string;
-      HAPOALIM_PERSONAL_PASSWORD: string;
-      ISRACARD_ID: string;
-      ISRACARD_PASSWORD: string;
-      ISRACARD_6_DIGITS: string;
-    }
-  }
-}
 
 export async function init() {
   /* this initiates browser and returns every scraper as function */

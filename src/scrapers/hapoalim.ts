@@ -59,9 +59,9 @@ async function personalLogin(
   await page.goto(BASE_URL);
 
   const userCode: string =
-    credentials.userCode || process.env.HAPOALIM_PERSONAL_USER_CODE;
+    credentials.userCode
   const password: string =
-    credentials.password || process.env.HAPOALIM_PERSONAL_PASSWORD;
+    credentials.password
 
   await page.waitForSelector('.login-btn');
 
