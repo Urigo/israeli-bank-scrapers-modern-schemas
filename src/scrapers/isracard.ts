@@ -178,21 +178,27 @@ export async function isracard(
   await login(credentials, page);
 
   /* dates logic  */
-  const now = new Date();
-  const monthStart = () => new Date(now.getFullYear(), now.getMonth(), 1);
-  let firstMonth = new Date(monthStart().setMonth(monthStart().getMonth() - (options.duration ?? 30)));
-  const finalMonth = new Date(monthStart().setMonth(monthStart().getMonth()))
-  const allMonths: Date[] = [];
-  while (firstMonth <= finalMonth) {
-    allMonths.push(new Date(firstMonth));
-    firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth()+1));
+  const allMonths = () => {
+    const now = new Date();
+    const monthStart = () => new Date(now.getFullYear(), now.getMonth(), 1);
+    let firstMonth = new Date(monthStart().setMonth(monthStart().getMonth() - (options.duration ?? 30)));
+    const finalMonth = new Date(monthStart().setMonth(monthStart().getMonth()))
+    const monthsList: Date[] = [];
+    while (firstMonth <= finalMonth) {
+      monthsList.push(new Date(firstMonth));
+      firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth()+1));
+    }
+    return monthsList;
   }
 
   return {
-    getDashboard: async () => {
+    getMonthDashboard: async (RequestedMonthDate: Date) => { 
+      return getMonthDashboard(page, RequestedMonthDate, options);
+    },
+    getDashboards: async () => {
       return Promise.all(
         /* get monthly results */
-        allMonths.map(async (monthDate) => {
+        allMonths().map(async (monthDate) => {
           return getMonthDashboard(page, monthDate, options);
         })
       );
@@ -203,7 +209,7 @@ export async function isracard(
     getTransactions: async () => {
       return Promise.all(
         /* get monthly results */
-        allMonths.map(async (monthDate) => {
+        allMonths().map(async (monthDate) => {
           return getMonthTransactions(page, monthDate, options);
         })
       );
@@ -211,7 +217,7 @@ export async function isracard(
     getEditedTransactions: async () => {
       return Promise.all(
         /* get monthly results */
-        allMonths.map(async (monthDate) => {
+        allMonths().map(async (monthDate) => {
           return fetchAndEditMonth(page, monthDate, options);
         })
       );
