@@ -7,10 +7,8 @@ config();
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      USER_CODE: string; // suggested: rename 'HAPOALIM_BUISNESS_USER_CODE'
-      PASSWORD: string; // suggested: rename 'HAPOALIM_BUISNESS_PASSWORD'
-      //HAPOALIM_BUISNESS_USER_CODE: string;
-      //HAPOALIM_BUISNESS_PASSWORD: string;
+      HAPOALIM_BUISNESS_USER_CODE: string;
+      HAPOALIM_BUISNESS_PASSWORD: string;
       HAPOALIM_PERSONAL_USER_CODE: string;
       HAPOALIM_PERSONAL_PASSWORD: string;
       ISRACARD_ID: string;
