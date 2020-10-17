@@ -167,6 +167,19 @@ async function getMonthTransactions(
   }
 }
 
+const getMonthsList = (options: isracardOptions): Date[] => {
+  const now = new Date();
+  const monthStart = () => new Date(now.getFullYear(), now.getMonth(), 1);
+  let firstMonth = new Date(monthStart().setMonth(monthStart().getMonth() - (options.duration ?? 30)));
+  const finalMonth = new Date(monthStart().setMonth(monthStart().getMonth()))
+  const monthsList: Date[] = [];
+  while (firstMonth <= finalMonth) {
+    monthsList.push(new Date(firstMonth));
+    firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth()+1));
+  }
+  return monthsList;
+}
+
 export async function isracard(
   page: puppeteer.Page,
   credentials: isracardCredentials,
@@ -177,20 +190,6 @@ export async function isracard(
 
   await login(credentials, page);
 
-  /* dates logic  */
-  const allMonths = () => {
-    const now = new Date();
-    const monthStart = () => new Date(now.getFullYear(), now.getMonth(), 1);
-    let firstMonth = new Date(monthStart().setMonth(monthStart().getMonth() - (options.duration ?? 30)));
-    const finalMonth = new Date(monthStart().setMonth(monthStart().getMonth()))
-    const monthsList: Date[] = [];
-    while (firstMonth <= finalMonth) {
-      monthsList.push(new Date(firstMonth));
-      firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth()+1));
-    }
-    return monthsList;
-  }
-
   return {
     getMonthDashboard: async (RequestedMonthDate: Date) => { 
       return getMonthDashboard(page, RequestedMonthDate, options);
@@ -198,7 +197,7 @@ export async function isracard(
     getDashboards: async () => {
       return Promise.all(
         /* get monthly results */
-        allMonths().map(async (monthDate) => {
+        getMonthsList(options).map(async (monthDate) => {
           return getMonthDashboard(page, monthDate, options);
         })
       );
@@ -209,7 +208,7 @@ export async function isracard(
     getTransactions: async () => {
       return Promise.all(
         /* get monthly results */
-        allMonths().map(async (monthDate) => {
+        getMonthsList(options).map(async (monthDate) => {
           return getMonthTransactions(page, monthDate, options);
         })
       );
@@ -217,7 +216,7 @@ export async function isracard(
     getEditedTransactions: async () => {
       return Promise.all(
         /* get monthly results */
-        allMonths().map(async (monthDate) => {
+        getMonthsList(options).map(async (monthDate) => {
           return fetchAndEditMonth(page, monthDate, options);
         })
       );
