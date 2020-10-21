@@ -124,8 +124,25 @@ export async function hapoalim(
       const getIlsTransactionsFunction = fetchPoalimXSRFWithinPage<
         ILSCheckingTransactionsDataSchema
       >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
-      if (options?.validateSchema) {
+      if (options?.validateSchema || options?.getTransactionsDetails) {
         const data = await getIlsTransactionsFunction;
+
+        if (options?.getTransactionsDetails && data != null) {
+          for(let transaction of data?.transactions) {
+            if (!!transaction.pfmDetails) {
+              let a = await fetchPoalimXSRFWithinPage(page, ILSCheckingTransactionsUrl, transaction.pfmDetails);
+              // TODO: create schema and make this attribute string / object for inputing data
+            }
+            if (!!transaction.details) {
+              let b = await fetchPoalimXSRFWithinPage(page, ILSCheckingTransactionsUrl, transaction.details);
+              // TODO: create schema and make this attribute string / object for inputing data
+            }
+          }
+          if (!options?.validateSchema) {
+            return { data };
+          }
+        }
+
         const validation = await validateSchema(
           ILSCheckingTransactionsDataSchemaFile,
           data
@@ -169,6 +186,7 @@ export class hapoalimOptions {
   validateSchema?: boolean = false;
   isBusiness?: boolean = true;
   duration?: number = 12;
+  getTransactionsDetails?: boolean = false;
 }
 
 class hapoalimPersonalCredentials {
