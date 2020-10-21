@@ -1,5 +1,4 @@
 import * as puppeteer from 'puppeteer';
-import * as lodash from 'lodash';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
 import { IsracardDashboardMonth } from '../../generatedTypes/isracardDashboardMonth';
 import { IsracardCardsTransactionsList } from '../../generatedTypes/isracardCardsTransactionsList';
@@ -22,109 +21,13 @@ async function login(credentials: isracardCredentials, page: puppeteer.Page) {
   return fetchPostWithinPage(page, validateUrl, validateRequest);
 }
 
-async function fetchAndEditMonth(
-  page: puppeteer.Page,
-  monthDate: Date,
-  options?: isracardOptions
-) {
-  // get accounts data
-  const billingDate = monthDate.toISOString().substr(0, 10); // get date in format YYYY-MM-DD
-  const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
-  const dashboardMonthData = await fetchGetWithinPage<IsracardDashboardMonth>(
-    page,
-    accountsUrl
-  );
-
-  if (options && options.validateSchema) {
-    let validation = await validateSchema(
-      isracardDashboardMonth,
-      dashboardMonthData
-    );
-    Object.assign(dashboardMonthData, validation);
-  }
-
-  /* create conainer object by user accounts */
-  if (dashboardMonthData) {
-    const accounts = dashboardMonthData.DashboardMonthBean.cardsCharges.map(
-      (cardCharge: {
-        cardIndex: string;
-        cardNumber: string;
-        billingDate: string;
-      }) => {
-        return {
-          index: parseInt(cardCharge.cardIndex, 10),
-          accountNumber: cardCharge.cardNumber,
-          processedDate: new Date(cardCharge.billingDate).toISOString,
-        };
-      }
-    );
-
-    /* get transactions data */
-    const monthStr = ("0"+(monthDate.getMonth()+1)).slice(-2);
-    const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthDate.getFullYear()}&requiredDate=N`;
-    const transResult = await fetchGetWithinPage<IsracardCardsTransactionsList>(
-      page,
-      transUrl
-    );
-
-    if (options && options.validateSchema) {
-      let validation = await validateSchema(
-        isracardCardsTransactionsList,
-        transResult
-      );
-      Object.assign(transResult, validation);
-    }
-
-    const accountTxns: { [key: string]: any } = {};
-    accounts.forEach((account) => {
-      const txnGroups = lodash.get(
-        transResult,
-        `CardsTransactionsListBean.Index${account.index}.CurrentCardTransactions`
-      );
-
-      if (txnGroups) {
-        let txnIsrael: any[] = [];
-        let txnAbroad: any[] = [];
-        txnGroups.forEach((txnGroup: { txnIsrael: any; txnAbroad: any }) => {
-          if (txnGroup.txnIsrael) {
-            const txns = txnGroup.txnIsrael.map((txn: any) => {
-              return Object.assign(txn, {
-                processedDate: account.processedDate,
-              });
-            });
-            txnIsrael.push(...txns);
-          }
-
-          if (txnGroup.txnAbroad) {
-            const txns = txnGroup.txnAbroad.map((txn: any) => {
-              return Object.assign(txn, {
-                processedDate: account.processedDate,
-              });
-            });
-            txnAbroad.push(...txns);
-          }
-        });
-        const accountNum = lodash.get(account, 'accountNumber');
-        accountTxns[accountNum] = {
-          accountNumber: accountNum,
-          index: account.index,
-          txnIsrael: txnIsrael,
-          txnAbroad: txnAbroad,
-        };
-      }
-    });
-    return accountTxns;
-  }
-  return 0;
-}
-
 async function getMonthDashboard(
   page: puppeteer.Page,
   monthDate: Date,
   options?: isracardOptions
 ) {
   // get accounts data
-  const billingDate = monthDate.toISOString().substr(0, 10); // get date in format YYYY-MM-DD
+  const billingDate = monthDate.toISOString().substr(0, 10) // get date in format YYYY-MM-DD
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
   const getDashboardFunction = fetchGetWithinPage<IsracardDashboardMonth>(
     page,
@@ -210,14 +113,6 @@ export async function isracard(
         /* get monthly results */
         getMonthsList(options).map(async (monthDate) => {
           return getMonthTransactions(page, monthDate, options);
-        })
-      );
-    },
-    getEditedTransactions: async () => {
-      return Promise.all(
-        /* get monthly results */
-        getMonthsList(options).map(async (monthDate) => {
-          return fetchAndEditMonth(page, monthDate, options);
         })
       );
     },
