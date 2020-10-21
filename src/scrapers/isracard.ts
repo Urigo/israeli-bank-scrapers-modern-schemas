@@ -28,7 +28,7 @@ async function fetchAndEditMonth(
   options?: isracardOptions
 ) {
   // get accounts data
-  const billingDate = monthDate.toISOString().substr(0,10); // get date in format YYYY-MM-DD
+  const billingDate = monthDate.toISOString().substr(0, 10); // get date in format YYYY-MM-DD
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
   const dashboardMonthData = await fetchGetWithinPage<IsracardDashboardMonth>(
     page,
@@ -124,7 +124,7 @@ async function getMonthDashboard(
   options?: isracardOptions
 ) {
   // get accounts data
-  const billingDate = `${monthDate.getFullYear()}-${("0"+(monthDate.getMonth()+1)).slice(-2)}-${("0" + monthDate.getDate()).slice(-2)}`; // get date in format YYYY-MM-DD
+  const billingDate = monthDate.toISOString().substr(0, 10); // get date in format YYYY-MM-DD
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
   const getDashboardFunction = fetchGetWithinPage<IsracardDashboardMonth>(
     page,
