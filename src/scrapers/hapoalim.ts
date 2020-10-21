@@ -1,6 +1,5 @@
 import * as puppeteer from 'puppeteer';
 import * as inquirer from 'inquirer';
-import * as moment from 'moment';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import * as accountDataSchemaFile from '../schemas/accountDataSchema.json';
 import * as ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
@@ -90,10 +89,11 @@ export async function hapoalim(
     options?.isBusiness ? 'biz2' : 'login'
   }.bankhapoalim.co.il/${result.slice(1)}`;
 
-  const API_DATE_FORMAT = 'YYYYMMDD';
-  const defaultStartMoment = moment().subtract(1, 'years').add(1, 'day');
-  const startDateString = defaultStartMoment.format(API_DATE_FORMAT);
-  const endDateString = moment().format(API_DATE_FORMAT);
+  const now = new Date();
+  const startMonth = options?.duration ?? 12;
+  const startDate = new Date(now.getFullYear(), now.getMonth()-startMonth, now.getDate()+1);
+  const startDateString = startDate.toISOString().substr(0, 10).replace(/-/g, '');
+  const endDateString = new Date().toISOString().substr(0, 10).replace(/-/g, '');
   // TODO: https://www.npmjs.com/package/node-fetch-cookies
 
   return {
@@ -166,8 +166,9 @@ export async function hapoalim(
 }
 
 export class hapoalimOptions {
-  validateSchema: boolean = false;
-  isBusiness: boolean = true;
+  validateSchema?: boolean = false;
+  isBusiness?: boolean = true;
+  duration?: number = 12;
 }
 
 class hapoalimPersonalCredentials {
