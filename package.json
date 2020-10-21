@@ -15,8 +15,6 @@
     "ajv": "6.12.6",
     "dotenv": "8.2.0",
     "inquirer": "7.3.3",
-    "lodash": "4.17.20",
-    "moment": "2.29.1",
     "node-fetch": "2.6.1",
     "puppeteer": "5.3.1",
     "uuid": "8.3.1"
