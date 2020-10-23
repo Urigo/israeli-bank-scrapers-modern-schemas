@@ -82,7 +82,7 @@
 				},
 				"cardIdx": {
 					"type": "string",
-					"enum": [ "0,1,2", "0,1" ]
+					"enum": [ "0,1,2,3", "0,1,2", "0,1" ]
 				},
 				"cardNumberList": {
 					"type": "array",
@@ -195,7 +195,7 @@
 				},
 				"selectedCardIndex": {
 					"type": "string",
-					"enum": [ "1", "2" ]
+					"enum": [ "1", "2", "3" ]
 				},
 				"selectedCardInfo": {
 					"type": "string"
@@ -414,7 +414,7 @@
 											},
 											"cardIndex": {
 													"type": "string",
-													"enum": [ "0", "1", "2" ]
+													"enum": [ "0", "1", "2", "3" ]
 											},
 											"city": {
 													"type": ["string", "null"]
@@ -620,7 +620,7 @@
 										},
 										"cardIndex": {
 											"type": "string",
-											"enum": [ "0", "1", "2" ]
+											"enum": [ "0", "1", "2", "3" ]
 										},
 										"city": {
 											"type": "null"
@@ -810,7 +810,7 @@
 					},
 					"currentId": {
 						"type": ["string", "null"],
-						"enum": [ "0", "1", "2", null ]
+						"enum": [ "0", "1", "2", "3", null ]
 					},
 					"displayProperties": {
 						"type": "null"
@@ -922,7 +922,7 @@
 					},
 					"cardIndex": {
 						"type": "string",
-						"enum": [ "0", "1", "2" ]
+						"enum": [ "0", "1", "2", "3" ]
 					},
 					"city": {
 						"type": [ "string", "null" ]
