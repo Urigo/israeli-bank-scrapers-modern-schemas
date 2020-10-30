@@ -20,7 +20,7 @@
 				},
 				"Status": {
 					"type": "string",
-					"enum": [ "1" ]
+					"enum": [ "1", "-2" ]
 				},
 				"Message": {
 					"type": "null"
