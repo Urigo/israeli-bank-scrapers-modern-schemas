@@ -1,8 +1,6 @@
 import * as puppeteer from 'puppeteer';
-import { config } from 'dotenv';
 import * as scraper from './scrapers/scrapersIndex';
 import * as browserUtil from './utils/browserUtil';
-config();
 
 
 export async function init() {
