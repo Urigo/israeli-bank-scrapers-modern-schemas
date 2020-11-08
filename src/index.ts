@@ -2,7 +2,6 @@ import * as puppeteer from 'puppeteer';
 import * as scraper from './scrapers/scrapersIndex';
 import * as browserUtil from './utils/browserUtil';
 
-
 export async function init() {
   /* this initiates browser and returns every scraper as function */
   /* each scraper opens its own page                              */
