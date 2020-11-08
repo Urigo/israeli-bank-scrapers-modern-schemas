@@ -33,7 +33,7 @@
     "typescript": "4.0.5"
   },
   "engines": {
-    "node": "15.0.1"
+    "node": "15.1.0"
   },
   "license": "MIT",
   "husky": {
