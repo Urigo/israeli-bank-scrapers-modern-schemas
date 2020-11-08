@@ -24,14 +24,8 @@ async function businessLogin(
 
   await page.waitFor('#inputSend');
 
-  await page.type(
-    '#userID',
-    credentials.userCode
-  );
-  await page.type(
-    '#userPassword',
-    credentials.password
-  );
+  await page.type('#userID', credentials.userCode);
+  await page.type('#userPassword', credentials.password);
 
   page.click('#inputSend');
 
@@ -59,10 +53,8 @@ async function personalLogin(
   const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
   await page.goto(BASE_URL);
 
-  const userCode: string =
-    credentials.userCode
-  const password: string =
-    credentials.password
+  const userCode: string = credentials.userCode;
+  const password: string = credentials.password;
 
   await page.waitForSelector('.login-btn');
 
@@ -93,9 +85,19 @@ export async function hapoalim(
 
   const now = new Date();
   const startMonth = options?.duration ?? 12;
-  const startDate = new Date(now.getFullYear(), now.getMonth()-startMonth, now.getDate()+1);
-  const startDateString = startDate.toISOString().substr(0, 10).replace(/-/g, '');
-  const endDateString = new Date().toISOString().substr(0, 10).replace(/-/g, '');
+  const startDate = new Date(
+    now.getFullYear(),
+    now.getMonth() - startMonth,
+    now.getDate() + 1
+  );
+  const startDateString = startDate
+    .toISOString()
+    .substr(0, 10)
+    .replace(/-/g, '');
+  const endDateString = new Date()
+    .toISOString()
+    .substr(0, 10)
+    .replace(/-/g, '');
   // TODO: https://www.npmjs.com/package/node-fetch-cookies
 
   return {
@@ -130,13 +132,21 @@ export async function hapoalim(
         const data = await getIlsTransactionsFunction;
 
         if (options?.getTransactionsDetails && data != null) {
-          for(let transaction of data?.transactions) {
+          for (let transaction of data?.transactions) {
             if (!!transaction.pfmDetails) {
-              let a = await fetchPoalimXSRFWithinPage(page, ILSCheckingTransactionsUrl, transaction.pfmDetails);
+              let a = await fetchPoalimXSRFWithinPage(
+                page,
+                ILSCheckingTransactionsUrl,
+                transaction.pfmDetails
+              );
               // TODO: create schema and make this attribute string / object for inputing data
             }
             if (!!transaction.details) {
-              let b = await fetchPoalimXSRFWithinPage(page, ILSCheckingTransactionsUrl, transaction.details);
+              let b = await fetchPoalimXSRFWithinPage(
+                page,
+                ILSCheckingTransactionsUrl,
+                transaction.details
+              );
               // TODO: create schema and make this attribute string / object for inputing data
             }
           }

@@ -27,7 +27,7 @@ async function getMonthDashboard(
   options?: isracardOptions
 ) {
   // get accounts data
-  const billingDate = monthDate.toISOString().substr(0, 10) // get date in format YYYY-MM-DD
+  const billingDate = monthDate.toISOString().substr(0, 10); // get date in format YYYY-MM-DD
   const accountsUrl = `${SERVICE_URL}?reqName=DashboardMonth&actionCode=0&billingDate=${billingDate}&format=Json`;
   const getDashboardFunction = fetchGetWithinPage<IsracardDashboardMonth>(
     page,
@@ -52,7 +52,7 @@ async function getMonthTransactions(
   options?: isracardOptions
 ) {
   /* get transactions data */
-  const monthStr = ("0"+(monthDate.getMonth()+1)).slice(-2);
+  const monthStr = ('0' + (monthDate.getMonth() + 1)).slice(-2);
   const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthDate.getFullYear()}&requiredDate=N`;
   const getTransactionsFunction = fetchGetWithinPage<
     IsracardCardsTransactionsList
@@ -73,28 +73,33 @@ async function getMonthTransactions(
 const getMonthsList = (options: isracardOptions): Date[] => {
   const now = new Date();
   const monthStart = () => new Date(now.getFullYear(), now.getMonth(), 1);
-  let firstMonth = new Date(monthStart().setMonth(monthStart().getMonth() - (options.duration ?? 30)));
-  const finalMonth = new Date(monthStart().setMonth(monthStart().getMonth()))
+  let firstMonth = new Date(
+    monthStart().setMonth(monthStart().getMonth() - (options.duration ?? 30))
+  );
+  const finalMonth = new Date(monthStart().setMonth(monthStart().getMonth()));
   const monthsList: Date[] = [];
   while (firstMonth <= finalMonth) {
     monthsList.push(new Date(firstMonth));
-    firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth()+1));
+    firstMonth = new Date(firstMonth.setMonth(firstMonth.getMonth() + 1));
   }
   return monthsList;
-}
+};
 
 export async function isracard(
   page: puppeteer.Page,
   credentials: isracardCredentials,
-  options: isracardOptions = new isracardOptions(),
+  options: isracardOptions = new isracardOptions()
 ) {
   const BASE_URL = 'https://digital.isracard.co.il';
-  await page.goto(`${BASE_URL}/personalarea/Login`, {waitUntil: 'load', timeout: 0});
+  await page.goto(`${BASE_URL}/personalarea/Login`, {
+    waitUntil: 'load',
+    timeout: 0,
+  });
 
   await login(credentials, page);
 
   return {
-    getMonthDashboard: async (RequestedMonthDate: Date) => { 
+    getMonthDashboard: async (RequestedMonthDate: Date) => {
       return getMonthDashboard(page, RequestedMonthDate, options);
     },
     getDashboards: async () => {
