@@ -577,7 +577,7 @@
             "properties": {
               "messageCode": {
                 "type": "number",
-                "enum": [11040, 330, 11039]
+                "enum": [11040, 330, 11039, 11038]
               },
               "messageDescription": {
                 "type": "string"

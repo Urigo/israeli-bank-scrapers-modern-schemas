@@ -339,6 +339,10 @@
           },
           "valueDate": {
             "type": "number"
+          },
+          "displayCreditAccountDetails": {
+            "type": "number",
+            "enum": [0]
           }
         }
       }
