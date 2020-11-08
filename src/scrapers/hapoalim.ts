@@ -4,9 +4,11 @@ import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import * as accountDataSchemaFile from '../schemas/accountDataSchema.json';
 import * as ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
 import * as foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
+import * as depositsSchema from '../schemas/hapoalimDepositsSchema.json';
 import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
+import { HapoalimDepositsSchema } from '../../generatedTypes/hapoalimDepositsSchema';
 import { validateSchema } from '../utils/validateSchema';
 
 declare namespace window {
@@ -177,6 +179,28 @@ export async function hapoalim(
         };
       } else {
         return { data: await getForeignTransactionsFunction };
+      }
+    },
+    getDeposits: async (account: {
+      bankNumber: number;
+      branchNumber: number;
+      accountNumber: number;
+    }) => {
+      const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
+      const depositsUrl = `${apiSiteUrl}/deposits-and-savings/deposits?accountId=${fullAccountNumber}&view=details&lang=he`;
+      const getDepositsFunction = fetchGetWithinPage<HapoalimDepositsSchema>(
+        page,
+        depositsUrl
+      );
+      if (options?.validateSchema) {
+        const data = await getDepositsFunction;
+        const validation = await validateSchema(depositsSchema, data);
+        return {
+          data,
+          ...validation,
+        };
+      } else {
+        return { data: await getDepositsFunction };
       }
     },
   };
