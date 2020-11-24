@@ -82,7 +82,7 @@
 				},
 				"cardIdx": {
 					"type": "string",
-					"enum": [ "0,1,2,3", "0,1,2", "0,1" ]
+					"enum": [ "0,1,2,3,4", "0,1,2,3", "0,1,2", "0,1" ]
 				},
 				"cardNumberList": {
 					"type": "array",
@@ -195,7 +195,7 @@
 				},
 				"selectedCardIndex": {
 					"type": "string",
-					"enum": [ "1", "2", "3" ]
+					"enum": [ "1", "2", "3", "4" ]
 				},
 				"selectedCardInfo": {
 					"type": "string"
@@ -430,7 +430,7 @@
 											},
 											"currentPaymentCurrency": {
 													"type": ["string", "null"],
-													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", "CHF", "HUF", "AUD", "INR", "HKD", "YUN", "JPY", "SGD", "OMR", null ]
+													"enum": [ "NIS", "USD", "LEU", "SUR", "EUR", "DKK", "TRY", "GBP", "CHF", "HUF", "AUD", "INR", "HKD", "YUN", "JPY", "SGD", "OMR", "CZE", "NOK", null ]
 											},
 											"dealsInbound": {
 													"type": "null"
@@ -620,7 +620,7 @@
 										},
 										"cardIndex": {
 											"type": "string",
-											"enum": [ "0", "1", "2", "3" ]
+											"enum": [ "0", "1", "2", "3", "4" ]
 										},
 										"city": {
 											"type": "null"
@@ -810,7 +810,7 @@
 					},
 					"currentId": {
 						"type": ["string", "null"],
-						"enum": [ "0", "1", "2", "3", null ]
+						"enum": [ "0", "1", "2", "3", "4", null ]
 					},
 					"displayProperties": {
 						"type": "null"
