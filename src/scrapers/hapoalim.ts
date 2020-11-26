@@ -67,6 +67,36 @@ async function personalLogin(
   return 0;
 }
 
+async function replacePassword(
+  previousCredentials: hapoalimCredentials,
+  page: puppeteer.Page
+) {
+  await page.waitForSelector('#buttonAction');
+
+  const answers = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'newPassword',
+      message: 'Enter your new wanted password:',
+    },
+  ]);
+
+  await page.type('[name="oldpassword"]', previousCredentials.password);
+  await page.type('[name="newpassword"]', answers.newPassword);
+  await page.type('[name="newpassword2"]', answers.newPassword);
+
+  await Promise.all([page.waitForNavigation(), page.keyboard.press('Enter')]);
+
+  await page.waitForSelector('#linkToHomePage');
+  await Promise.all([
+    page.waitForNavigation(),
+    page.keyboard.press('Enter'),
+    page.click('#linkToHomePage'),
+  ]);
+
+  return 0;
+}
+
 export async function hapoalim(
   page: puppeteer.Page,
   credentials: hapoalimCredentials,
@@ -77,8 +107,20 @@ export async function hapoalim(
     : await personalLogin(credentials, page);
 
   const result = await page.evaluate(() => {
-    return window.bnhpApp.restContext;
+    if (window && window.bnhpApp && window.bnhpApp.restContext) {
+      return window.bnhpApp.restContext;
+    } else {
+      return 'nothing';
+    }
   });
+
+  // Example replace password url:
+  // https://biz2.bankhapoalim.co.il/ABOUTTOEXPIRE/START?flow=ABOUTTOEXPIRE&state=START&expiredDate=11122020
+  if (result == 'nothing' && page.url().search('ABOUTTOEXPIRE') != -1) {
+    await replacePassword(credentials, page);
+  } else if (result == 'nothing') {
+    return 'Unknown Error';
+  }
   const apiSiteUrl = `https://${
     options?.isBusiness ? 'biz2' : 'login'
   }.bankhapoalim.co.il/${result.slice(1)}`;
@@ -125,9 +167,11 @@ export async function hapoalim(
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
-      const getIlsTransactionsFunction = fetchPoalimXSRFWithinPage<
-        ILSCheckingTransactionsDataSchema
-      >(page, ILSCheckingTransactionsUrl, '/current-account/transactions');
+      const getIlsTransactionsFunction = fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
+        page,
+        ILSCheckingTransactionsUrl,
+        '/current-account/transactions'
+      );
       if (options?.validateSchema || options?.getTransactionsDetails) {
         const data = await getIlsTransactionsFunction;
 
@@ -174,9 +218,10 @@ export async function hapoalim(
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
-      const getForeignTransactionsFunction = fetchGetWithinPage<
-        ForeignTransactionsSchema
-      >(page, foreignTransactionsUrl);
+      const getForeignTransactionsFunction = fetchGetWithinPage<ForeignTransactionsSchema>(
+        page,
+        foreignTransactionsUrl
+      );
       if (options?.validateSchema) {
         const data = await getForeignTransactionsFunction;
         const validation = await validateSchema(
