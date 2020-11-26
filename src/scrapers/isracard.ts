@@ -54,9 +54,10 @@ async function getMonthTransactions(
   /* get transactions data */
   const monthStr = ('0' + (monthDate.getMonth() + 1)).slice(-2);
   const transUrl = `${SERVICE_URL}?reqName=CardsTransactionsList&month=${monthStr}&year=${monthDate.getFullYear()}&requiredDate=N`;
-  const getTransactionsFunction = fetchGetWithinPage<
-    IsracardCardsTransactionsList
-  >(page, transUrl);
+  const getTransactionsFunction = fetchGetWithinPage<IsracardCardsTransactionsList>(
+    page,
+    transUrl
+  );
 
   if (options && options.validateSchema) {
     const data = await getTransactionsFunction;
