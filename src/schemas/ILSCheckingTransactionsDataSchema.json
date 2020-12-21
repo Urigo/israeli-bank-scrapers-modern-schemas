@@ -224,6 +224,9 @@
               },
               "tableNumber": {
                 "type": "number"
+              },
+              "beneficiaryDetails": {
+                "type": ["string", "null"]
               }
             }
           },
