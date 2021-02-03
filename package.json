@@ -15,7 +15,7 @@
     "ajv": "7.0.3",
     "inquirer": "7.3.3",
     "node-fetch": "2.6.1",
-    "puppeteer": "5.5.0",
+    "puppeteer": "6.0.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {
