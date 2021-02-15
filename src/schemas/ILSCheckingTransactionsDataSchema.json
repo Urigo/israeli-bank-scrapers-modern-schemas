@@ -8,19 +8,17 @@
     "numItemsPerPage",
     "pdfUrl",
     "retrievalTransactionData",
-    "transactions"   
+    "transactions"
   ],
   "properties": {
     "comments": {
       "type": "array",
-      "additionalItems": false,
       "items": {
         "type": "string"
       }
     },
     "message": {
       "type": "array",
-      "additionalItems": false,
       "items": {
         "type": "string"
       }
@@ -41,7 +39,6 @@
         },
         "messages": {
           "type": "array",
-          "additionalItems": false,
           "items": {
             "type": "object",
             "additionalProperties": false,
@@ -54,18 +51,25 @@
             "properties": {
               "messageCode": {
                 "type": "number",
-                "enum": [11040, 1260003]
+                "enum": [
+                  11040,
+                  1260003
+                ]
               },
               "messageDescription": {
                 "type": "string"
               },
               "messagePurposeCategoryCode": {
                 "type": "string",
-                "enum": ["1"]
+                "enum": [
+                  "1"
+                ]
               },
               "severity": {
                 "type": "string",
-                "enum": ["I"]
+                "enum": [
+                  "I"
+                ]
               }
             }
           }
@@ -103,11 +107,15 @@
         },
         "balanceAmountDisplayIndication": {
           "type": "string",
-          "enum": ["Y"]
+          "enum": [
+            "Y"
+          ]
         },
         "bankNumber": {
           "type": "number",
-          "enum": [12]
+          "enum": [
+            12
+          ]
         },
         "branchNumber": {
           "type": "number"
@@ -129,7 +137,10 @@
         },
         "joinPfm": {
           "type": "boolean",
-          "enum": [false, true]
+          "enum": [
+            false,
+            true
+          ]
         },
         "retrievalEndDate": {
           "type": "number"
@@ -147,7 +158,6 @@
     },
     "transactions": {
       "type": "array",
-      "additionalItems": false,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -197,27 +207,45 @@
             "type": "string"
           },
           "activityDescriptionIncludeValueDate": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "activityTypeCode": {
             "type": "number"
           },
           "beneficiaryDetailsData": {
-            "type": ["object", "null"],
+            "type": [
+              "object",
+              "null"
+            ],
             "additionalProperties": false,
             "required": [],
             "properties": {
               "messageDetail": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "messageHeadline": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "partyHeadline": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "partyName": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               },
               "recordNumber": {
                 "type": "number"
@@ -226,16 +254,24 @@
                 "type": "number"
               },
               "beneficiaryDetails": {
-                "type": ["string", "null"]
+                "type": [
+                  "string",
+                  "null"
+                ]
               }
             }
           },
           "comment": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "commentExistenceSwitch": {
             "type": "number",
-            "enum": [0]
+            "enum": [
+              0
+            ]
           },
           "contraAccountNumber": {
             "type": "number"
@@ -256,18 +292,27 @@
             "type": "number"
           },
           "details": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "differentDateIndication": {
             "type": "string"
           },
           "englishActionDesc": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "eventActivityTypeCode": {
             "type": "number",
             "description": "Income (1) or expense (2)",
-            "enum": [1, 2]
+            "enum": [
+              1,
+              2
+            ]
           },
           "eventAmount": {
             "type": "number"
@@ -277,7 +322,11 @@
           },
           "eventId": {
             "type": "integer",
-            "enum": [0, 184, 8552511030540]
+            "enum": [
+              0,
+              184,
+              8552511030540
+            ]
           },
           "executingBranchNumber": {
             "type": "number"
@@ -287,7 +336,10 @@
           },
           "fieldDescDisplaySwitch": {
             "type": "integer",
-            "enum": [0, 1]
+            "enum": [
+              0,
+              1
+            ]
           },
           "formattedEventDate": {
             "type": "string"
@@ -303,16 +355,24 @@
           },
           "marketingOfferContext": {
             "type": "number",
-            "enum": [0]
+            "enum": [
+              0
+            ]
           },
           "offerActivityContext": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "originalEventCreateDate": {
             "type": "number"
           },
           "pfmDetails": {
-            "type": ["string", "null"]
+            "type": [
+              "string",
+              "null"
+            ]
           },
           "recordNumber": {
             "type": "number"
@@ -338,14 +398,20 @@
           "transactionType": {
             "type": "string",
             "description": "Fixed (REGULAR) or still in process/temporary (TODAY)",
-            "enum": ["REGULAR", "TODAY"]
+            "enum": [
+              "REGULAR",
+              "TODAY"
+            ]
           },
           "valueDate": {
             "type": "number"
           },
           "displayCreditAccountDetails": {
             "type": "number",
-            "enum": [0, 1]
+            "enum": [
+              0,
+              1
+            ]
           }
         }
       }
