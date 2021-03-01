@@ -14,7 +14,7 @@
   "dependencies": {
     "ajv": "7.1.1",
     "ajv-formats": "1.5.1",
-    "inquirer": "7.3.3",
+    "inquirer": "8.0.0",
     "node-fetch": "2.6.1",
     "puppeteer": "8.0.0",
     "uuid": "8.3.2"
