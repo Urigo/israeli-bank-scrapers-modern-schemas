@@ -1108,7 +1108,10 @@
             ]
           },
           "totalNis": {
-            "type": "string"
+            "type": [
+              "string",
+              "null"
+            ]
           }
         }
       }
