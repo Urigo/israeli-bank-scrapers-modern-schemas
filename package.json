@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "ajv": "7.2.3",
-    "ajv-formats": "1.5.1",
+    "ajv-formats": "1.6.1",
     "inquirer": "8.0.0",
     "node-fetch": "2.6.1",
     "puppeteer": "8.0.0",
