@@ -9,7 +9,8 @@
     "dev": "tsc && concurrently \"tsc -w\" \"nodemon --experimental-specifier-resolution=node --experimental-json-modules dist/index.js\"",
     "build": "tsc",
     "format": "prettier \"**/*.ts\" --write",
-    "json2ts": "json2ts -i src/schemas -o generatedTypes"
+    "json2ts": "json2ts -i src/schemas -o generatedTypes",
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "ajv": "8.2.0",
@@ -21,7 +22,7 @@
   },
   "devDependencies": {
     "@types/inquirer": "7.3.1",
-    "@types/node": "14.14.43",
+    "@types/node": "15.0.1",
     "@types/node-fetch": "2.5.10",
     "@types/uuid": "8.3.0",
     "concurrently": "6.0.2",
@@ -36,11 +37,6 @@
     "node": "15.13.0"
   },
   "license": "MIT",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "*.--write": "prettier --write"
   }
