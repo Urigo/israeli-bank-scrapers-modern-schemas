@@ -167,11 +167,12 @@ export async function hapoalim(
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const ILSCheckingTransactionsUrl = `${apiSiteUrl}/current-account/transactions?accountId=${fullAccountNumber}&numItemsPerPage=200&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&sortCode=1`;
-      const getIlsTransactionsFunction = fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
-        page,
-        ILSCheckingTransactionsUrl,
-        '/current-account/transactions'
-      );
+      const getIlsTransactionsFunction =
+        fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
+          page,
+          ILSCheckingTransactionsUrl,
+          '/current-account/transactions'
+        );
       if (options?.validateSchema || options?.getTransactionsDetails) {
         const data = await getIlsTransactionsFunction;
 
@@ -218,10 +219,11 @@ export async function hapoalim(
     }) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,100&detailedAccountTypeCodeList=142&lang=he`;
-      const getForeignTransactionsFunction = fetchGetWithinPage<ForeignTransactionsSchema>(
-        page,
-        foreignTransactionsUrl
-      );
+      const getForeignTransactionsFunction =
+        fetchGetWithinPage<ForeignTransactionsSchema>(
+          page,
+          foreignTransactionsUrl
+        );
       if (options?.validateSchema) {
         const data = await getForeignTransactionsFunction;
         const validation = await validateSchema(
