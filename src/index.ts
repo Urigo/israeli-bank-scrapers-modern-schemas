@@ -1,6 +1,13 @@
-import * as puppeteer from 'puppeteer';
-import * as scraper from './scrapers/scrapersIndex';
-import * as browserUtil from './utils/browserUtil';
+import puppeteer from 'puppeteer';
+import {
+  hapoalim,
+  isracard,
+  hapoalimCredentials,
+  hapoalimOptions,
+  isracardCredentials,
+  isracardOptions,
+} from './scrapers/scrapersIndex';
+import { newPage } from './utils/browserUtil';
 
 export async function init() {
   /* this initiates browser and returns every scraper as function */
@@ -9,20 +16,20 @@ export async function init() {
 
   return {
     hapoalim: async (
-      credentials: scraper.hapoalimCredentials,
-      options?: scraper.hapoalimOptions
+      credentials: hapoalimCredentials,
+      options?: hapoalimOptions
     ) => {
       //return hapoalim.init
-      const page = await browserUtil.newPage(browser);
-      return scraper.hapoalim(page, credentials, options);
+      const page = await newPage(browser);
+      return hapoalim(page, credentials, options);
     },
     isracard: async (
-      credentials: scraper.isracardCredentials,
-      options?: scraper.isracardOptions
+      credentials: isracardCredentials,
+      options?: isracardOptions
     ) => {
       //return isracard.init
-      const page = await browserUtil.newPage(browser);
-      return scraper.isracard(page, credentials, options);
+      const page = await newPage(browser);
+      return isracard(page, credentials, options);
     },
     close: () => {
       return browser.close();

@@ -1,11 +1,11 @@
-import { Page, SerializableOrJSHandle } from 'puppeteer';
+import puppeteer from 'puppeteer';
 import { v4 as uuidv4 } from 'uuid';
 import { IncomingHttpHeaders } from 'http';
 
 export async function fetchPostWithinPage<TResult>(
-  page: Page,
+  page: puppeteer.Page,
   url: string,
-  data: SerializableOrJSHandle,
+  data: puppeteer.SerializableOrJSHandle,
   extraHeaders = {}
 ): Promise<TResult | null> {
   return page.evaluate(
@@ -45,7 +45,7 @@ export async function fetchPostWithinPage<TResult>(
 }
 
 export async function fetchGetWithinPage<TResult>(
-  page: Page,
+  page: puppeteer.Page,
   url: string
 ): Promise<TResult | null> {
   return page.evaluate((url) => {
@@ -66,7 +66,7 @@ export async function fetchGetWithinPage<TResult>(
 }
 
 export async function fetchPoalimXSRFWithinPage<TResult>(
-  page: Page,
+  page: puppeteer.Page,
   url: string,
   pageUuid: string
 ): Promise<TResult | null> {
