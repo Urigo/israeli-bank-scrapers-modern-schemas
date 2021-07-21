@@ -1,10 +1,14 @@
-import * as puppeteer from 'puppeteer';
-import * as inquirer from 'inquirer';
+import puppeteer from 'puppeteer';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+const inquirer = require('inquirer');
+
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
-import * as accountDataSchemaFile from '../schemas/accountDataSchema.json';
-import * as ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
-import * as foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
-import * as depositsSchema from '../schemas/hapoalimDepositsSchema.json';
+import accountDataSchemaFile from '../schemas/accountDataSchema.json';
+import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
+import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
+import depositsSchema from '../schemas/hapoalimDepositsSchema.json';
 import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
 import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
 import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
@@ -15,10 +19,7 @@ declare namespace window {
   const bnhpApp: any;
 }
 
-async function businessLogin(
-  credentials: hapoalimCredentials,
-  page: puppeteer.Page
-) {
+async function businessLogin(credentials: hapoalimCredentials, page: puppeteer.Page) {
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
   await page.goto(BASE_URL);
 
@@ -46,10 +47,7 @@ async function businessLogin(
   ]);
 }
 
-async function personalLogin(
-  credentials: hapoalimCredentials,
-  page: puppeteer.Page
-) {
+async function personalLogin(credentials: hapoalimCredentials, page: puppeteer.Page) {
   const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
   await page.goto(BASE_URL);
 
@@ -121,9 +119,8 @@ export async function hapoalim(
   } else if (result == 'nothing') {
     return 'Unknown Error';
   }
-  const apiSiteUrl = `https://${
-    options?.isBusiness ? 'biz2' : 'login'
-  }.bankhapoalim.co.il/${result.slice(1)}`;
+  const apiSiteUrl = `https://${options?.isBusiness ? 'biz2' : 'login'
+    }.bankhapoalim.co.il/${result.slice(1)}`;
 
   const now = new Date();
   const startMonth = options?.duration ?? 12;
@@ -275,7 +272,7 @@ class hapoalimPersonalCredentials {
   password: string = '';
 }
 
-class hapoalimBusinessCredentials extends hapoalimPersonalCredentials {}
+class hapoalimBusinessCredentials extends hapoalimPersonalCredentials { }
 
 export type hapoalimCredentials =
   | hapoalimPersonalCredentials

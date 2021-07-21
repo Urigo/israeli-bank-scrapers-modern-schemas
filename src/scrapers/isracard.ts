@@ -1,9 +1,9 @@
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
 import { IsracardDashboardMonth } from '../../generatedTypes/isracardDashboardMonth';
 import { IsracardCardsTransactionsList } from '../../generatedTypes/isracardCardsTransactionsList';
-import * as isracardDashboardMonth from '../schemas/isracardDashboardMonth.json';
-import * as isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json';
+import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json';
+import isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json';
 import { validateSchema } from '../utils/validateSchema';
 
 const SERVICE_URL =

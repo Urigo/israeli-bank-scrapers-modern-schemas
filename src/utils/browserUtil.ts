@@ -1,8 +1,6 @@
-import * as puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer';
 
-export async function newPage(
-  browser: puppeteer.Browser
-): Promise<puppeteer.Page> {
+export async function newPage(browser: puppeteer.Browser): Promise<puppeteer.Page> {
   // creates new page in browser
   const VIEWPORT_WIDTH = 1024;
   const VIEWPORT_HEIGHT = 768;

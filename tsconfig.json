@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "es2020",
     "strict": true,
     "sourceMap": true,
@@ -10,5 +10,7 @@
     "resolveJsonModule": true,
     "declaration": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
