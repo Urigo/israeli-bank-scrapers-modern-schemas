@@ -1,6 +1,6 @@
 {
   "name": "modern-poalim-scraper",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,9 +8,9 @@
   "scripts": {
     "start": "node --experimental-specifier-resolution=node --experimental-json-modules dist/index.js",
     "dev": "tsc && concurrently \"tsc -w\" \"nodemon --experimental-specifier-resolution=node --experimental-json-modules dist/index.js\"",
-    "build": "tsc",
+    "build": "json2ts -i src/schemas -o dist/generatedTypes && tsc",
     "format": "prettier \"**/*.ts\" --write",
-    "json2ts": "json2ts -i src/schemas -o generatedTypes",
+    "json2ts": "json2ts -i src/schemas -o src/generatedTypes",
     "pre-commit": "lint-staged"
   },
   "dependencies": {

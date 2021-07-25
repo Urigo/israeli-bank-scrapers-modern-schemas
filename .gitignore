@@ -4,4 +4,4 @@ yarn.lock
 .idea
 dist
 .env
-generatedTypes
+src/generatedTypes

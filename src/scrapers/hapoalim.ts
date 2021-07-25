@@ -9,10 +9,10 @@ import accountDataSchemaFile from '../schemas/accountDataSchema.json';
 import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json';
 import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json';
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json';
-import { AccountDataSchema } from '../../generatedTypes/accountDataSchema';
-import { ILSCheckingTransactionsDataSchema } from '../../generatedTypes/ILSCheckingTransactionsDataSchema';
-import { ForeignTransactionsSchema } from '../../generatedTypes/foreignTransactionsSchema';
-import { HapoalimDepositsSchema } from '../../generatedTypes/hapoalimDepositsSchema';
+import { AccountDataSchema } from '../generatedTypes/accountDataSchema';
+import { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
+import { ForeignTransactionsSchema } from '../generatedTypes/foreignTransactionsSchema';
+import { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema';
 import { validateSchema } from '../utils/validateSchema';
 
 declare namespace window {
@@ -125,9 +125,8 @@ export async function hapoalim(
   } else if (result == 'nothing') {
     return 'Unknown Error';
   }
-  const apiSiteUrl = `https://${
-    options?.isBusiness ? 'biz2' : 'login'
-  }.bankhapoalim.co.il/${result.slice(1)}`;
+  const apiSiteUrl = `https://${options?.isBusiness ? 'biz2' : 'login'
+    }.bankhapoalim.co.il/${result.slice(1)}`;
 
   const now = new Date();
   const startMonth = options?.duration ?? 12;
@@ -279,7 +278,7 @@ class hapoalimPersonalCredentials {
   password: string = '';
 }
 
-class hapoalimBusinessCredentials extends hapoalimPersonalCredentials {}
+class hapoalimBusinessCredentials extends hapoalimPersonalCredentials { }
 
 export type hapoalimCredentials =
   | hapoalimPersonalCredentials

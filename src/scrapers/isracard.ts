@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
-import { IsracardDashboardMonth } from '../../generatedTypes/isracardDashboardMonth';
-import { IsracardCardsTransactionsList } from '../../generatedTypes/isracardCardsTransactionsList';
+import { IsracardDashboardMonth } from '../generatedTypes/isracardDashboardMonth';
+import { IsracardCardsTransactionsList } from '../generatedTypes/isracardCardsTransactionsList';
 import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json';
 import isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json';
 import { validateSchema } from '../utils/validateSchema';
