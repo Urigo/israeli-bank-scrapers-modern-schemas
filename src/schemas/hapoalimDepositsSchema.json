@@ -356,7 +356,8 @@
                 "lienDescription": {
                   "type": "string",
                   "enum": [
-                    "משועבד"
+                    "משועבד",
+                    "מבטיח אשראי"
                   ]
                 },
                 "withdrawalEnablingIndication": {
@@ -393,7 +394,8 @@
                 "expectedRepaymentSwitch": {
                   "type": "integer",
                   "enum": [
-                    0
+                    0,
+                    1
                   ]
                 }
               }

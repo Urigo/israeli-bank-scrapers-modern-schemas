@@ -206,6 +206,7 @@
           "enum": [
             "10",
             "02",
+            "15",
             null
           ]
         },
@@ -215,7 +216,8 @@
         "paymentSum": {
           "type": "string",
           "enum": [
-            "000"
+            "000",
+            "280"
           ]
         },
         "returnCode": {
