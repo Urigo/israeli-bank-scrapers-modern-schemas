@@ -14,7 +14,7 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "ajv": "8.7.1",
+    "ajv": "8.8.0",
     "ajv-formats": "2.1.1",
     "inquirer": "8.2.0",
     "node-fetch": "3.1.0",
