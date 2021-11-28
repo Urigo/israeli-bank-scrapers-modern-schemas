@@ -200,7 +200,8 @@
           "tableNumber",
           "textCode",
           "transactionType",
-          "valueDate"
+          "valueDate",
+          "displayRTGSIncomingTrsDetails"
         ],
         "properties": {
           "activityDescription": {
@@ -407,6 +408,13 @@
             "type": "number"
           },
           "displayCreditAccountDetails": {
+            "type": "number",
+            "enum": [
+              0,
+              1
+            ]
+          },
+          "displayRTGSIncomingTrsDetails": {
             "type": "number",
             "enum": [
               0,
