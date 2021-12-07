@@ -48,9 +48,14 @@
         ]
       },
       "accountUpdateDate": {
-        "type": "integer",
-        "minimum": 10000000,
-        "maximum": 99999999
+        "anyOf": [{
+          "type": "integer",
+          "minimum": 10000000,
+          "maximum": 99999999
+        }, {
+          "type": "integer",
+          "enum": [0]
+        }]
       },
       "metegDoarNet": {
         "type": "integer",
