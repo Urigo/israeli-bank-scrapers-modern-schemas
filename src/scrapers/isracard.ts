@@ -91,7 +91,7 @@ export async function isracard(
 ) {
   const BASE_URL = 'https://digital.isracard.co.il';
   await page.goto(`${BASE_URL}/personalarea/Login`, {
-    waitUntil: 'load',
+    waitUntil: 'networkidle2',
     timeout: 0,
   });
 
