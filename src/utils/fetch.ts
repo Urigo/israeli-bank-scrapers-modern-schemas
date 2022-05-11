@@ -1,6 +1,6 @@
-import puppeteer from 'puppeteer';
+import type puppeteer from 'puppeteer';
 import { v4 as uuidv4 } from 'uuid';
-import { IncomingHttpHeaders } from 'http';
+import type { IncomingHttpHeaders } from 'http';
 
 export async function fetchPostWithinPage<TResult>(
   page: puppeteer.Page,
@@ -76,8 +76,8 @@ export async function fetchPoalimXSRFWithinPage<TResult>(
   if (XSRFCookie != null) {
     headers['X-XSRF-TOKEN'] = XSRFCookie.value;
   }
-  headers.pageUuid = pageUuid;
-  headers.uuid = uuidv4();
+  headers['pageUuid'] = pageUuid;
+  headers['uuid'] = uuidv4();
   headers['Content-Type'] = 'application/json;charset=UTF-8';
   return fetchPostWithinPage(page, url, [], headers);
 }

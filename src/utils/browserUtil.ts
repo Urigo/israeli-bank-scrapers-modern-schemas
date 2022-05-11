@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import type puppeteer from 'puppeteer';
 
 export async function newPage(
   browser: puppeteer.Browser

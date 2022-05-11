@@ -1,18 +1,18 @@
-import puppeteer from 'puppeteer';
+import type puppeteer from 'puppeteer';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const inquirer = require('inquirer');
 
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
-import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };
+import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };;
 import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json' assert { type: 'json' };
 import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
-import { AccountDataSchema } from '../generatedTypes/accountDataSchema';
-import { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
-import { ForeignTransactionsSchema } from '../generatedTypes/foreignTransactionsSchema';
-import { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema';
+import type { AccountDataSchema } from '../generatedTypes/accountDataSchema';
+import type { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
+import type { ForeignTransactionsSchema } from '../generatedTypes/foreignTransactionsSchema';
+import type { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema';
 import { validateSchema } from '../utils/validateSchema';
 
 declare namespace window {
@@ -183,7 +183,7 @@ export async function hapoalim(
         if (options?.getTransactionsDetails && data != null) {
           for (let transaction of data?.transactions) {
             if (!!transaction.pfmDetails) {
-              let a = await fetchPoalimXSRFWithinPage(
+              /* let a = */ await fetchPoalimXSRFWithinPage(
                 page,
                 ILSCheckingTransactionsUrl,
                 transaction.pfmDetails
@@ -191,7 +191,7 @@ export async function hapoalim(
               // TODO: create schema and make this attribute string / object for inputing data
             }
             if (!!transaction.details) {
-              let b = await fetchPoalimXSRFWithinPage(
+              /*let b = */ await fetchPoalimXSRFWithinPage(
                 page,
                 ILSCheckingTransactionsUrl,
                 transaction.details
