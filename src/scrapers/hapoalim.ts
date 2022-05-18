@@ -5,7 +5,7 @@ const require = createRequire(import.meta.url);
 const inquirer = require('inquirer');
 
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
-import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };;
+import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };
 import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json' assert { type: 'json' };
 import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
