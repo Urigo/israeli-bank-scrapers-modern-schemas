@@ -122,8 +122,9 @@ export async function hapoalim(
   } else if (result == 'nothing') {
     return 'Unknown Error';
   }
-  const apiSiteUrl = `https://${options?.isBusiness ? 'biz2' : 'login'
-    }.bankhapoalim.co.il/${result.slice(1)}`;
+  const apiSiteUrl = `https://${
+    options?.isBusiness ? 'biz2' : 'login'
+  }.bankhapoalim.co.il/${result.slice(1)}`;
 
   const now = new Date();
   const startMonth = options?.duration ?? 12;
@@ -180,18 +181,18 @@ export async function hapoalim(
           for (let transaction of data?.transactions) {
             if (!!transaction.pfmDetails) {
               /* let a = */ await fetchPoalimXSRFWithinPage(
-              page,
-              ILSCheckingTransactionsUrl,
-              transaction.pfmDetails
-            );
+                page,
+                ILSCheckingTransactionsUrl,
+                transaction.pfmDetails
+              );
               // TODO: create schema and make this attribute string / object for inputing data
             }
             if (!!transaction.details) {
               /*let b = */ await fetchPoalimXSRFWithinPage(
-              page,
-              ILSCheckingTransactionsUrl,
-              transaction.details
-            );
+                page,
+                ILSCheckingTransactionsUrl,
+                transaction.details
+              );
               // TODO: create schema and make this attribute string / object for inputing data
             }
           }
@@ -275,7 +276,7 @@ class hapoalimPersonalCredentials {
   password: string = '';
 }
 
-class hapoalimBusinessCredentials extends hapoalimPersonalCredentials { }
+class hapoalimBusinessCredentials extends hapoalimPersonalCredentials {}
 
 export type hapoalimCredentials =
   | hapoalimPersonalCredentials
