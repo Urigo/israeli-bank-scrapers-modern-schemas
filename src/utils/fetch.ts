@@ -5,7 +5,7 @@ import type { IncomingHttpHeaders } from 'http';
 export async function fetchPostWithinPage<TResult>(
   page: puppeteer.Page,
   url: string,
-  data: puppeteer.SerializableOrJSHandle,
+  data: any,
   extraHeaders = {}
 ): Promise<TResult | null> {
   return page.evaluate(

@@ -23,7 +23,7 @@ async function businessLogin(
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
   await page.goto(BASE_URL);
 
-  await page.waitFor('#inputSend');
+  await page.waitForSelector('#inputSend');
 
   await page.type('#userID', credentials.userCode);
   await page.type('#userPassword', credentials.password);
