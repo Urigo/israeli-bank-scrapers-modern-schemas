@@ -1,6 +1,6 @@
 {
   "name": "modern-poalim-scraper",
-  "version": "0.3.14",
+  "version": "0.3.16",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/inquirer": "8.2.1",
-    "@types/node": "18.0.4",
+    "@types/node": "18.0.5",
     "@types/node-fetch": "3.0.3",
     "@types/uuid": "8.3.4",
     "concurrently": "7.2.2",

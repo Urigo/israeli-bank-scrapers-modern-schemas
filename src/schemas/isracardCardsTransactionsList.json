@@ -73,8 +73,7 @@
         "totalChargeNis",
         "totalDebit",
         "userId",
-        "year",
-        "bcKey"
+        "year"
       ],
       "properties": {
         "card0": {
@@ -330,8 +329,7 @@
               "tablePageNum",
               "totalDollar",
               "totalEuro",
-              "totalNis",
-              "bcKey"
+              "totalNis"
             ],
             "properties": {
               "clientIpAddress": {
@@ -494,8 +492,7 @@
                     "tablePageNum",
                     "voucherNumber",
                     "voucherNumberRatz",
-                    "voucherNumberRatzOutbound",
-                    "bcKey"
+                    "voucherNumberRatzOutbound"
                   ],
                   "properties": {
                     "adendum": {
@@ -778,8 +775,7 @@
                     "tablePageNum",
                     "voucherNumber",
                     "voucherNumberRatz",
-                    "voucherNumberRatzOutbound",
-                    "bcKey"
+                    "voucherNumberRatzOutbound"
                   ],
                   "properties": {
                     "adendum": {
@@ -1038,8 +1034,7 @@
           "tablePageNum",
           "totalDollar",
           "totalEuro",
-          "totalNis",
-          "bcKey"
+          "totalNis"
         ],
         "properties": {
           "clientIpAddress": {
