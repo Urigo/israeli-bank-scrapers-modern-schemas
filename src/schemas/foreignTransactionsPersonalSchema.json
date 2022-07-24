@@ -4,17 +4,14 @@
   "additionalProperties": false,
   "required": [
     "balancesAndLimitsDataList",
-    "balancesAndTransactionsCurrencyCombo",
-    "currancyBalanceData",
     "currencyCode",
+    "currencyLongDescription",
     "detailedAccountTypeCode",
     "displayedRevaluationCurrencyCode",
-    "foreignCurrencyBalancesData",
     "formattedValidityDate",
     "messages",
     "outputArrayRecordSum2",
-    "pdfUrl",
-    "rateFixingDescription",
+    "totalRevaluatedCurrentBalance",
     "validityDate"
   ],
   "properties": {
@@ -24,9 +21,6 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "accountNumber",
-          "bankNumber",
-          "branchNumber",
           "creditLimits",
           "currencyCode",
           "currencyLongDescription",
@@ -42,11 +36,9 @@
           "formattedLastEventDate",
           "formattedRetrievalMaxDate",
           "formattedRetrievalMinDate",
-          "lastBalance",
           "lastBalanceExchangeRateWayCode",
           "lastEventDate",
           "messages",
-          "numItemsPerPage",
           "outputArrayRecordSum3",
           "outputArrayRecordSum4",
           "pendingBalance",
@@ -60,19 +52,6 @@
           "withdrawalBalance"
         ],
         "properties": {
-          "accountNumber": {
-            "type": "number"
-          },
-          "bankNumber": {
-            "type": "number",
-            "enum": [
-              12,
-              0
-            ]
-          },
-          "branchNumber": {
-            "type": "number"
-          },
           "creditLimits": {
             "type": "array",
             "items": {
@@ -139,12 +118,6 @@
               "null"
             ]
           },
-          "lastBalance": {
-            "type": "number",
-            "enum": [
-              0
-            ]
-          },
           "lastBalanceExchangeRateWayCode": {
             "type": "number",
             "enum": [
@@ -182,9 +155,6 @@
               }
             }
           },
-          "numItemsPerPage": {
-            "type": "number"
-          },
           "outputArrayRecordSum3": {
             "type": "number",
             "enum": [
@@ -219,12 +189,10 @@
             "type": "number"
           },
           "revaluatedCurrentBalance": {
-            "type": "array",
-            "minItems": 0,
-            "maxItems": 0,
-            "items": {
-              "type": "string"
-            }
+            "type": "number",
+            "enum": [
+              0
+            ]
           },
           "transactionResultCode": {
             "type": "number"
@@ -235,35 +203,24 @@
               "type": "object",
               "additionalProperties": false,
               "required": [
-                "accountName",
                 "activityDescription",
                 "activityTypeCode",
-                "comments",
-                "commentExistenceSwitch",
-                "contraAccountFieldNameLable",
-                "contraAccountNumber",
-                "contraBankNumber",
-                "contraBranchNumber",
                 "contraCurrencyCode",
                 "currencyLongDescription",
                 "currencyRate",
                 "currencySwiftCode",
                 "currentBalance",
-                "dataGroupCode",
                 "eventActivityTypeCode",
                 "eventAmount",
                 "eventDetails",
                 "eventNumber",
                 "executingDate",
-                "expendedExecutingDate",
                 "formattedExecutingDate",
                 "formattedValueDate",
-                "originalEventKey",
                 "originalSystemId",
                 "rateFixingCode",
                 "rateFixingDescription",
                 "rateFixingShortDescription",
-                "recordSerialNumber",
                 "referenceCatenatedNumber",
                 "referenceNumber",
                 "transactionType",
@@ -272,40 +229,10 @@
                 "valueDate"
               ],
               "properties": {
-                "accountName": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
                 "activityDescription": {
                   "type": "string"
                 },
                 "activityTypeCode": {
-                  "type": "number"
-                },
-                "comments": {
-                  "type": "null"
-                },
-                "commentExistenceSwitch": {
-                  "type": "number",
-                  "enum": [
-                    0
-                  ]
-                },
-                "contraAccountFieldNameLable": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "contraAccountNumber": {
-                  "type": "number"
-                },
-                "contraBankNumber": {
-                  "type": "number"
-                },
-                "contraBranchNumber": {
                   "type": "number"
                 },
                 "contraCurrencyCode": {
@@ -331,12 +258,6 @@
                 "currentBalance": {
                   "type": "number"
                 },
-                "dataGroupCode": {
-                  "type": "integer",
-                  "enum": [
-                    0
-                  ]
-                },
                 "displayCreditAccountDetails": {
                   "type": "integer",
                   "enum": [
@@ -361,9 +282,6 @@
                 },
                 "executingDate": {
                   "type": "number"
-                },
-                "expendedExecutingDate": {
-                  "type": "string"
                 },
                 "formattedExecutingDate": {
                   "type": "string"
@@ -558,12 +476,6 @@
                     }
                   }
                 },
-                "originalEventKey": {
-                  "type": "integer",
-                  "enum": [
-                    0
-                  ]
-                },
                 "originalSystemId": {
                   "type": "number"
                 },
@@ -576,9 +488,6 @@
                 "rateFixingShortDescription": {
                   "type": "string"
                 },
-                "recordSerialNumber": {
-                  "type": "number"
-                },
                 "referenceCatenatedNumber": {
                   "type": "number"
                 },
@@ -589,7 +498,10 @@
                   "type": "string"
                 },
                 "urlAddress": {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 "validityDate": {
                   "type": "number"
@@ -609,23 +521,14 @@
         }
       }
     },
-    "balancesAndTransactionsCurrencyCombo": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "currencyCode"
-      ],
-      "properties": {
-        "currencyCode": {
-          "type": "null"
-        }
-      }
-    },
-    "currancyBalanceData": {
-      "type": "null"
-    },
     "currencyCode": {
       "type": "null"
+    },
+    "currencyLongDescription": {
+      "type": "string",
+      "enum": [
+        "שקל חדש"
+      ]
     },
     "detailedAccountTypeCode": {
       "type": "null"
@@ -635,9 +538,6 @@
       "enum": [
         0
       ]
-    },
-    "foreignCurrencyBalancesData": {
-      "type": "null"
     },
     "formattedValidityDate": {
       "type": "null"
@@ -699,11 +599,11 @@
         0
       ]
     },
-    "pdfUrl": {
-      "type": "null"
-    },
-    "rateFixingDescription": {
-      "type": "null"
+    "totalRevaluatedCurrentBalance": {
+      "type": "number",
+      "enum": [
+        0
+      ]
     },
     "validityDate": {
       "type": "number",

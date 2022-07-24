@@ -4,7 +4,8 @@ import inquirer from 'inquirer';
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };
 import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json' assert { type: 'json' };
-import foreignTransactionsSchema from '../schemas/foreignTransactionsSchema.json' assert { type: 'json' };
+import foreignTransactionsBusinessSchema from '../schemas/foreignTransactionsBusinessSchema.json' assert { type: 'json' };
+import foreignTransactionsPersonalSchema from '../schemas/foreignTransactionsPersonalSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
 import type { AccountDataSchema } from '../generatedTypes/accountDataSchema';
 import type { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
@@ -217,9 +218,9 @@ export async function hapoalim(
       bankNumber: number;
       branchNumber: number;
       accountNumber: number;
-    }) => {
+    }, isBusiness = true) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
-      const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,27,100&detailedAccountTypeCodeList=142&lang=he`;
+      const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&${isBusiness ? 'type=business&' : ''}view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,27,100&detailedAccountTypeCodeList=142&lang=he`;
       const getForeignTransactionsFunction =
         fetchGetWithinPage<ForeignTransactionsSchema>(
           page,
@@ -227,8 +228,15 @@ export async function hapoalim(
         );
       if (options?.validateSchema) {
         const data = await getForeignTransactionsFunction;
+        if (data && (data as unknown as Record<string, unknown>)['messageCode'] === 0 && (data as unknown as Record<string, unknown>)['severity'] === 'E') {
+          return {
+            data,
+            errors: 'Data seems unreachable. Is the account active?',
+            isValid: false,
+          };
+        }
         const validation = await validateSchema(
-          foreignTransactionsSchema,
+          isBusiness ? foreignTransactionsBusinessSchema: foreignTransactionsPersonalSchema,
           data
         );
         return {
