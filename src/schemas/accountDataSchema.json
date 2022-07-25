@@ -74,7 +74,8 @@
       "accountClosingReasonCode": {
         "type": "integer",
         "enum": [
-          0
+          0,
+          1
         ]
       },
       "productLabel": {
