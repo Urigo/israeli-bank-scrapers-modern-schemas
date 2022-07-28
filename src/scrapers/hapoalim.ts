@@ -220,22 +220,21 @@ export async function hapoalim(
         bankNumber: number;
         branchNumber: number;
         accountNumber: number;
-      },
-      isBusiness = true
+      }
+      // isBusiness = true
     ) => {
       /**
        * The URL includes optional "type" query param.
        * Setting itto "business" changes the response type.
        * Since accounter uses the business-specific fields,
        * the non-business option is commented out
-       *  */ 
+       *  */
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       // ${isBusiness ? 'type=business&' : ''}
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,27,100&detailedAccountTypeCodeList=142&lang=he`;
       const getForeignTransactionsFunction =
-        fetchGetWithinPage<ForeignTransactionsBusinessSchema
-        //  | ForeignTransactionsPersonalSchema
-         >(
+        fetchGetWithinPage<ForeignTransactionsBusinessSchema>(
+          //  | ForeignTransactionsPersonalSchema
           page,
           foreignTransactionsUrl
         );
