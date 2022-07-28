@@ -89,7 +89,8 @@
             "0,1,2,3,4",
             "0,1,2,3",
             "0,1,2",
-            "0,1"
+            "0,1",
+            "0"
           ]
         },
         "cardNumberList": {
@@ -229,6 +230,7 @@
         "selectedCardIndex": {
           "type": "string",
           "enum": [
+            "0",
             "1",
             "2",
             "3",
@@ -814,11 +816,15 @@
                     "dealsInbound": {
                       "type": "string",
                       "enum": [
-                        "yes"
+                        "yes",
+                        "NO"
                       ]
                     },
                     "dealSum": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "dealSumOutbound": {
                       "type": "null"
@@ -831,6 +837,7 @@
                       "enum": [
                         "1",
                         "T",
+                        "P",
                         null
                       ]
                     },
@@ -851,7 +858,10 @@
                       "type": "null"
                     },
                     "fullSupplierNameHeb": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "fullSupplierNameOutbound": {
                       "type": "null"
@@ -914,7 +924,10 @@
                       "type": "null"
                     },
                     "paymentSum": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "paymentSumOutbound": {
                       "type": "null"
@@ -949,12 +962,16 @@
                       "type": "null"
                     },
                     "solek": {
-                      "type": "string",
+                      "type": [
+                        "string",
+                        "null"
+                      ],
                       "enum": [
                         "I",
                         "L",
                         "V",
-                        "_"
+                        "_",
+                        null
                       ]
                     },
                     "specificDate": {
@@ -977,7 +994,10 @@
                       ]
                     },
                     "supplierName": {
-                      "type": "string"
+                      "type": [
+                        "string",
+                        "null"
+                      ]
                     },
                     "supplierNameOutbound": {
                       "type": "null"
