@@ -28,7 +28,7 @@
     "@types/uuid": "8.3.4",
     "concurrently": "7.3.0",
     "husky": "8.0.1",
-    "json-schema-to-typescript": "11.0.1",
+    "json-schema-to-typescript": "11.0.2",
     "lint-staged": "13.0.3",
     "nodemon": "2.0.19",
     "prettier": "2.7.1",
