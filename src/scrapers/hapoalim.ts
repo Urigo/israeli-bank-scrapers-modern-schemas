@@ -5,6 +5,8 @@ import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
 import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };
 import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json' assert { type: 'json' };
 import foreignTransactionsBusinessSchema from '../schemas/foreignTransactionsBusinessSchema.json' assert { type: 'json' };
+import foreignSwiftTransactionsSchema from '../schemas/foreignSwiftTransactions.json' assert { type: 'json' };
+import foreignSwiftTransactionSchema from '../schemas/foreignSwiftTransaction.json' assert { type: 'json' };
 // import foreignTransactionsPersonalSchema from '../schemas/foreignTransactionsPersonalSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
 import type { AccountDataSchema } from '../generatedTypes/accountDataSchema';
@@ -12,6 +14,8 @@ import type { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSChe
 import type { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema';
 import { validateSchema } from '../utils/validateSchema';
 import { ForeignTransactionsBusinessSchema } from '../generatedTypes/foreignTransactionsBusinessSchema';
+import { ForeignSwiftTransactions } from '../generatedTypes/foreignSwiftTransactions';
+import { ForeignSwiftTransaction } from '../generatedTypes/foreignSwiftTransaction';
 // import { ForeignTransactionsPersonalSchema } from '../generatedTypes/foreignTransactionsPersonalSchema';
 
 declare namespace window {
@@ -264,6 +268,83 @@ export async function hapoalim(
         };
       } else {
         return { data: await getForeignTransactionsFunction };
+      }
+    },
+    getForeignSwiftTransactions: async (account: {
+      bankNumber: number;
+      branchNumber: number;
+      accountNumber: number;
+    }) => {
+      const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
+      const foreignSwiftTransactionsUrl = `${apiSiteUrl}/foreign-trade/swiftTransactions?accountId=${fullAccountNumber}&endDate=${endDateString}&startDate=20190501`;
+      const getForeignSwiftTransactionsFunction =
+        fetchGetWithinPage<ForeignSwiftTransactions>(
+          page,
+          foreignSwiftTransactionsUrl
+        );
+      if (options?.validateSchema) {
+        const data = await getForeignSwiftTransactionsFunction;
+        if (
+          data &&
+          (data as unknown as Record<string, unknown>)['messageCode'] === 0 &&
+          (data as unknown as Record<string, unknown>)['severity'] === 'E'
+        ) {
+          return {
+            data,
+            errors: 'Data seems unreachable. Is the account active?',
+            isValid: false,
+          };
+        }
+        const validation = await validateSchema(
+          foreignSwiftTransactionsSchema,
+          data
+        );
+        return {
+          data,
+          ...validation,
+        };
+      } else {
+        return { data: await getForeignSwiftTransactionsFunction };
+      }
+    },
+    getForeignSwiftTransaction: async (
+      account: {
+        bankNumber: number;
+        branchNumber: number;
+        accountNumber: number;
+      },
+      transferCatenatedId: string
+    ) => {
+      const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
+      const foreignSwiftTransactionUrl = `${apiSiteUrl}/foreign-trade/swiftTransactions/${transferCatenatedId}?accountId=${fullAccountNumber}&dataOriginCode=2&lang=he`;
+      const getForeignSwiftTransactionFunction =
+        fetchGetWithinPage<ForeignSwiftTransaction>(
+          page,
+          foreignSwiftTransactionUrl
+        );
+      if (options?.validateSchema) {
+        const data = await getForeignSwiftTransactionFunction;
+        if (
+          data &&
+          (data as unknown as Record<string, unknown>)['messageCode'] === 0 &&
+          (data as unknown as Record<string, unknown>)['severity'] === 'E'
+        ) {
+          return {
+            data,
+            errors: 'Data seems unreachable. Is the account active?',
+            isValid: false,
+          };
+        }
+        const validation = await validateSchema(
+          foreignSwiftTransactionSchema,
+          data
+        );
+        return {
+          data,
+          ...validation,
+        };
+      } else {
+        return { data: await getForeignSwiftTransactionFunction };
       }
     },
     getDeposits: async (account: {
