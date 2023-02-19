@@ -1,5 +1,5 @@
 import type { Page } from 'puppeteer';
-import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
+import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch.js';
 import type { IsracardDashboardMonth } from '../generatedTypes/isracardDashboardMonth.js';
 import type { IsracardCardsTransactionsList } from '../generatedTypes/isracardCardsTransactionsList.js';
 import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json' assert { type: 'json' };
