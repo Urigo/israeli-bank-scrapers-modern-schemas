@@ -1,15 +1,15 @@
-import type puppeteer from 'puppeteer';
+import type { Page } from 'puppeteer';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
-import type { IsracardDashboardMonth } from '../generatedTypes/isracardDashboardMonth';
-import type { IsracardCardsTransactionsList } from '../generatedTypes/isracardCardsTransactionsList';
+import type { IsracardDashboardMonth } from '../generatedTypes/isracardDashboardMonth.js';
+import type { IsracardCardsTransactionsList } from '../generatedTypes/isracardCardsTransactionsList.js';
 import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json' assert { type: 'json' };
 import isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json' assert { type: 'json' };
-import { validateSchema } from '../utils/validateSchema';
+import { validateSchema } from '../utils/validateSchema.js';
 
 const SERVICE_URL =
   'https://digital.isracard.co.il/services/ProxyRequestHandler.ashx';
 
-async function login(credentials: isracardCredentials, page: puppeteer.Page) {
+async function login(credentials: isracardCredentials, page: Page) {
   const validateUrl = `${SERVICE_URL}?reqName=performLogonI`;
   const validateRequest = {
     MisparZihuy: credentials.ID,
@@ -22,7 +22,7 @@ async function login(credentials: isracardCredentials, page: puppeteer.Page) {
 }
 
 async function getMonthDashboard(
-  page: puppeteer.Page,
+  page: Page,
   monthDate: Date,
   options?: isracardOptions
 ) {
@@ -47,7 +47,7 @@ async function getMonthDashboard(
 }
 
 async function getMonthTransactions(
-  page: puppeteer.Page,
+  page: Page,
   monthDate: Date,
   options?: isracardOptions
 ) {
@@ -85,7 +85,7 @@ const getMonthsList = (options: isracardOptions): Date[] => {
 };
 
 export async function isracard(
-  page: puppeteer.Page,
+  page: Page,
   credentials: isracardCredentials,
   options: isracardOptions = new isracardOptions()
 ) {

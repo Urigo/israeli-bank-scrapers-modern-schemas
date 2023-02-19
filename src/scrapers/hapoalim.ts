@@ -1,7 +1,10 @@
-import type puppeteer from 'puppeteer';
+import type { Page } from 'puppeteer';
 import inquirer from 'inquirer';
 
-import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
+import {
+  fetchPoalimXSRFWithinPage,
+  fetchGetWithinPage,
+} from '../utils/fetch.js';
 import accountDataSchemaFile from '../schemas/accountDataSchema.json' assert { type: 'json' };
 import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransactionsDataSchema.json' assert { type: 'json' };
 import foreignTransactionsBusinessSchema from '../schemas/foreignTransactionsBusinessSchema.json' assert { type: 'json' };
@@ -9,23 +12,20 @@ import foreignSwiftTransactionsSchema from '../schemas/foreignSwiftTransactions.
 import foreignSwiftTransactionSchema from '../schemas/foreignSwiftTransaction.json' assert { type: 'json' };
 // import foreignTransactionsPersonalSchema from '../schemas/foreignTransactionsPersonalSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
-import type { AccountDataSchema } from '../generatedTypes/accountDataSchema';
-import type { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema';
-import type { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema';
-import { validateSchema } from '../utils/validateSchema';
-import { ForeignTransactionsBusinessSchema } from '../generatedTypes/foreignTransactionsBusinessSchema';
-import { ForeignSwiftTransactions } from '../generatedTypes/foreignSwiftTransactions';
-import { ForeignSwiftTransaction } from '../generatedTypes/foreignSwiftTransaction';
+import type { AccountDataSchema } from '../generatedTypes/accountDataSchema.js';
+import type { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema.js';
+import type { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema.js';
+import { validateSchema } from '../utils/validateSchema.js';
+import { ForeignTransactionsBusinessSchema } from '../generatedTypes/foreignTransactionsBusinessSchema.js';
+import { ForeignSwiftTransactions } from '../generatedTypes/foreignSwiftTransactions.js';
+import { ForeignSwiftTransaction } from '../generatedTypes/foreignSwiftTransaction.js';
 // import { ForeignTransactionsPersonalSchema } from '../generatedTypes/foreignTransactionsPersonalSchema';
 
 declare namespace window {
   const bnhpApp: any;
 }
 
-async function businessLogin(
-  credentials: hapoalimCredentials,
-  page: puppeteer.Page
-) {
+async function businessLogin(credentials: hapoalimCredentials, page: Page) {
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
   await page.goto(BASE_URL);
 
@@ -53,10 +53,7 @@ async function businessLogin(
   ]);
 }
 
-async function personalLogin(
-  credentials: hapoalimCredentials,
-  page: puppeteer.Page
-) {
+async function personalLogin(credentials: hapoalimCredentials, page: Page) {
   const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
   await page.goto(BASE_URL);
 
@@ -76,7 +73,7 @@ async function personalLogin(
 
 async function replacePassword(
   previousCredentials: hapoalimCredentials,
-  page: puppeteer.Page
+  page: Page
 ) {
   await page.waitForSelector('#buttonAction');
 
@@ -105,7 +102,7 @@ async function replacePassword(
 }
 
 export async function hapoalim(
-  page: puppeteer.Page,
+  page: Page,
   credentials: hapoalimCredentials,
   options?: hapoalimOptions
 ) {
