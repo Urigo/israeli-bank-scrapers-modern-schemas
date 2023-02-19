@@ -1,2 +1,2 @@
-export * from './hapoalim';
-export * from './isracard';
+export * from './hapoalim.js';
+export * from './isracard.js';

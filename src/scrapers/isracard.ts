@@ -1,10 +1,10 @@
 import type { Page } from 'puppeteer';
 import { fetchGetWithinPage, fetchPostWithinPage } from '../utils/fetch';
-import type { IsracardDashboardMonth } from '../generatedTypes/isracardDashboardMonth';
-import type { IsracardCardsTransactionsList } from '../generatedTypes/isracardCardsTransactionsList';
+import type { IsracardDashboardMonth } from '../generatedTypes/isracardDashboardMonth.js';
+import type { IsracardCardsTransactionsList } from '../generatedTypes/isracardCardsTransactionsList.js';
 import isracardDashboardMonth from '../schemas/isracardDashboardMonth.json' assert { type: 'json' };
 import isracardCardsTransactionsList from '../schemas/isracardCardsTransactionsList.json' assert { type: 'json' };
-import { validateSchema } from '../utils/validateSchema';
+import { validateSchema } from '../utils/validateSchema.js';
 
 const SERVICE_URL =
   'https://digital.isracard.co.il/services/ProxyRequestHandler.ashx';

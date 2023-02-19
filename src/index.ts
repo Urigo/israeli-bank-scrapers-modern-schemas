@@ -6,8 +6,8 @@ import {
   hapoalimOptions,
   isracardCredentials,
   isracardOptions,
-} from './scrapers/scrapersIndex';
-import { newPage } from './utils/browserUtil';
+} from './scrapers/scrapersIndex.js';
+import { newPage } from './utils/browserUtil.js';
 
 export async function init() {
   /* this initiates browser and returns every scraper as function */
