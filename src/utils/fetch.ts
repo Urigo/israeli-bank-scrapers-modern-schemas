@@ -1,9 +1,9 @@
-import type puppeteer from 'puppeteer';
+import type { Page } from 'puppeteer';
 import { v4 as uuidv4 } from 'uuid';
 import type { IncomingHttpHeaders } from 'http';
 
 export async function fetchPostWithinPage<TResult>(
-  page: puppeteer.Page,
+  page: Page,
   url: string,
   data: Record<string, any>,
   extraHeaders: Record<string, any> = {}
@@ -45,7 +45,7 @@ export async function fetchPostWithinPage<TResult>(
 }
 
 export async function fetchGetWithinPage<TResult>(
-  page: puppeteer.Page,
+  page: Page,
   url: string
 ): Promise<TResult | null> {
   return page.evaluate((url) => {
@@ -66,7 +66,7 @@ export async function fetchGetWithinPage<TResult>(
 }
 
 export async function fetchPoalimXSRFWithinPage<TResult>(
-  page: puppeteer.Page,
+  page: Page,
   url: string,
   pageUuid: string
 ): Promise<TResult | null> {

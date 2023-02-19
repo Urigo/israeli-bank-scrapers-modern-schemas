@@ -1,4 +1,4 @@
-import type puppeteer from 'puppeteer';
+import type { Page } from 'puppeteer';
 import inquirer from 'inquirer';
 
 import { fetchPoalimXSRFWithinPage, fetchGetWithinPage } from '../utils/fetch';
@@ -22,10 +22,7 @@ declare namespace window {
   const bnhpApp: any;
 }
 
-async function businessLogin(
-  credentials: hapoalimCredentials,
-  page: puppeteer.Page
-) {
+async function businessLogin(credentials: hapoalimCredentials, page: Page) {
   const BASE_URL = 'https://biz2.bankhapoalim.co.il/authenticate/logon/main';
   await page.goto(BASE_URL);
 
@@ -53,10 +50,7 @@ async function businessLogin(
   ]);
 }
 
-async function personalLogin(
-  credentials: hapoalimCredentials,
-  page: puppeteer.Page
-) {
+async function personalLogin(credentials: hapoalimCredentials, page: Page) {
   const BASE_URL = 'https://login.bankhapoalim.co.il/ng-portals/auth/he/';
   await page.goto(BASE_URL);
 
@@ -76,7 +70,7 @@ async function personalLogin(
 
 async function replacePassword(
   previousCredentials: hapoalimCredentials,
-  page: puppeteer.Page
+  page: Page
 ) {
   await page.waitForSelector('#buttonAction');
 
@@ -105,7 +99,7 @@ async function replacePassword(
 }
 
 export async function hapoalim(
-  page: puppeteer.Page,
+  page: Page,
   credentials: hapoalimCredentials,
   options?: hapoalimOptions
 ) {
