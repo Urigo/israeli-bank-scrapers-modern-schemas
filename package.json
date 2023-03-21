@@ -31,7 +31,7 @@
     "json-schema-to-typescript": "12.0.0",
     "lint-staged": "13.2.0",
     "nodemon": "2.0.21",
-    "prettier": "2.8.5",
+    "prettier": "2.8.6",
     "typescript": "5.0.2"
   },
   "engines": {
