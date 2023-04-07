@@ -32,7 +32,7 @@
     "lint-staged": "13.2.0",
     "nodemon": "2.0.22",
     "prettier": "2.8.7",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   },
   "engines": {
     "node": "19.8.1"
