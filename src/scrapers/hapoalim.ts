@@ -12,9 +12,11 @@ import foreignSwiftTransactionsSchema from '../schemas/foreignSwiftTransactions.
 import foreignSwiftTransactionSchema from '../schemas/foreignSwiftTransaction.json' assert { type: 'json' };
 // import foreignTransactionsPersonalSchema from '../schemas/foreignTransactionsPersonalSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
+import hapoalimForeignDepositsSchema from '../schemas/hapoalimForeignDepositsSchema.json' assert { type: 'json' };
 import type { AccountDataSchema } from '../generatedTypes/accountDataSchema.js';
 import type { ILSCheckingTransactionsDataSchema } from '../generatedTypes/ILSCheckingTransactionsDataSchema.js';
 import type { HapoalimDepositsSchema } from '../generatedTypes/hapoalimDepositsSchema.js';
+import type { HapoalimForeignDepositsSchema } from '../generatedTypes/hapoalimForeignDepositsSchema.js';
 import { validateSchema } from '../utils/validateSchema.js';
 import { ForeignTransactionsBusinessSchema } from '../generatedTypes/foreignTransactionsBusinessSchema.js';
 import { ForeignSwiftTransactions } from '../generatedTypes/foreignSwiftTransactions.js';
@@ -358,6 +360,29 @@ export async function hapoalim(
       if (options?.validateSchema) {
         const data = await getDepositsFunction;
         const validation = await validateSchema(depositsSchema, data);
+        return {
+          data,
+          ...validation,
+        };
+      } else {
+        return { data: await getDepositsFunction };
+      }
+    },
+    getForeignDeposits: async (account: {
+      bankNumber: number;
+      branchNumber: number;
+      accountNumber: number;
+    }) => {
+      const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
+      const depositsUrl = `${apiSiteUrl}/foreign-currency/revaluedDeposit?accountId=${fullAccountNumber}&lang=he`;
+      const getDepositsFunction =
+        fetchGetWithinPage<HapoalimForeignDepositsSchema>(page, depositsUrl);
+      if (options?.validateSchema) {
+        const data = await getDepositsFunction;
+        const validation = await validateSchema(
+          hapoalimForeignDepositsSchema,
+          data
+        );
         return {
           data,
           ...validation,
