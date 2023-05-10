@@ -990,14 +990,17 @@
                       "type": "null"
                     },
                     "supplierId": {
-                      "type": "string",
-                      "oneOf": [
+                      "anyOf": [
+                        { "type" : "null" },
                         {
-                          "pattern": "^[0-9]{7}$"
-                        },
-                        {
-                          "enum": [
-                            "0"
+                          "type": "string",
+                          "oneOf": [{
+                              "pattern": "^[0-9]{7}$"
+                            },{
+                              "enum": [
+                                "0"
+                              ]
+                            }
                           ]
                         }
                       ]
