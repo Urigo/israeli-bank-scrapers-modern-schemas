@@ -10,7 +10,7 @@ import ILSCheckingTransactionsDataSchemaFile from '../schemas/ILSCheckingTransac
 import foreignTransactionsBusinessSchema from '../schemas/foreignTransactionsBusinessSchema.json' assert { type: 'json' };
 import foreignSwiftTransactionsSchema from '../schemas/foreignSwiftTransactions.json' assert { type: 'json' };
 import foreignSwiftTransactionSchema from '../schemas/foreignSwiftTransaction.json' assert { type: 'json' };
-// import foreignTransactionsPersonalSchema from '../schemas/foreignTransactionsPersonalSchema.json' assert { type: 'json' };
+import foreignTransactionsPersonalSchema from '../schemas/foreignTransactionsPersonalSchema.json' assert { type: 'json' };
 import depositsSchema from '../schemas/hapoalimDepositsSchema.json' assert { type: 'json' };
 import hapoalimForeignDepositsSchema from '../schemas/hapoalimForeignDepositsSchema.json' assert { type: 'json' };
 import type { AccountDataSchema } from '../generatedTypes/accountDataSchema.js';
@@ -21,7 +21,13 @@ import { validateSchema } from '../utils/validateSchema.js';
 import { ForeignTransactionsBusinessSchema } from '../generatedTypes/foreignTransactionsBusinessSchema.js';
 import { ForeignSwiftTransactions } from '../generatedTypes/foreignSwiftTransactions.js';
 import { ForeignSwiftTransaction } from '../generatedTypes/foreignSwiftTransaction.js';
-// import { ForeignTransactionsPersonalSchema } from '../generatedTypes/foreignTransactionsPersonalSchema';
+import { ForeignTransactionsPersonalSchema } from '../generatedTypes/foreignTransactionsPersonalSchema';
+
+type ForeignTransactionsSchema<T extends boolean> = T extends true
+  ? ForeignTransactionsBusinessSchema
+  : T extends false
+  ? ForeignTransactionsPersonalSchema
+  : never;
 
 declare namespace window {
   const bnhpApp: any;
@@ -218,29 +224,27 @@ export async function hapoalim(
         return { data: await getIlsTransactionsFunction };
       }
     },
-    getForeignTransactions: async (
+    getForeignTransactions: async <T extends boolean>(
       account: {
         bankNumber: number;
         branchNumber: number;
         accountNumber: number;
-      }
-      // isBusiness = true
+      },
+      isBusiness: T = true as T
     ) => {
       /**
        * The URL includes optional "type" query param.
-       * Setting itto "business" changes the response type.
+       * Setting it to "business" changes the response type.
        * Since accounter uses the business-specific fields,
        * the non-business option is commented out
        *  */
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
-      // ${isBusiness ? 'type=business&' : ''}
-      const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}&type=business&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,27,100&detailedAccountTypeCodeList=142&lang=he`;
-      const getForeignTransactionsFunction =
-        fetchGetWithinPage<ForeignTransactionsBusinessSchema>(
-          //  | ForeignTransactionsPersonalSchema
-          page,
-          foreignTransactionsUrl
-        );
+      const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}${
+        isBusiness ? 'type=business&' : ''
+      }&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,27,100&detailedAccountTypeCodeList=142&lang=he`;
+      const getForeignTransactionsFunction = fetchGetWithinPage<
+        ForeignTransactionsSchema<T>
+      >(page, foreignTransactionsUrl);
       if (options?.validateSchema) {
         const data = await getForeignTransactionsFunction;
         if (
@@ -255,10 +259,9 @@ export async function hapoalim(
           };
         }
         const validation = await validateSchema(
-          // isBusiness
-          //   ? foreignTransactionsBusinessSchema
-          //   : foreignTransactionsPersonalSchema,
-          foreignTransactionsBusinessSchema,
+          isBusiness
+            ? foreignTransactionsBusinessSchema
+            : foreignTransactionsPersonalSchema,
           data
         );
         return {
