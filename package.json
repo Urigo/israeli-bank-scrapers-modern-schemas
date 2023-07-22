@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@types/inquirer": "9.0.3",
-    "@types/node": "18.16.16",
+    "@types/node": "18.17.0",
     "@types/node-fetch": "3.0.3",
     "@types/uuid": "9.0.1",
     "concurrently": "8.1.0",
