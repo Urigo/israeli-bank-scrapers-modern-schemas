@@ -6,7 +6,7 @@ export async function fetchPostWithinPage<TResult>(
   page: Page,
   url: string,
   data: Record<string, any>,
-  extraHeaders: Record<string, any> = {}
+  extraHeaders: Record<string, any> = {},
 ): Promise<TResult | null> {
   return page.evaluate(
     (url, data, extraHeaders) => {
@@ -21,8 +21,8 @@ export async function fetchPostWithinPage<TResult>(
                 'Content-Type':
                   'application/x-www-form-urlencoded; charset=UTF-8',
               },
-              extraHeaders
-            )
+              extraHeaders,
+            ),
           ),
         })
           .then((result) => {
@@ -40,13 +40,13 @@ export async function fetchPostWithinPage<TResult>(
     },
     url,
     data,
-    extraHeaders
+    extraHeaders,
   );
 }
 
 export async function fetchGetWithinPage<TResult>(
   page: Page,
-  url: string
+  url: string,
 ): Promise<TResult | null> {
   return page.evaluate((url) => {
     return new Promise<TResult | null>((resolve, reject) => {
@@ -68,7 +68,7 @@ export async function fetchGetWithinPage<TResult>(
 export async function fetchPoalimXSRFWithinPage<TResult>(
   page: Page,
   url: string,
-  pageUuid: string
+  pageUuid: string,
 ): Promise<TResult | null> {
   const cookies = await page.cookies();
   const XSRFCookie = cookies.find((cookie) => cookie.name === 'XSRF-TOKEN');

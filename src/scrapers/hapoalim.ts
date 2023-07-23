@@ -81,7 +81,7 @@ async function personalLogin(credentials: hapoalimCredentials, page: Page) {
 
 async function replacePassword(
   previousCredentials: hapoalimCredentials,
-  page: Page
+  page: Page,
 ) {
   await page.waitForSelector('#buttonAction');
 
@@ -112,7 +112,7 @@ async function replacePassword(
 export async function hapoalim(
   page: Page,
   credentials: hapoalimCredentials,
-  options?: hapoalimOptions
+  options?: hapoalimOptions,
 ) {
   options?.isBusiness
     ? await businessLogin(credentials, page)
@@ -142,7 +142,7 @@ export async function hapoalim(
   const startDate = new Date(
     now.getFullYear(),
     now.getMonth() - startMonth,
-    now.getDate() + 1
+    now.getDate() + 1,
   );
   const startDateString = startDate
     .toISOString()
@@ -159,7 +159,7 @@ export async function hapoalim(
       const accountDataUrl = `${apiSiteUrl}/general/accounts`;
       const getAccountsFunction = fetchGetWithinPage<AccountDataSchema>(
         page,
-        accountDataUrl
+        accountDataUrl,
       );
       if (options?.validateSchema) {
         const data = await getAccountsFunction;
@@ -183,7 +183,7 @@ export async function hapoalim(
         fetchPoalimXSRFWithinPage<ILSCheckingTransactionsDataSchema>(
           page,
           ILSCheckingTransactionsUrl,
-          '/current-account/transactions'
+          '/current-account/transactions',
         );
       if (options?.validateSchema || options?.getTransactionsDetails) {
         const data = await getIlsTransactionsFunction;
@@ -194,7 +194,7 @@ export async function hapoalim(
               /* let a = */ await fetchPoalimXSRFWithinPage(
                 page,
                 ILSCheckingTransactionsUrl,
-                transaction.pfmDetails
+                transaction.pfmDetails,
               );
               // TODO: create schema and make this attribute string / object for inputing data
             }
@@ -202,7 +202,7 @@ export async function hapoalim(
               /*let b = */ await fetchPoalimXSRFWithinPage(
                 page,
                 ILSCheckingTransactionsUrl,
-                transaction.details
+                transaction.details,
               );
               // TODO: create schema and make this attribute string / object for inputing data
             }
@@ -214,7 +214,7 @@ export async function hapoalim(
 
         const validation = await validateSchema(
           ILSCheckingTransactionsDataSchemaFile,
-          data
+          data,
         );
         return {
           data,
@@ -230,7 +230,7 @@ export async function hapoalim(
         branchNumber: number;
         accountNumber: number;
       },
-      isBusiness: T = true as T
+      isBusiness: T = true as T,
     ) => {
       /**
        * The URL includes optional "type" query param.
@@ -262,7 +262,7 @@ export async function hapoalim(
           isBusiness
             ? foreignTransactionsBusinessSchema
             : foreignTransactionsPersonalSchema,
-          data
+          data,
         );
         return {
           data,
@@ -282,7 +282,7 @@ export async function hapoalim(
       const getForeignSwiftTransactionsFunction =
         fetchGetWithinPage<ForeignSwiftTransactions>(
           page,
-          foreignSwiftTransactionsUrl
+          foreignSwiftTransactionsUrl,
         );
       if (options?.validateSchema) {
         const data = await getForeignSwiftTransactionsFunction;
@@ -299,7 +299,7 @@ export async function hapoalim(
         }
         const validation = await validateSchema(
           foreignSwiftTransactionsSchema,
-          data
+          data,
         );
         return {
           data,
@@ -315,14 +315,14 @@ export async function hapoalim(
         branchNumber: number;
         accountNumber: number;
       },
-      transferCatenatedId: string
+      transferCatenatedId: string,
     ) => {
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const foreignSwiftTransactionUrl = `${apiSiteUrl}/foreign-trade/swiftTransactions/${transferCatenatedId}?accountId=${fullAccountNumber}&dataOriginCode=2&lang=he`;
       const getForeignSwiftTransactionFunction =
         fetchGetWithinPage<ForeignSwiftTransaction>(
           page,
-          foreignSwiftTransactionUrl
+          foreignSwiftTransactionUrl,
         );
       if (options?.validateSchema) {
         const data = await getForeignSwiftTransactionFunction;
@@ -339,7 +339,7 @@ export async function hapoalim(
         }
         const validation = await validateSchema(
           foreignSwiftTransactionSchema,
-          data
+          data,
         );
         return {
           data,
@@ -358,7 +358,7 @@ export async function hapoalim(
       const depositsUrl = `${apiSiteUrl}/deposits-and-savings/deposits?accountId=${fullAccountNumber}&view=details&lang=he`;
       const getDepositsFunction = fetchGetWithinPage<HapoalimDepositsSchema>(
         page,
-        depositsUrl
+        depositsUrl,
       );
       if (options?.validateSchema) {
         const data = await getDepositsFunction;
@@ -384,7 +384,7 @@ export async function hapoalim(
         const data = await getDepositsFunction;
         const validation = await validateSchema(
           hapoalimForeignDepositsSchema,
-          data
+          data,
         );
         return {
           data,

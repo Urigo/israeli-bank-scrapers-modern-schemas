@@ -17,7 +17,7 @@ export async function init() {
   return {
     hapoalim: async (
       credentials: hapoalimCredentials,
-      options?: hapoalimOptions
+      options?: hapoalimOptions,
     ) => {
       //return hapoalim.init
       const page = await newPage(browser);
@@ -25,7 +25,7 @@ export async function init() {
     },
     isracard: async (
       credentials: isracardCredentials,
-      options?: isracardOptions
+      options?: isracardOptions,
     ) => {
       //return isracard.init
       const page = await newPage(browser);
