@@ -240,7 +240,7 @@ export async function hapoalim(
        *  */
       const fullAccountNumber = `${account.bankNumber}-${account.branchNumber}-${account.accountNumber}`;
       const foreignTransactionsUrl = `${apiSiteUrl}/foreign-currency/transactions?accountId=${fullAccountNumber}${
-        isBusiness ? 'type=business&' : ''
+        isBusiness ? '&type=business' : ''
       }&view=details&retrievalEndDate=${endDateString}&retrievalStartDate=${startDateString}&currencyCodeList=19,27,100&detailedAccountTypeCodeList=142&lang=he`;
       const getForeignTransactionsFunction = fetchGetWithinPage<
         ForeignTransactionsSchema<T>
