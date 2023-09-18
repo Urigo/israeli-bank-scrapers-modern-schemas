@@ -35,7 +35,7 @@
     "typescript": "5.2.2"
   },
   "engines": {
-    "node": "20.6.0"
+    "node": "20.7.0"
   },
   "license": "MIT",
   "lint-staged": {
