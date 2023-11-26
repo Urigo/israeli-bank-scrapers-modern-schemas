@@ -26,8 +26,8 @@ import { ForeignTransactionsPersonalSchema } from '../generatedTypes/foreignTran
 type ForeignTransactionsSchema<T extends boolean> = T extends true
   ? ForeignTransactionsBusinessSchema
   : T extends false
-  ? ForeignTransactionsPersonalSchema
-  : never;
+    ? ForeignTransactionsPersonalSchema
+    : never;
 
 declare namespace window {
   const bnhpApp: any;
