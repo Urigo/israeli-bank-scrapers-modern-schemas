@@ -26,7 +26,7 @@
     "@types/node": "18.18.0",
     "@types/node-fetch": "3.0.3",
     "@types/uuid": "9.0.7",
-    "concurrently": "8.2.1",
+    "concurrently": "8.2.2",
     "husky": "8.0.3",
     "json-schema-to-typescript": "13.1.1",
     "lint-staged": "14.0.1",
