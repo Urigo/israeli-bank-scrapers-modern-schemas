@@ -73,7 +73,8 @@
         "totalChargeNis",
         "totalDebit",
         "userId",
-        "year"
+        "year",
+        "requestNumber"
       ],
       "properties": {
         "card0": {
@@ -307,6 +308,9 @@
         },
         "bcKey": {
           "type": "null"
+        },
+        "requestNumber": {
+          "type": "null"
         }
       },
       "patternProperties": {
@@ -334,7 +338,8 @@
               "tablePageNum",
               "totalDollar",
               "totalEuro",
-              "totalNis"
+              "totalNis",
+              "requestNumber"
             ],
             "properties": {
               "clientIpAddress": {
@@ -408,6 +413,9 @@
                 "type": "string"
               },
               "bcKey": {
+                "type": "null"
+              },
+              "requestNumber": {
                 "type": "null"
               }
             }
@@ -497,7 +505,9 @@
                     "tablePageNum",
                     "voucherNumber",
                     "voucherNumberRatz",
-                    "voucherNumberRatzOutbound"
+                    "voucherNumberRatzOutbound",
+                    "requestNumber",
+                    "kodMatbeaMekori"
                   ],
                   "properties": {
                     "adendum": {
@@ -730,6 +740,12 @@
                     },
                     "bcKey": {
                       "type": "null"
+                    },
+                    "requestNumber": {
+                      "type": "null"
+                    },
+                    "kodMatbeaMekori": {
+                      "type": "null"
                     }
                   }
                 }
@@ -788,7 +804,8 @@
                     "tablePageNum",
                     "voucherNumber",
                     "voucherNumberRatz",
-                    "voucherNumberRatzOutbound"
+                    "voucherNumberRatzOutbound",
+                    "requestNumber"
                   ],
                   "properties": {
                     "adendum": {
@@ -1040,6 +1057,20 @@
                     },
                     "bcKey": {
                       "type": "null"
+                    },
+                    "requestNumber": {
+                      "type": "null"
+                    },
+                    "kodMatbeaMekori": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "enum": [
+                        "ש\"ח",
+                        "דולר",
+                        null
+                      ]
                     }
                   }
                 }
@@ -1070,7 +1101,8 @@
           "tablePageNum",
           "totalDollar",
           "totalEuro",
-          "totalNis"
+          "totalNis",
+          "requestNumber"
         ],
         "properties": {
           "clientIpAddress": {
@@ -1167,6 +1199,9 @@
             ]
           },
           "bcKey": {
+            "type": "null"
+          },
+          "requestNumber": {
             "type": "null"
           }
         }

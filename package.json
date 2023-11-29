@@ -1,6 +1,6 @@
 {
   "name": "modern-poalim-scraper",
-  "version": "0.8.8",
+  "version": "0.9.9",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -35,7 +35,7 @@
     "typescript": "5.3.2"
   },
   "engines": {
-    "node": "20.10.0"
+    "node": "21.2.0"
   },
   "license": "MIT",
   "lint-staged": {
