@@ -1,7 +1,7 @@
 # israeli-bank-scrapers-modern-schemas
 A new architecture for Israeli bank scrapers to hopefully merge into [Israeli-bank-scrapers](https://github.com/eshaham/israeli-bank-scrapers) when they are ready
 
-# Project moved to github.com/urigo/accounter-fullstack
+# Project moved to [https://github.com/urigo/accounter-fullstack](https://github.com/urigo/accounter-fullstack)
 
 This project is very heavily ispired by [israeli-bank-scrapers](https://github.com/eshaham/israeli-bank-scrapers).
 I was using their scrapers but needed to get:
